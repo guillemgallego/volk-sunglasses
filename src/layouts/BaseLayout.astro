@@ -1,5 +1,6 @@
 ---
 // BaseLayout.astro
+import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
@@ -73,15 +74,12 @@ const siteName = "VOLK Sunglasses";
       }
     </script>
 
-    <!-- Fonts (preconnected via CSS import) -->
+    <!-- Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
     <slot />
