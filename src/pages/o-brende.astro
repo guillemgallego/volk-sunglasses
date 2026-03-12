@@ -1,0 +1,422 @@
+---
+// o-brende.astro – About brand page
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="О бренде VOLK Sunglasses — История и философия"
+  description="VOLK Sunglasses — российский бренд премиальных солнцезащитных очков. Вдохновлены природой России, созданы для настоящих авантюристов. Узнайте нашу историю."
+>
+  <Navbar />
+  <main class="about-main">
+    <!-- Hero section -->
+    <section class="about-hero">
+      <div class="about-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=85"
+          alt="VOLK Sunglasses — природа России"
+          loading="eager"
+          decoding="async"
+        />
+        <div class="about-hero-overlay"></div>
+      </div>
+      <div class="about-hero-content">
+        <span class="eyebrow">О бренде</span>
+        <h1 class="about-hero-title">РОЖДЕНЫ<br /><span>РОССИЕЙ</span></h1>
+        <p class="about-hero-sub">
+          Бескрайние просторы. Экстремальный климат.<br />
+          Необузданный дух авантюры.
+        </p>
+      </div>
+    </section>
+
+    <!-- Story section -->
+    <section class="about-story">
+      <div class="about-story-inner">
+        <div class="story-text">
+          <span class="eyebrow">Наша история</span>
+          <h2 class="story-title">Очки, рождённые<br />из экспедиций</h2>
+          <p class="story-p">
+            VOLK появился из личного опыта. Основатели бренда — страстные путешественники, которые исходили тайгу, покоряли уральские хребты и бороздили просторы Байкала. Они устали от компромиссов: яркие очки, которые быстро ломаются, или прочные, но уродливые.
+          </p>
+          <p class="story-p">
+            В 2019 году родилась идея — создать очки, которые сочетают итальянское качество материалов с русским духом бескомпромиссности. Первая коллекция называлась TAIGA. Шесть расцветок, вдохновлённых временами года в сибирском лесу.
+          </p>
+          <p class="story-p">
+            Сегодня VOLK — это шесть коллекций, более 15 000 довольных владельцев по всей России и философия, которая не меняется: делать лучшее.
+          </p>
+        </div>
+        <div class="story-img">
+          <img
+            src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&q=85"
+            alt="VOLK Sunglasses — экспедиция"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="story-stat-card">
+            <span class="stat-big">2019</span>
+            <span class="stat-label">Год основания</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="about-values">
+      <div class="values-inner">
+        <span class="eyebrow">Наши ценности</span>
+        <h2 class="values-title">Три принципа VOLK</h2>
+        <div class="values-grid">
+          <div class="value-card">
+            <span class="value-num">01</span>
+            <h3 class="value-name">Качество без компромиссов</h3>
+            <p class="value-desc">Только итальянская ацетатная оправа, японские петли и линзы с многослойным покрытием. Каждая пара проходит контроль качества в три этапа.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-num">02</span>
+            <h3 class="value-name">Дизайн с характером</h3>
+            <p class="value-desc">Мы не следуем трендам — мы задаём их. Брутальный, минималистичный дизайн, вдохновлённый суровой красотой России.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-num">03</span>
+            <h3 class="value-name">Для реальной жизни</h3>
+            <p class="value-desc">Наши очки носят в горах, на пляже, в офисе и на вечеринке. Они должны выдерживать всё — и выглядеть при этом безупречно.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collections lineup -->
+    <section class="about-collections">
+      <div class="collections-inner">
+        <span class="eyebrow">Наши коллекции</span>
+        <h2 class="collections-title">Шесть коллекций.<br />Один бренд.</h2>
+        <div class="collections-list">
+          {[
+            { name: "TAIGA", desc: "6 расцветок. Тайга в каждом взгляде.", img: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=600&q=80", slug: "taiga" },
+            { name: "SIBERIA", desc: "Металлическая оправа. Сибирская прочность.", img: "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=600&q=80", slug: "siberia" },
+            { name: "SOCHI", desc: "Курортный шик. Всё лето напролёт.", img: "https://images.unsplash.com/photo-1565945887714-d5139f4eb0ce?w=600&q=80", slug: "sochi" },
+            { name: "HERMITAGE", desc: "Ограниченная серия. Петербургская роскошь.", img: "https://images.unsplash.com/photo-1473496169904-658ba7574b0d?w=600&q=80", slug: "hermitage" },
+            { name: "ARCTIC", desc: "Фотохромные линзы. Для экстремала.", img: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=80", slug: "arctic" },
+            { name: "MOSCOW", desc: "Авиатор для жителей мегаполиса.", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80", slug: "moscow" },
+          ].map((col) => (
+            <a href={`/produkty/${col.slug}`} class="coll-item" id={`about-col-${col.slug}`}>
+              <div class="coll-img">
+                <img src={col.img} alt={`VOLK ${col.name}`} loading="lazy" decoding="async" />
+              </div>
+              <div class="coll-info">
+                <span class="coll-name">{col.name}</span>
+                <span class="coll-desc">{col.desc}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta">
+      <div class="about-cta-inner">
+        <h2 class="about-cta-title">Выбери свои VOLK</h2>
+        <p class="about-cta-desc">Найди очки, которые станут частью твоей истории.</p>
+        <a href="/katalog" class="btn-primary about-cta-btn" id="about-cta-btn">Перейти в каталог</a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .about-main { padding-top: 70px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-montserrat);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-volk-accent);
+    margin-bottom: 1rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--color-volk-accent);
+  }
+
+  /* Hero */
+  .about-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+  .about-hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .about-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.5) 100%);
+  }
+  .about-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    width: 100%;
+  }
+  .about-hero-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(4rem, 10vw, 9rem);
+    letter-spacing: 0.05em;
+    line-height: 0.9;
+    margin-bottom: 1.5rem;
+  }
+  .about-hero-title span { color: var(--color-volk-accent); }
+  .about-hero-sub {
+    font-family: var(--font-inter);
+    font-size: 1rem;
+    color: rgba(245,245,240,0.6);
+    line-height: 1.7;
+  }
+
+  /* Story */
+  .about-story {
+    background: #090909;
+    border-bottom: 1px solid #111;
+  }
+  .about-story-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .story-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .story-p {
+    font-family: var(--font-inter);
+    font-size: 0.88rem;
+    color: #666;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+  .story-img {
+    position: relative;
+    overflow: visible;
+  }
+  .story-img img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+  .story-stat-card {
+    position: absolute;
+    bottom: -1.5rem;
+    left: -1.5rem;
+    background: var(--color-volk-accent);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stat-big {
+    font-family: var(--font-bebas);
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    color: #0a0a0a;
+  }
+  .stat-label {
+    font-family: var(--font-montserrat);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(10,10,10,0.6);
+  }
+
+  /* Values */
+  .about-values {
+    background: #0a0a0a;
+  }
+  .values-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+  .values-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.05em;
+    margin-bottom: 3rem;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .value-card {
+    border: 1px solid #1a1a1a;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .value-card:hover {
+    border-color: var(--color-volk-accent);
+    background: #0d0d0d;
+  }
+  .value-num {
+    font-family: var(--font-bebas);
+    font-size: 3rem;
+    color: #1a1a1a;
+    line-height: 1;
+  }
+  .value-name {
+    font-family: var(--font-montserrat);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #f5f5f0;
+    line-height: 1.3;
+  }
+  .value-desc {
+    font-family: var(--font-inter);
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* Collections */
+  .about-collections {
+    background: #090909;
+    border-top: 1px solid #111;
+  }
+  .collections-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+  .collections-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 2.5rem;
+  }
+  .collections-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .coll-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.3s;
+  }
+  .coll-item:hover {
+    border-color: #333;
+    transform: translateY(-3px);
+  }
+  .coll-img {
+    overflow: hidden;
+    aspect-ratio: 4/3;
+  }
+  .coll-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .coll-item:hover .coll-img img {
+    transform: scale(1.05);
+  }
+  .coll-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .coll-name {
+    font-family: var(--font-bebas);
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: #f5f5f0;
+  }
+  .coll-desc {
+    font-family: var(--font-inter);
+    font-size: 0.72rem;
+    color: #555;
+  }
+
+  /* CTA */
+  .about-cta {
+    background: var(--color-volk-accent);
+    text-align: center;
+  }
+  .about-cta-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .about-cta-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.05em;
+    color: #0a0a0a;
+  }
+  .about-cta-desc {
+    font-family: var(--font-inter);
+    font-size: 0.9rem;
+    color: rgba(10,10,10,0.6);
+    margin-bottom: 0.5rem;
+  }
+  .about-cta-btn {
+    background: #0a0a0a;
+    color: #f5f5f0;
+    border-color: #0a0a0a;
+  }
+  .about-cta-btn:hover {
+    background: transparent;
+    color: #0a0a0a;
+    border-color: #0a0a0a;
+  }
+
+  @media (max-width: 1024px) {
+    .about-story-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .values-grid { grid-template-columns: 1fr; }
+    .collections-list { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .collections-list { grid-template-columns: 1fr; }
+  }
+</style>

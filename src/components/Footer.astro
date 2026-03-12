@@ -1,0 +1,293 @@
+---
+// Footer.astro – Premium footer with real VOLK contact info
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" aria-label="Footer VOLK Sunglasses">
+  <!-- Marquee ticker -->
+  <div class="footer-ticker" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-inner">
+        {Array.from({ length: 12 }).map(() => (
+          <span class="ft-items">
+            <span>VOLK SUNGLASSES</span>
+            <span class="ft-sep">✦</span>
+            <span>РОССИЯ</span>
+            <span class="ft-sep">✦</span>
+            <span>UV400</span>
+            <span class="ft-sep">✦</span>
+            <span>TAC POLARIZED</span>
+            <span class="ft-sep">✦</span>
+            <span>ПОМОЩЬ ПРИРОДЕ</span>
+            <span class="ft-sep">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main footer -->
+  <div class="footer-main">
+    <div class="footer-container">
+      <!-- Brand col -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="VOLK Sunglasses главная">
+          <span class="footer-logo-volk">VOLK</span>
+          <span class="footer-logo-sub">SUNGLASSES</span>
+        </a>
+        <p class="footer-tagline">
+          Поляризационные солнцезащитные очки. Разработаны в России. Для спорта, вождения и путешествий.
+        </p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/volk.sunglasses/" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Instagram VOLK">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://vk.com/volksunglasses" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте VOLK">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.701 18.771H12.662C12.662 18.771 12.948 18.739 13.094 18.579C13.229 18.432 13.225 18.155 13.225 18.155C13.225 18.155 13.205 16.863 13.809 16.667C14.405 16.474 15.17 17.916 15.985 18.456C16.6 18.863 17.067 18.771 17.067 18.771L19.211 18.742C19.211 18.742 20.336 18.673 19.801 17.791C19.757 17.718 19.493 17.139 18.222 15.957C16.891 14.718 17.071 14.921 18.665 12.738C19.637 11.417 20.026 10.608 19.904 10.264C19.788 9.937 19.058 10.02 19.058 10.02L16.643 10.036C16.643 10.036 16.462 10.011 16.327 10.09C16.196 10.168 16.109 10.349 16.109 10.349C16.109 10.349 15.731 11.381 15.226 12.247C14.161 14.072 13.749 14.164 13.579 14.054C13.181 13.796 13.279 12.991 13.279 12.421C13.279 10.614 13.555 9.867 12.726 9.666C12.452 9.599 12.249 9.556 11.558 9.548C10.673 9.539 9.924 9.552 9.5 9.758C9.22 9.894 9.005 10.198 9.145 10.216C9.318 10.239 9.712 10.321 9.921 10.607C10.19 10.975 10.181 11.799 10.181 11.799C10.181 11.799 10.321 13.815 9.862 14.067C9.545 14.24 9.109 13.886 8.162 12.224C7.674 11.374 7.308 10.432 7.308 10.432C7.308 10.432 7.234 10.257 7.105 10.163C6.948 10.048 6.726 10.013 6.726 10.013L4.433 10.028C4.433 10.028 4.089 10.038 3.963 10.189C3.85 10.324 3.953 10.605 3.953 10.605C3.953 10.605 5.765 14.904 7.817 17.072C9.703 19.063 11.701 18.771 11.701 18.771Z"/></svg>
+          </a>
+          <a href="https://t.me/volksunglasses" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Telegram VOLK">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://wa.me/79602737038" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp VOLK">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer-nav-col">
+        <span class="footer-col-title">Каталог</span>
+        <nav aria-label="Каталог">
+          <a href="/katalog" class="footer-link">Все модели</a>
+          <a href="/katalog" class="footer-link">TAIGA</a>
+          <a href="/katalog" class="footer-link">SIBERIA</a>
+          <a href="/katalog" class="footer-link">HERMITAGE</a>
+        </nav>
+      </div>
+
+      <div class="footer-nav-col">
+        <span class="footer-col-title">Компания</span>
+        <nav aria-label="Компания">
+          <a href="/o-brende" class="footer-link">О бренде</a>
+          <a href="https://volksunglasses.com/o-nashem-proekte/" class="footer-link" target="_blank" rel="noopener">Помощь природе</a>
+          <a href="https://volksunglasses.com/ambassador-2/" class="footer-link" target="_blank" rel="noopener">Амбассадоры</a>
+          <a href="/blog" class="footer-link">Блог</a>
+        </nav>
+      </div>
+
+      <div class="footer-nav-col">
+        <span class="footer-col-title">Поддержка</span>
+        <nav aria-label="Поддержка">
+          <a href="https://volksunglasses.com/dostavka-oplata/" class="footer-link" target="_blank" rel="noopener">Доставка и оплата</a>
+          <a href="https://volksunglasses.com/vozvrat-obmen-tovara/" class="footer-link" target="_blank" rel="noopener">Возврат и обмен</a>
+          <a href="/kontakty" class="footer-link">Контакты</a>
+          <a href="https://volksunglasses.com/privacy-policy/" class="footer-link" target="_blank" rel="noopener">Конфиденциальность</a>
+        </nav>
+        <div class="footer-contact">
+          <a href="https://wa.me/79602737038" class="footer-phone" target="_blank" rel="noopener">+7 960 273 70 38</a>
+          <a href="mailto:info@volksunglasses.com" class="footer-email">info@volksunglasses.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="footer-container footer-bottom-inner">
+      <p class="footer-copy">
+        © {year} VOLK Sunglasses. Все права защищены.
+      </p>
+      <div class="payment-badges">
+        <span class="pay-badge">Visa</span>
+        <span class="pay-badge">MasterCard</span>
+        <span class="pay-badge">МИР</span>
+        <span class="pay-badge">ЮKassa</span>
+        <span class="pay-badge">СДЭК</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* Ticker */
+.footer-ticker {
+  background: #000;
+  border-top: 1px solid rgba(206,255,2,0.15);
+  border-bottom: 1px solid rgba(206,255,2,0.15);
+  padding: 0.75rem 0;
+  overflow: hidden;
+}
+.ft-items {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: rgba(206,255,2,0.7);
+  white-space: nowrap;
+}
+.ft-sep { color: #ceff02; font-size: 0.45rem; }
+
+/* Main footer */
+.footer-main {
+  background: var(--color-volk-black);
+  padding: 4rem 0 3rem;
+  border-top: 1px solid var(--color-volk-border);
+}
+.footer-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+}
+
+/* Brand */
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 1.25rem;
+}
+.footer-logo-volk {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  letter-spacing: 0.16em;
+  color: var(--color-volk-white);
+  line-height: 1;
+  transition: color 0.2s;
+}
+.footer-logo:hover .footer-logo-volk { color: var(--color-accent); }
+.footer-logo-sub {
+  font-family: var(--font-body);
+  font-size: 0.42rem;
+  letter-spacing: 0.42em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.footer-tagline {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-volk-muted);
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+}
+.footer-social {
+  display: flex;
+  gap: 0.5rem;
+}
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border);
+  color: var(--color-volk-muted);
+  transition: all 0.2s;
+}
+.social-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-volk-black);
+}
+
+/* Nav columns */
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.footer-col-title {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+  margin-bottom: 0.5rem;
+}
+.footer-link {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-volk-muted);
+  transition: color 0.2s;
+  padding: 0.18rem 0;
+  line-height: 1.5;
+}
+.footer-link:hover { color: var(--color-accent); }
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-volk-border);
+}
+.footer-phone {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-volk-white);
+  transition: color 0.2s;
+}
+.footer-phone:hover { color: #25D366; }
+.footer-email {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-volk-muted);
+  transition: color 0.2s;
+}
+.footer-email:hover { color: var(--color-accent); }
+
+/* Bottom */
+.footer-bottom {
+  background: var(--color-volk-deep);
+  border-top: 1px solid var(--color-volk-border);
+  padding: 1.1rem 0;
+}
+.footer-bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-copy {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--color-volk-subtle);
+}
+.payment-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.pay-badge {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-volk-subtle);
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border);
+  padding: 0.2rem 0.5rem;
+}
+
+@media (max-width: 1100px) {
+  .footer-container { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-brand { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .footer-container { grid-template-columns: 1fr; padding: 0 1.5rem; }
+  .footer-brand { grid-column: span 1; }
+  .footer-bottom-inner { flex-direction: column; text-align: center; }
+}
+</style>

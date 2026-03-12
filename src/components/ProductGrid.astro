@@ -1,0 +1,106 @@
+---
+// ProductGrid.astro – Responsive product grid
+import ProductCard from "./ProductCard.astro";
+import type { Product } from "../data/products";
+
+interface Props {
+  products: Product[];
+  title?: string;
+  subtitle?: string;
+  columns?: 2 | 3 | 4;
+  showViewAll?: boolean;
+}
+
+const {
+  products,
+  title,
+  subtitle,
+  columns = 3,
+  showViewAll = false,
+} = Astro.props;
+---
+
+<section class="product-grid-section" id="product-grid">
+  {(title || subtitle) && (
+    <div class="section-header">
+      {title && <h2 class="section-title">{title}</h2>}
+      {subtitle && <p class="section-subtitle">{subtitle}</p>}
+    </div>
+  )}
+
+  <div class={`product-grid grid-cols-${columns}`}>
+    {products.map((product, i) => (
+      <ProductCard product={product} eager={i < 3} />
+    ))}
+  </div>
+
+  {showViewAll && (
+    <div class="view-all-wrap">
+      <a href="/katalog" class="btn-outline" id="view-all-btn">
+        Смотреть весь каталог →
+      </a>
+    </div>
+  )}
+</section>
+
+<style>
+  .product-grid-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.08em;
+    color: #f5f5f0;
+    line-height: 1;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-inter);
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 300;
+    max-width: 500px;
+  }
+
+  .product-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .view-all-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 1024px) {
+    .grid-cols-4 { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .grid-cols-3,
+    .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .product-grid-section { padding: 3rem 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 { grid-template-columns: 1fr; }
+  }
+</style>

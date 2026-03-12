@@ -1,0 +1,502 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Bebas+Neue&display=swap');
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════
+   VOLK SUNGLASSES — Design System v2
+   Accent: Electric Lime #ceff02
+   Inspired by: Hawkers, Goodr, Knockaround, Oakley
+   ═══════════════════════════════════════════════════════ */
+
+@theme {
+  /* Brand colors */
+  --color-volk-black: #080808;
+  --color-volk-deep: #0d0d0d;
+  --color-volk-surface: #131313;
+  --color-volk-elevated: #1a1a1a;
+  --color-volk-border: #222222;
+  --color-volk-border-hi: #303030;
+  --color-volk-white: #f5f5f0;
+  --color-volk-muted: #686868;
+  --color-volk-subtle: #383838;
+
+  /* Accent — Electric Lime #ceff02 */
+  --color-accent: #ceff02;
+  --color-accent-bright: #ddff44;
+  --color-accent-dim: #8baa00;
+  --color-accent-bg: rgba(206, 255, 2, 0.07);
+
+  /* Semantic */
+  --color-danger: #ff4d4d;
+  --color-danger-bg: rgba(255, 77, 77, 0.07);
+  --color-success: #4dcc88;
+
+  /* Font families */
+  --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* ─── RESET ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--color-volk-black);
+  color: var(--color-volk-white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ─── SCROLLBAR ────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-volk-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-volk-black);
+}
+
+/* ─── TYPOGRAPHY ──────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-muted {
+  color: var(--color-volk-muted);
+}
+
+.text-white {
+  color: var(--color-volk-white);
+}
+
+/* Display sizes */
+.display-hero {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 12rem);
+  letter-spacing: -0.01em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.display-lg {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.display-md {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.label-xs {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.label-sm {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ─── LAYOUT HELPERS ─────────────────────────────────── */
+.container {
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* ─── BUTTONS ────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold {
+  background: var(--color-accent);
+  color: var(--color-volk-black);
+  border-color: var(--color-accent);
+  padding: 0.9rem 2rem;
+}
+
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(-101%);
+  transition: transform 0.3s ease;
+}
+
+.btn-gold:hover::after {
+  transform: translateX(0);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 0 28px rgba(206, 255, 2, 0.5), 0 0 6px rgba(206, 255, 2, 0.25);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-volk-white);
+  border-color: var(--color-volk-border-hi);
+  padding: 0.9rem 2rem;
+}
+
+.btn-ghost:hover {
+  background: var(--color-volk-white);
+  color: var(--color-volk-black);
+  border-color: var(--color-volk-white);
+}
+
+.btn-outline-gold {
+  background: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  padding: 0.9rem 2rem;
+}
+
+.btn-outline-gold:hover {
+  background: var(--color-accent);
+  color: var(--color-volk-black);
+  box-shadow: 0 0 22px rgba(206, 255, 2, 0.4);
+}
+
+.btn-sm {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.65rem;
+}
+
+.btn-lg {
+  padding: 1.1rem 2.5rem;
+  font-size: 0.78rem;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ─── EYEBROW / SECTION LABEL ────────────────────────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* ─── PRODUCT CARD ──────────────────────────────────── */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border);
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-5px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(206, 255, 2, 0.15), 0 0 40px rgba(206, 255, 2, 0.05);
+}
+
+.product-card .card-img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .card-img {
+  transform: scale(1.07);
+}
+
+/* ─── BADGE ─────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  line-height: 1;
+}
+
+.badge-fire {
+  background: #c0392b;
+  color: #fff;
+}
+
+.badge-gold {
+  background: var(--color-accent);
+  color: var(--color-volk-black);
+}
+
+.badge-dark {
+  background: var(--color-volk-elevated);
+  border: 1px solid var(--color-volk-border-hi);
+  color: var(--color-volk-muted);
+}
+
+.badge-out {
+  background: var(--color-volk-elevated);
+  border: 1px solid var(--color-volk-border);
+  color: var(--color-volk-subtle);
+}
+
+/* ─── ANIMATIONS ────────────────────────────────────── */
+@keyframes firebeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.04);
+    opacity: 0.88;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes scrollBounce {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+
+  50% {
+    transform: translateY(6px) rotate(90deg);
+  }
+}
+
+.animate-firebeat {
+  animation: firebeat 1.8s ease-in-out infinite;
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.55s ease-out both;
+}
+
+/* Shimmer text */
+.text-shimmer {
+  background: linear-gradient(90deg,
+      #ceff02 0%,
+      #eeff66 35%,
+      #ceff02 55%,
+      #f5ff99 80%,
+      #ceff02 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ─── DIVIDERS ──────────────────────────────────────── */
+.hr-gold {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  opacity: 0.3;
+}
+
+/* ─── MARQUEE ───────────────────────────────────────── */
+.marquee-track {
+  overflow: hidden;
+}
+
+.marquee-inner {
+  display: flex;
+  animation: marquee 22s linear infinite;
+  width: max-content;
+}
+
+.marquee-inner:hover {
+  animation-play-state: paused;
+}
+
+/* ─── GLASS / BLUR CARD ─────────────────────────────── */
+.glass {
+  background: rgba(20, 20, 20, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─────────────────────────── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ─── UTILITIES ─────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,606 @@
+---
+// index.astro – VOLK Sunglasses homepage (Hawkers+Goodr+Oakley inspired)
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import ProductCard from "../components/ProductCard.astro";
+import Footer from "../components/Footer.astro";
+import { products, getBestsellers } from "../data/products";
+
+const bestsellers = getBestsellers();
+const allInStock = products.filter(p => !p.outOfStock);
+const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
+---
+
+<BaseLayout
+  title="VOLK Sunglasses — Поляризационные солнцезащитные очки с UV400 | Россия"
+  description="Поляризационные солнцезащитные очки VOLK для спорта, вождения и путешествий. Защита UV400, антибликовые линзы TAC Polarized. Бесплатная доставка по России от 2 350 ₽."
+>
+  <Navbar />
+  <main id="main-content">
+    <!-- ① HERO ─────────────────────────────────────────────── -->
+    <Hero />
+
+    <!-- ② TICKER BAND ─────────────────────────────────────── -->
+    <div class="ticker" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-inner">
+          {Array.from({ length: 10 }).map(() => (
+            <span class="ticker-items">
+              <span>🕶 TAIGA</span>
+              <span class="ticker-dot">✦</span>
+              <span>SIBERIA</span>
+              <span class="ticker-dot">✦</span>
+              <span>HERMITAGE</span>
+              <span class="ticker-dot">✦</span>
+              <span>UV400</span>
+              <span class="ticker-dot">✦</span>
+              <span>ПОЛЯРИЗАЦИЯ</span>
+              <span class="ticker-dot">✦</span>
+              <span>РОССИЯ</span>
+              <span class="ticker-dot">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ VALUE PROPS (Goodr style icons) ─────────────────── -->
+    <section class="props-section" aria-label="Преимущества">
+      <div class="container props-grid">
+        {[
+          {
+            icon: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+            title: "UV400 Защита",
+            text: "Блокируем 100% вредных лучей UVA и UVB",
+          },
+          {
+            icon: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
+            title: "TAC Polarized",
+            text: "Поляризационный фильтр 3-й категории затемнения",
+          },
+          {
+            icon: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`,
+            title: "Доставка по РФ",
+            text: "СДЭК по России, Беларуси и Казахстану",
+          },
+          {
+            icon: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+            title: "Помощь природе",
+            text: "Часть средств от каждой покупки идёт на экологию",
+          },
+        ].map(p => (
+          <div class="prop-card">
+            <div class="prop-icon" aria-hidden="true" set:html={p.icon}></div>
+            <h3 class="prop-title">{p.title}</h3>
+            <p class="prop-text">{p.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ④ BESTSELLERS GRID ─────────────────────────────────── -->
+    <section class="section" id="bestsellers" aria-label="Хиты продаж">
+      <div class="container">
+        <header class="section-header">
+          <div>
+            <span class="eyebrow">Топ продаж</span>
+            <h2 class="display-lg" style="margin-top: 0.6rem;">Хиты VOLK</h2>
+          </div>
+          <a href="/katalog" class="btn btn-ghost btn-sm section-all-btn" id="sec-bestsellers-all">
+            Все модели →
+          </a>
+        </header>
+
+        <!-- Scarcity alert -->
+        {lowStock.length > 0 && (
+          <div class="scarcity-bar" role="alert">
+            <span class="scarcity-fire animate-firebeat">🔥</span>
+            <span>
+              <strong>Высокий спрос!</strong>
+              &nbsp;{lowStock.length} {lowStock.length === 1 ? "модель заканчивается" : "модели заканчиваются"} — успей купить.
+            </span>
+          </div>
+        )}
+
+        <div class="product-grid">
+          {bestsellers.map((p, i) => (
+            <ProductCard product={p} eager={i < 2} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ LIFESTYLE SPLIT ─────────────────────────────────── -->
+    <section class="lifestyle-section" aria-label="Философия бренда">
+      <div class="lifestyle-left">
+        <img
+          src="https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Blue-Green-Face.jpg"
+          alt="VOLK SIBERIA BLUE — поляризационные очки"
+          loading="lazy"
+          decoding="async"
+          class="ls-img"
+        />
+        <!-- Floating info card -->
+        <div class="ls-card glass">
+          <span class="label-xs" style="color: var(--color-accent);">Наша миссия</span>
+          <p class="ls-card-text">"Качество должно быть доступным"</p>
+          <a href="/o-brende" class="btn btn-outline-gold btn-sm" id="lifestyle-about">О бренде</a>
+        </div>
+      </div>
+      <div class="lifestyle-right">
+        <div class="ls-text-wrap">
+          <span class="eyebrow">Разработаны в России</span>
+          <h2 class="display-lg" style="margin-top: 0.75rem; max-width: 520px;">
+            Очки для тех,<br />кто живёт<br /><span style="color: var(--color-accent);">вне рамок</span>
+          </h2>
+          <p class="ls-body">
+            VOLK — российский бренд поляризационных очков для активных людей, водителей, путешественников.
+            Мы используем линзы TAC Polarized и защиту UV400, чтобы ваши глаза были в безопасности при любом освещении.
+          </p>
+          <ul class="ls-features">
+            {[
+              "Поляризационные линзы 3-й категории",
+              "Защита UV400 от UVA и UVB лучей",
+              "Антибликовая технология",
+              "Унисекс дизайн — подходит всем",
+              "Сверхлёгкая квадратная оправа",
+              "Часть прибыли идёт на помощь природе",
+            ].map(f => (
+              <li class="ls-feature">
+                <span class="ls-check" aria-hidden="true">◈</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <a href="/katalog" class="btn btn-gold" id="lifestyle-catalog">
+            Выбрать очки
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑥ ALL PRODUCTS ─────────────────────────────────────── -->
+    <section class="section bg-deep" id="vse-modeli" aria-label="Все модели">
+      <div class="container">
+        <header class="section-header">
+          <div>
+            <span class="eyebrow">Полный каталог</span>
+            <h2 class="display-lg" style="margin-top: 0.6rem;">Все модели</h2>
+          </div>
+          <p class="section-count">{allInStock.length} в наличии</p>
+        </header>
+        <div class="product-grid product-grid--4">
+          {products.map((p, i) => (
+            <ProductCard product={p} eager={i < 4} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑦ FAQ (real from volksunglasses.com) ───────────────── -->
+    <section class="faq-section" id="faq" aria-label="Часто задаваемые вопросы">
+      <div class="container faq-inner">
+        <div class="faq-left">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="display-lg" style="margin-top: 0.75rem;">
+            Частые<br />вопросы
+          </h2>
+          <p class="faq-sub">
+            Если не нашли ответ — пишите в WhatsApp:<br />
+            <a href="https://wa.me/79602737038" class="faq-wa" target="_blank" rel="noopener">+7 960 273 70 38</a>
+          </p>
+        </div>
+        <div class="faq-right">
+          {[
+            {
+              q: "🕶️ Какая категория линз используется в очках VOLK?",
+              a: "Во всех очках VOLK используются линзы 3-й категории затемнения. Они поглощают 82–92% видимого света — идеально для яркого солнца, пляжа, гор и вождения днём.",
+            },
+            {
+              q: "☀️ Есть ли защита от ультрафиолета и бликов?",
+              a: "Да. Все модели оснащены защитой UV400 и поляризационным фильтром. Это блокирует вредные лучи UVA и UVB, устраняет блики и снижает нагрузку на глаза при ярком освещении.",
+            },
+            {
+              q: "📦 Как отследить заказ?",
+              a: "Сразу после оформления заказа вы получите трекинг-номер на email. Отследить посылку можно через сайт СДЭК. Если письмо не пришло — напишите нам в WhatsApp.",
+            },
+            {
+              q: "🧼 Как ухаживать за очками?",
+              a: "Храните очки в чехле из микрофибры (идёт в комплекте). Не оставляйте на солнце или в горячем автомобиле. Избегайте контакта с твёрдыми поверхностями и бытовой химией.",
+            },
+            {
+              q: "⏱️ Сколько ждать доставку?",
+              a: "Срок зависит от региона. Доставляем по России, Беларуси и Казахстану через СДЭК. Подробнее — на странице доставки.",
+            },
+          ].map((item, i) => (
+            <details class="faq-item" id={`faq-${i}`}>
+              <summary class="faq-q">
+                <span>{item.q}</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-a">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑧ NEWSLETTER (Hawkers-style) ─────────────────────── -->
+    <section class="newsletter-section" id="newsletter" aria-label="Подписка на скидку">
+      <div class="container newsletter-inner">
+        <div class="newsletter-content">
+          <span class="eyebrow">Эксклюзив</span>
+          <h2 class="display-md" style="margin-top: 0.75rem; max-width: 440px;">
+            Получи <span style="color: var(--color-accent);">10% скидку</span> на следующий заказ
+          </h2>
+          <p class="newsletter-sub">
+            Подпишись и получай эксклюзивные предложения от нашего мохнатого друга 🐺
+          </p>
+        </div>
+        <form class="newsletter-form" action="https://volksunglasses.com/" method="POST" id="newsletter-form">
+          <div class="nl-input-row">
+            <input
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              required
+              autocomplete="email"
+              class="nl-input"
+              id="nl-email"
+              aria-label="Email для подписки"
+            />
+            <button type="submit" class="btn btn-gold nl-btn" id="nl-submit">
+              Получить скидку
+            </button>
+          </div>
+          <p class="nl-legal">
+            Нажимая кнопку, вы соглашаетесь с <a href="https://volksunglasses.com/privacy-policy/">политикой конфиденциальности</a>.
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+/* ─── TICKER ─────────────────────────────────────────── */
+.ticker {
+  background: #000;
+  border-top: 1px solid rgba(206,255,2,0.2);
+  border-bottom: 1px solid rgba(206,255,2,0.2);
+  padding: 0.65rem 0;
+  overflow: hidden;
+}
+.ticker-items {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ceff02;
+  white-space: nowrap;
+}
+.ticker-dot {
+  font-size: 0.45rem;
+  opacity: 0.35;
+}
+
+/* ─── VALUE PROPS ─────────────────────────────────────── */
+.props-section {
+  padding: 4rem 0;
+  background: var(--color-volk-deep);
+  border-top: 1px solid var(--color-volk-border);
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.props-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.prop-card {
+  padding: 2rem 2rem;
+  border-right: 1px solid var(--color-volk-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background 0.2s;
+}
+.prop-card:last-child { border-right: none; }
+.prop-card:hover { background: var(--color-volk-surface); }
+.prop-icon {
+  color: var(--color-accent);
+  width: 26px;
+}
+.prop-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+}
+.prop-text {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-volk-muted);
+  line-height: 1.65;
+}
+
+/* ─── SECTION ──────────────────────────────────────────── */
+.section {
+  padding: 5rem 0;
+}
+.bg-deep { background: var(--color-volk-deep); }
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+.section-count {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-volk-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.section-all-btn { flex-shrink: 0; }
+
+/* Scarcity bar */
+.scarcity-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--color-danger-bg);
+  border: 1px solid rgba(224,92,92,0.2);
+  padding: 0.65rem 1rem;
+  margin-bottom: 1.75rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: #e8907a;
+}
+.scarcity-bar strong { color: var(--color-volk-white); }
+.scarcity-fire { font-size: 1rem; }
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.product-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ─── LIFESTYLE ────────────────────────────────────────── */
+.lifestyle-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 650px;
+  border-top: 1px solid var(--color-volk-border);
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.lifestyle-left {
+  position: relative;
+  overflow: hidden;
+}
+.ls-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.lifestyle-left:hover .ls-img { transform: scale(1.04); }
+.ls-card {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ls-card-text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-volk-white);
+  font-style: italic;
+}
+.lifestyle-right {
+  background: var(--color-volk-deep);
+  display: flex;
+  align-items: center;
+}
+.ls-text-wrap {
+  padding: 4rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.ls-body {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-volk-muted);
+  line-height: 1.8;
+  max-width: 420px;
+}
+.ls-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.ls-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(242,240,235,0.7);
+}
+.ls-check { color: var(--color-accent); font-size: 0.65rem; flex-shrink: 0; }
+
+/* ─── FAQ ──────────────────────────────────────────────── */
+.faq-section {
+  padding: 5rem 0;
+  background: var(--color-volk-surface);
+  border-top: 1px solid var(--color-volk-border);
+}
+.faq-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 5rem;
+  align-items: start;
+}
+.faq-sub {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-volk-muted);
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+.faq-wa {
+  color: #25D366;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.faq-wa:hover { opacity: 0.8; }
+.faq-item {
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.faq-q {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-volk-white);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.faq-item[open] .faq-q { color: var(--color-accent); }
+.faq-q::-webkit-details-marker { display: none; }
+.faq-icon {
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  transition: transform 0.3s;
+  font-weight: 300;
+}
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-volk-muted);
+  line-height: 1.75;
+  padding-bottom: 1.1rem;
+}
+
+/* ─── NEWSLETTER ───────────────────────────────────────── */
+.newsletter-section {
+  padding: 5rem 0;
+  background: var(--color-volk-black);
+  border-top: 1px solid var(--color-volk-border);
+  position: relative;
+  overflow: hidden;
+}
+.newsletter-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(206,255,2,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.newsletter-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+}
+.newsletter-sub {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-volk-muted);
+  line-height: 1.7;
+  margin-top: 0.75rem;
+  max-width: 420px;
+}
+.nl-input-row {
+  display: flex;
+  gap: 0;
+}
+.nl-input {
+  flex: 1;
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border-hi);
+  border-right: none;
+  color: var(--color-volk-white);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 0.9rem 1.25rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.nl-input:focus { border-color: var(--color-accent); }
+.nl-input::placeholder { color: var(--color-volk-muted); }
+.nl-btn {
+  border-left: none;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+.nl-legal {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  color: var(--color-volk-subtle);
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+.nl-legal a { color: var(--color-accent); text-decoration: underline; }
+
+/* ─── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .props-grid { grid-template-columns: repeat(2, 1fr); }
+  .prop-card:nth-child(2) { border-right: none; }
+  .prop-card:nth-child(1),
+  .prop-card:nth-child(2) { border-bottom: 1px solid var(--color-volk-border); }
+  .product-grid--4 { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 1024px) {
+  .lifestyle-section { grid-template-columns: 1fr; }
+  .lifestyle-left { min-height: 400px; }
+  .ls-text-wrap { padding: 3rem 2rem; }
+  .faq-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .newsletter-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+@media (max-width: 768px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .props-grid { grid-template-columns: 1fr; }
+  .prop-card { border-right: none; border-bottom: 1px solid var(--color-volk-border); }
+  .section { padding: 3rem 0; }
+  .section-header { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .product-grid { grid-template-columns: 1fr; }
+  .product-grid--4 { grid-template-columns: 1fr; }
+  .nl-input-row { flex-direction: column; }
+  .nl-input { border-right: 1px solid var(--color-volk-border-hi); }
+}
+</style>

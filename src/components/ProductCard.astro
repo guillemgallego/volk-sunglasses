@@ -1,0 +1,278 @@
+---
+// ProductCard.astro – Real VOLK data, Oakley/Hawkers visual quality
+import type { Product } from "../data/products";
+
+interface Props {
+  product: Product;
+  eager?: boolean;
+}
+
+const { product, eager = false } = Astro.props;
+
+const isLowStock  = product.stock > 0 && product.stock < 3;
+const isMidStock  = product.stock >= 3 && product.stock <= 5;
+const isOutOfStock = product.outOfStock || product.stock === 0;
+
+// Real checkout URL from volksunglasses.com
+const buyUrl = isOutOfStock
+  ? product.originalUrl  // go to product page if OOS
+  : `https://volksunglasses.com/?add-to-cart=${product.woo_id}`;
+
+const detailUrl = `/produkty/${product.slug}`;
+---
+
+<article
+  class="product-card"
+  itemscope
+  itemtype="https://schema.org/Product"
+  id={`card-${product.slug}`}
+  data-category={product.category}
+  data-price={product.price}
+  data-rating={product.rating}
+  data-instock={!isOutOfStock}
+>
+  <!-- Image -->
+  <a href={detailUrl} class="card-img-wrap" aria-label={`Смотреть ${product.name}`} tabindex="-1">
+    <div class="card-img-inner">
+      <img
+        src={product.images[0]}
+        alt={`${product.name} — поляризационные солнцезащитные очки VOLK`}
+        class="card-img"
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+        width="600"
+        height="450"
+        itemprop="image"
+      />
+      {product.images[1] && (
+        <img
+          src={product.images[1]}
+          alt={`${product.name} — вид сбоку`}
+          class="card-img card-img--hover"
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="450"
+          aria-hidden="true"
+        />
+      )}
+    </div>
+
+    <!-- Badges -->
+    <div class="card-badges">
+      {isLowStock && (
+        <span class="badge badge-fire animate-firebeat" role="status">
+          🔥 Осталось {product.stock} шт.!
+        </span>
+      )}
+      {!isLowStock && product.bestseller && !isOutOfStock && (
+        <span class="badge badge-gold">Хит</span>
+      )}
+      {isOutOfStock && (
+        <span class="badge badge-out">Нет в наличии</span>
+      )}
+    </div>
+
+    <!-- Mid-stock ribbon -->
+    {isMidStock && !isLowStock && (
+      <div class="card-ribbon">
+        <span>⚡ Заканчивается</span>
+      </div>
+    )}
+  </a>
+
+  <!-- Body -->
+  <div class="card-body">
+    <div class="card-top">
+      <a href={detailUrl} class="card-name" itemprop="name">{product.name}</a>
+      <p class="card-lens">{product.lens}</p>
+    </div>
+
+    <!-- Rating + reviews -->
+    <div
+      class="card-rating"
+      itemprop="aggregateRating"
+      itemscope
+      itemtype="https://schema.org/AggregateRating"
+    >
+      <div class="stars" aria-label={`${product.rating} из 5`} role="img">
+        {Array.from({ length: 5 }, (_, i) => (
+          <svg
+            width="10" height="10"
+            viewBox="0 0 12 12"
+            fill={i < Math.floor(product.rating) ? "var(--color-accent)" : "var(--color-volk-border-hi)"}
+            aria-hidden="true"
+          >
+            <path d="M6 0l1.5 4.5H12L8.25 7.5l1.5 4.5L6 9l-3.75 3 1.5-4.5L0 4.5h4.5z"/>
+          </svg>
+        ))}
+      </div>
+      <span class="rating-num" itemprop="ratingValue">{product.rating}</span>
+      <span class="rating-cnt">(<span itemprop="reviewCount">{product.reviewCount}</span>)</span>
+      <meta itemprop="bestRating" content="5" />
+    </div>
+
+    <!-- Price + CTA -->
+    <div class="card-footer" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+      <meta itemprop="priceCurrency" content="RUB" />
+      <link itemprop="availability" href={isOutOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"} />
+      <meta itemprop="price" content={String(product.price)} />
+
+      <span class="card-price">{product.priceFormatted}</span>
+
+      {isOutOfStock ? (
+        <a href={product.originalUrl} class="btn btn-ghost btn-sm card-btn" target="_blank" rel="noopener">
+          Уведомить
+        </a>
+      ) : (
+        <a
+          href={buyUrl}
+          class="btn btn-gold btn-sm card-btn"
+          id={`buy-${product.slug}`}
+          aria-label={`Купить ${product.name} — ${product.priceFormatted}`}
+        >
+          Купить
+        </a>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+/* ── Image area ─────────────────────────────── */
+.card-img-wrap {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--color-volk-elevated);
+}
+.card-img-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s ease;
+}
+.card-img--hover {
+  opacity: 0;
+}
+.product-card:hover .card-img:not(.card-img--hover) {
+  opacity: 0;
+}
+.product-card:hover .card-img--hover {
+  opacity: 1;
+}
+.product-card:hover .card-img {
+  transform: scale(1.06);
+}
+
+/* ── Badges ──────────────────────────────── */
+.card-badges {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  z-index: 2;
+}
+.badge { border-radius: 0; }
+
+/* ── Ribbon ────────────────────────────────── */
+.card-ribbon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.35rem 0.75rem;
+  background: rgba(200, 169, 110, 0.12);
+  border-top: 1px solid rgba(200, 169, 110, 0.25);
+  z-index: 2;
+}
+.card-ribbon span {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ── Body ────────────────────────────────── */
+.card-body {
+  padding: 1.1rem 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+.card-top { display: flex; flex-direction: column; gap: 0.2rem; }
+.card-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+  transition: color 0.2s;
+  line-height: 1;
+}
+.card-name:hover { color: var(--color-accent); }
+.card-lens {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-volk-muted);
+  font-weight: 300;
+  margin-top: 1px;
+}
+
+/* ── Rating ─────────────────────────────── */
+.card-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.stars { display: flex; gap: 2px; }
+.rating-num {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+.rating-cnt {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  color: var(--color-volk-muted);
+}
+
+/* ── Footer ──────────────────────────────── */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-volk-border);
+  margin-top: auto;
+}
+.card-price {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-volk-white);
+  line-height: 1;
+}
+.card-btn {
+  flex-shrink: 0;
+  min-width: 80px;
+}
+</style>

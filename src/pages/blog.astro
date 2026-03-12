@@ -1,0 +1,411 @@
+---
+// blog.astro – Blog page
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const posts = [
+  {
+    id: 1,
+    title: "Как выбрать солнцезащитные очки для горного похода",
+    excerpt: "Правильные очки могут спасти зрение на высоте. Разбираем всё: поляризация, категории защиты, форма оправы и главное — почему дешёвые очки опасны для ваших глаз.",
+    category: "Гид покупателя",
+    date: "15 февраля 2025",
+    readTime: "7 мин",
+    img: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=700&q=80",
+    slug: "kak-vybrat-ochki-dlya-gornogo-pohoda"
+  },
+  {
+    id: 2,
+    title: "ARCTIC: история создания самых технологичных очков VOLK",
+    excerpt: "Почему мы выбрали фотохромные линзы и оправу TR-90 вместо классики. Разработка, тестирование в условиях -40°C на Урале и финальная версия, которая превзошла ожидания.",
+    category: "За кулисами",
+    date: "28 января 2025",
+    readTime: "10 мин",
+    img: "https://images.unsplash.com/photo-1531911507543-ed43ca96d59a?w=700&q=80",
+    slug: "arctic-istoriya-sozdaniya"
+  },
+  {
+    id: 3,
+    title: "5 правил ухода за солнцезащитными очками",
+    excerpt: "Ацетатная оправа трескается от жары. Линзы с покрытием нельзя тереть. Мы собрали главные правила, которые продлят жизнь очков в несколько раз.",
+    category: "Советы",
+    date: "10 января 2025",
+    readTime: "5 мин",
+    img: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=700&q=80",
+    slug: "5-pravil-uhoda-za-ochiami"
+  },
+  {
+    id: 4,
+    title: "HERMITAGE: лимитированная серия, посвящённая великому музею",
+    excerpt: "Изумрудная оправа с ручной окраской. Только 300 экземпляров. История создания коллекции, вдохновлённой петербургскими интерьерами и собранием живописи Эрмитажа.",
+    category: "Коллекции",
+    date: "5 декабря 2024",
+    readTime: "8 мин",
+    img: "https://images.unsplash.com/photo-1473496169904-658ba7574b0d?w=700&q=80",
+    slug: "hermitage-limitirovannaya-seriya"
+  },
+  {
+    id: 5,
+    title: "Что такое UV400 и почему это важно",
+    excerpt: "Не все очки одинаково полезны. Объясняем разницу между UV400, UV380 и CE-стандартами. Как понять, что вы покупаете настоящую защиту, а не декоративный аксессуар.",
+    category: "Гид покупателя",
+    date: "18 ноября 2024",
+    readTime: "6 мин",
+    img: "https://images.unsplash.com/photo-1583394293194-a7d5d5b16ea0?w=700&q=80",
+    slug: "chto-takoe-uv400"
+  },
+  {
+    id: 6,
+    title: "Байкал зимой: репортаж экспедиции VOLK",
+    excerpt: "Наша команда провела 10 дней на Байкале при температуре -30°C. Лёд, белые просторы, потрясающие закаты — и наши очки ARCTIC, которые не подвели ни разу.",
+    category: "Экспедиции",
+    date: "3 ноября 2024",
+    readTime: "12 мин",
+    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80",
+    slug: "baykal-zimoy-reportazh"
+  },
+];
+
+const categories = ["Все", "Гид покупателя", "Коллекции", "За кулисами", "Советы", "Экспедиции"];
+---
+
+<BaseLayout
+  title="Блог VOLK Sunglasses — Советы, обзоры, экспедиции"
+  description="Блог VOLK: гид по выбору солнцезащитных очков, истории создания коллекций, советы по уходу и репортажи из экспедиций по России."
+>
+  <Navbar />
+  <main class="blog-main">
+    <!-- Header -->
+    <section class="blog-header">
+      <div class="blog-header-inner">
+        <span class="blog-eyebrow">Журнал VOLK</span>
+        <h1 class="blog-title">БЛОГ</h1>
+        <p class="blog-desc">Советы, обзоры, истории. Всё, что нужно знать об очках и жизни на полную.</p>
+      </div>
+    </section>
+
+    <!-- Featured post -->
+    <section class="blog-featured">
+      <div class="blog-featured-inner">
+        <a href={`/blog/${posts[0].slug}`} class="featured-post" id={`blog-featured-${posts[0].id}`}>
+          <div class="featured-img">
+            <img src={posts[0].img} alt={posts[0].title} loading="eager" decoding="async" />
+          </div>
+          <div class="featured-content">
+            <span class="post-cat">{posts[0].category}</span>
+            <h2 class="featured-title">{posts[0].title}</h2>
+            <p class="featured-excerpt">{posts[0].excerpt}</p>
+            <div class="post-meta">
+              <span class="post-date">{posts[0].date}</span>
+              <span class="post-read">{posts[0].readTime} чтения</span>
+            </div>
+            <span class="read-more">Читать статью →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Category filter -->
+    <div class="blog-filter">
+      <div class="blog-filter-inner">
+        {categories.map((cat, i) => (
+          <button class={`blog-filter-btn ${i === 0 ? "blog-filter-btn--active" : ""}`} data-cat={cat === "Все" ? "all" : cat}>
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Posts grid -->
+    <div class="blog-posts">
+      <div class="blog-grid" id="blog-grid">
+        {posts.slice(1).map((post) => (
+          <article class="post-card" data-category={post.category} id={`post-${post.id}`}>
+            <a href={`/blog/${post.slug}`} class="post-card-link">
+              <div class="post-img">
+                <img src={post.img} alt={post.title} loading="lazy" decoding="async" />
+              </div>
+              <div class="post-body">
+                <span class="post-cat">{post.category}</span>
+                <h3 class="post-title">{post.title}</h3>
+                <p class="post-excerpt">{post.excerpt}</p>
+                <div class="post-footer">
+                  <div class="post-meta">
+                    <span class="post-date">{post.date}</span>
+                    <span class="post-read">{post.readTime} чтения</span>
+                  </div>
+                  <span class="post-arrow">→</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-main { padding-top: 70px; }
+
+  .blog-header {
+    background: #090909;
+    border-bottom: 1px solid #111;
+  }
+  .blog-header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .blog-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-montserrat);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-volk-accent);
+    margin-bottom: 1rem;
+  }
+  .blog-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--color-volk-accent);
+  }
+  .blog-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(4rem, 10vw, 8rem);
+    letter-spacing: 0.08em;
+    line-height: 0.9;
+    color: #f5f5f0;
+    margin-bottom: 1rem;
+  }
+  .blog-desc {
+    font-family: var(--font-inter);
+    font-size: 0.9rem;
+    color: #555;
+    max-width: 500px;
+  }
+
+  /* Featured */
+  .blog-featured {
+    background: #0a0a0a;
+    border-bottom: 1px solid #111;
+  }
+  .blog-featured-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+  .featured-post {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .featured-img {
+    overflow: hidden;
+    aspect-ratio: 16/10;
+  }
+  .featured-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .featured-post:hover .featured-img img {
+    transform: scale(1.03);
+  }
+  .featured-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .featured-title {
+    font-family: var(--font-bebas);
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    color: #f5f5f0;
+    transition: color 0.2s;
+  }
+  .featured-post:hover .featured-title {
+    color: var(--color-volk-accent);
+  }
+  .featured-excerpt {
+    font-family: var(--font-inter);
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.75;
+  }
+  .read-more {
+    font-family: var(--font-montserrat);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-volk-accent);
+  }
+
+  /* Filter */
+  .blog-filter {
+    background: #0a0a0a;
+    border-bottom: 1px solid #1a1a1a;
+    position: sticky;
+    top: 70px;
+    z-index: 50;
+  }
+  .blog-filter-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .blog-filter-btn {
+    font-family: var(--font-montserrat);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #555;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0 1.25rem;
+    height: 52px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .blog-filter-btn:hover { color: #f5f5f0; }
+  .blog-filter-btn--active {
+    color: var(--color-volk-accent) !important;
+    border-bottom-color: var(--color-volk-accent) !important;
+  }
+
+  /* Grid */
+  .blog-posts {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .post-card {
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.3s;
+  }
+  .post-card:hover {
+    border-color: #333;
+    transform: translateY(-3px);
+  }
+  .post-card-link { display: flex; flex-direction: column; height: 100%; }
+  .post-img {
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+  .post-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .post-card:hover .post-img img { transform: scale(1.05); }
+  .post-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+  .post-cat {
+    font-family: var(--font-montserrat);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-volk-accent);
+  }
+  .post-title {
+    font-family: var(--font-montserrat);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f5f5f0;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+  .post-card:hover .post-title { color: var(--color-volk-accent); }
+  .post-excerpt {
+    font-family: var(--font-inter);
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.7;
+    flex: 1;
+  }
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid #1a1a1a;
+    margin-top: auto;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .post-date, .post-read {
+    font-family: var(--font-inter);
+    font-size: 0.65rem;
+    color: #444;
+  }
+  .post-arrow {
+    font-family: var(--font-montserrat);
+    font-size: 0.9rem;
+    color: #333;
+    transition: color 0.2s;
+  }
+  .post-card:hover .post-arrow { color: var(--color-volk-accent); }
+
+  @media (max-width: 1024px) {
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-post { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .blog-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.blog-filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.post-card');
+
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btns.forEach((b) => b.classList.remove('blog-filter-btn--active'));
+      btn.classList.add('blog-filter-btn--active');
+      const cat = btn.dataset.cat;
+      cards.forEach((card) => {
+        const matches = cat === 'all' || card.dataset.category === cat;
+        card.style.display = matches ? '' : 'none';
+      });
+    });
+  });
+</script>

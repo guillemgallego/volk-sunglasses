@@ -1,0 +1,258 @@
+---
+// Hero.astro – Oakley-inspired brutal hero with real VOLK copy
+---
+
+<section class="hero" id="hero" aria-label="Главный баннер">
+  <!-- BG image -->
+  <div class="hero-bg" aria-hidden="true">
+    <img
+      src="https://images.unsplash.com/photo-1531911507543-ed43ca96d59a?w=1920&q=90&fm=webp"
+      alt=""
+      class="hero-bg-img"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="hero-gradient"></div>
+    <!-- Diagonal sweep cut (like Oakley) -->
+    <div class="hero-cut" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero-body container">
+    <!-- Eyebrow -->
+    <div class="hero-eyebrow">
+      <span class="eyebrow">Коллекция 2025</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="hero-headline" id="hero-title">
+      <span class="hero-line">ЗАЩИТИ</span>
+      <span class="hero-line hero-line--accent text-shimmer">ВЗГЛЯД.</span>
+      <span class="hero-line">ПОКОРИ</span>
+      <span class="hero-line">МИР.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Поляризационные очки с&nbsp;UV400 для спорта, вождения и&nbsp;путешествий.<br />
+      Разработаны в&nbsp;России. Доставка по&nbsp;всей стране.
+    </p>
+
+    <div class="hero-actions">
+      <a href="/katalog" class="btn btn-gold btn-lg" id="hero-btn-catalog">
+        Смотреть каталог
+      </a>
+      <a href="/o-brende" class="btn btn-ghost btn-lg" id="hero-btn-brand">
+        О бренде
+      </a>
+    </div>
+
+    <!-- Trust signals (Knockaround-style) -->
+    <div class="hero-trust">
+      <div class="trust-item">
+        <span class="trust-icon">⭐</span>
+        <div>
+          <span class="trust-num">4.8</span>
+          <span class="trust-label">Средний рейтинг</span>
+        </div>
+      </div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-item">
+        <span class="trust-icon">🔒</span>
+        <div>
+          <span class="trust-num">UV400</span>
+          <span class="trust-label">Защита от ультрафиолета</span>
+        </div>
+      </div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-item">
+        <span class="trust-icon">🌿</span>
+        <div>
+          <span class="trust-num">ЭКО</span>
+          <span class="trust-label">Часть прибыли — природе</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue" aria-hidden="true">
+    <span>scroll</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="scroll-arrow">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% center;
+}
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(110deg,
+      rgba(8,8,8,0.95) 0%,
+      rgba(8,8,8,0.75) 35%,
+      rgba(8,8,8,0.25) 65%,
+      rgba(8,8,8,0.05) 100%
+    );
+}
+/* Oakley-style diagonal cut */
+.hero-cut {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 130px;
+  background: var(--color-volk-black);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0);
+}
+
+/* Body */
+.hero-body {
+  position: relative;
+  z-index: 2;
+  padding-top: 100px;
+  padding-bottom: 140px;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  margin-bottom: 1.5rem;
+}
+
+/* Headline */
+.hero-headline {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 11.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+.hero-line {
+  display: block;
+}
+.hero-line--accent {
+  /* shimmer applied via text-shimmer class in global.css */
+}
+
+/* Subtext */
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  font-weight: 300;
+  color: rgba(242,240,235,0.65);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2.25rem;
+}
+
+/* CTA row */
+.hero-actions {
+  display: flex;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+  margin-bottom: 3.5rem;
+}
+
+/* Trust */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.trust-icon {
+  font-size: 1.25rem;
+}
+.trust-num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-volk-white);
+  line-height: 1;
+}
+.trust-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+  margin-top: 2px;
+}
+.trust-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--color-volk-border-hi);
+  flex-shrink: 0;
+}
+
+/* Scroll cue */
+.scroll-cue {
+  position: absolute;
+  bottom: 1.75rem;
+  right: 2.5rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+  writing-mode: vertical-lr;
+}
+.scroll-arrow {
+  animation: scrollBounce 2s ease-in-out infinite;
+  color: var(--color-accent);
+  width: 16px;
+  height: 16px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .hero-body {
+    padding-top: 80px;
+    padding-bottom: 110px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .scroll-cue { display: none; }
+  .hero-cut { height: 80px; }
+}
+</style>
