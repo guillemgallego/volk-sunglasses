@@ -3,7 +3,7 @@ name: 🚀 Deploy to Beget
 on:
   push:
     branches:
-      - main  # Cambia a 'master' si tu rama principal se llama así
+      - master
 
 jobs:
   build-and-deploy:
