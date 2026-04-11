@@ -74,9 +74,21 @@ const siteName = "VOLK Sunglasses";
       }
     </script>
 
-    <!-- Fonts preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <!-- Fonts: async non-blocking (eliminates render-blocking 750ms penalty) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Bebas+Neue&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Bebas+Neue&display=swap" />
+    </noscript>
+
+    <!-- Hero image preload (critical LCP resource) -->
+    <link rel="preload" as="image" href="/hero-volk.jpg" fetchpriority="high" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
