@@ -58,9 +58,9 @@ const year = new Date().getFullYear();
         <span class="footer-col-title">Каталог</span>
         <nav aria-label="Каталог">
           <a href="/katalog" class="footer-link">Все модели</a>
-          <a href="/katalog" class="footer-link">TAIGA</a>
-          <a href="/katalog" class="footer-link">SIBERIA</a>
-          <a href="/katalog" class="footer-link">HERMITAGE</a>
+          <a href="/katalog?cat=taiga" class="footer-link">TAIGA</a>
+          <a href="/katalog?cat=siberia" class="footer-link">SIBERIA</a>
+          <a href="/katalog?cat=hermitage" class="footer-link">HERMITAGE</a>
         </nav>
       </div>
 
@@ -102,13 +102,15 @@ const year = new Date().getFullYear();
         </p>
       </div>
       <!-- Trust & Guarantee -->
-      <div class="trust-badges" aria-label="Гарантии">
-        <img src="/images/footer-trust.png" alt="Гарантия качества и безопасность" class="footer-badge-img" width="160" height="40" loading="lazy" />
+      <div class="trust-badges" aria-label="Гарантии" style="display: flex; gap: 0.5rem; align-items: center; background: rgba(255,255,255,0.03); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);">
+        <span style="color:var(--color-accent); font-size:1.2rem">⭐</span>
+        <span style="font-family:var(--font-body); font-weight:700; font-size:0.65rem; letter-spacing:0.05em; color:#fff">ПРЕМИАЛЬНОЕ КАЧЕСТВО</span>
       </div>
 
       <!-- Payment Methods -->
-      <div class="payment-methods" aria-label="Способы оплаты">
-        <img src="/images/footer-payments.png" alt="Безопасная оплата: Visa, Mastercard, МИР, СБП" class="footer-badge-img" width="200" height="40" loading="lazy" />
+      <div class="payment-methods" aria-label="Способы оплаты" style="display: flex; gap: 0.75rem; align-items: center; background: rgba(255,255,255,0.03); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05);">
+        <span style="font-family:var(--font-body); font-weight:700; font-size:0.65rem; letter-spacing:0.05em; color:rgba(255,255,255,0.7)">БЕЗОПАСНАЯ ОПЛАТА</span>
+        <span style="font-size: 1.2rem; letter-spacing: 0.2rem">💳📱</span>
       </div>
     </div>
   </div>

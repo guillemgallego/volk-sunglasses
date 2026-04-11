@@ -28,7 +28,7 @@ posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).get
               {post.data.image && (
                 <div class="blog-thumb">
                   <a href={`/${post.id}`}>
-                    <img src={post.data.image} alt={post.data.title} loading="lazy" />
+                    <img src={post.data.image} alt={post.data.title} loading="lazy" onerror="this.src='/hero-volk.jpg'; this.onerror=null;" style="object-fit: cover; width: 100%; height: 100%" />
                   </a>
                 </div>
               )}

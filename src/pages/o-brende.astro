@@ -177,17 +177,20 @@ import Footer from "../components/Footer.astro";
       </div>
     </section>
 
-    <!-- ⑦ FINAL CTA -->
-    <section class="bp-cta">
-      <div class="bp-cta__photo" style="background-image:url('/images/2024-12-Sochi-sportivnie-ochki-1000x856.jpg')"></div>
+    <!-- ⑦ CTA -->
+    <section class="bp-cta" aria-label="Купить">
+      <div class="bp-cta__photo" style="background-image: url('/hero-volk.jpg')"></div>
       <div class="bp-cta__dark"></div>
-      <div class="container bp-cta__body reveal">
-        <h2 class="bp-cta__title">Найди свои<br/><em>VOLK</em></h2>
-        <p class="bp-cta__sub">Стань частью сообщества, которое ценит качество, стиль и природу.</p>
-        <a href="/katalog" class="btn btn-gold btn-lg" id="cta-catalog-final">ПЕРЕЙТИ В КАТАЛОГ</a>
+      <div class="container bp-cta__body">
+        <h2 class="bp-cta__title reveal">Готов <em>выделяться?</em></h2>
+        <p class="bp-cta__sub reveal" style="--d:0.1s">
+          Ощути комфорт и защиту премиум-класса на себе.
+        </p>
+        <div class="bp-cta__btn reveal" style="--d:0.2s">
+          <a href="/siberia-blue" class="btn btn-gold">КУПИТЬ БЕСТСЕЛЛЕР →</a>
+        </div>
       </div>
     </section>
-
   </main>
   <Footer />
 </BaseLayout>
@@ -492,6 +495,7 @@ import Footer from "../components/Footer.astro";
   color: #fff; text-transform: uppercase;
 }
 .bp-cta__title em { font-style: normal; color: var(--color-accent); }
+.bp-cta__btn { margin-top: 1rem; }
 .bp-cta__sub {
   font-family: var(--font-body); font-size: 1.05rem;
   color: rgba(255,255,255,.55); max-width: 420px;
