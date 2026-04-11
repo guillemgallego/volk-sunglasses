@@ -106,8 +106,22 @@ const path = Astro.url.pathname;
   white-space: nowrap;
 }
 @media (max-width: 640px) {
-  .topbar-text { font-size: 0.65rem; letter-spacing: 0.06em; }
-  .topbar-inner { padding: 0.45rem 1rem; }
+  .topbar-inner {
+    padding: 0.45rem 0;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .topbar-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    animation: topbar-scroll 18s linear infinite;
+    padding-left: 100%;
+  }
+}
+@keyframes topbar-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
 /* Navbar */
