@@ -10,7 +10,7 @@ interface Props {
 const {
   title,
   description,
-  image = "https://volksunglasses.com/wp-content/uploads/2025/01/Ochki-zerkalnie-sky.jpg",
+  image = "/images/2025-01-Ochki-zerkalnie-sky.jpg",
   type = "website",
 } = Astro.props;
 
@@ -59,7 +59,7 @@ const siteName = "VOLK Sunglasses";
         "@type": "Organization",
         "name": "VOLK Sunglasses",
         "url": "https://volksunglasses.com",
-        "logo": "https://volksunglasses.com/wp-content/uploads/2023/08/volk-logo.png",
+        "logo": "/images/logo-volk.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "telephone": "+7-960-273-70-38",
@@ -85,3 +85,4 @@ const siteName = "VOLK Sunglasses";
     <slot />
   </body>
 </html>
+

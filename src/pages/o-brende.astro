@@ -1,422 +1,532 @@
 ---
-// o-brende.astro – About brand page
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 ---
 
 <BaseLayout
-  title="О бренде VOLK Sunglasses — История и философия"
-  description="VOLK Sunglasses — российский бренд премиальных солнцезащитных очков. Вдохновлены природой России, созданы для настоящих авантюристов. Узнайте нашу историю."
+  title="О бренде VOLK Sunglasses — Философия, качество и природа"
+  description="VOLK — российский бренд поляризационных солнцезащитных очков. 5% от всех продаж направляется на защиту природы. Узнайте нашу историю."
 >
   <Navbar />
-  <main class="about-main">
-    <!-- Hero section -->
-    <section class="about-hero">
-      <div class="about-hero-bg">
-        <img
-          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=85"
-          alt="VOLK Sunglasses — природа России"
-          loading="eager"
-          decoding="async"
-        />
-        <div class="about-hero-overlay"></div>
+  <main class="bp">
+
+    <!-- ① HERO -->
+    <section class="bp-hero">
+      <div class="bp-hero__canvas">
+        <div class="bp-hero__photo" style="background-image: url('/images/2025-07-1000052284-2048x1152.jpg')"></div>
+        <div class="bp-hero__shade"></div>
       </div>
-      <div class="about-hero-content">
-        <span class="eyebrow">О бренде</span>
-        <h1 class="about-hero-title">РОЖДЕНЫ<br /><span>РОССИЕЙ</span></h1>
-        <p class="about-hero-sub">
-          Бескрайние просторы. Экстремальный климат.<br />
-          Необузданный дух авантюры.
+      <div class="container bp-hero__copy">
+        <span class="bp-badge reveal">
+          <i class="bp-dot"></i>Санкт-Петербург · с 2019
+        </span>
+        <h1 class="bp-hero__h1 reveal" style="--d:.1s">
+          СОЗДАНО<br/><em>ПРИРОДОЙ</em>
+        </h1>
+        <p class="bp-hero__lead reveal" style="--d:.2s">
+          Поляризационные очки для тех,&nbsp;кто&nbsp;чувствует свободу.
+        </p>
+        <a href="/katalog" class="btn btn-outline-gold btn-lg reveal" style="--d:.3s" id="hero-cta-catalog">
+          Смотреть каталог →
+        </a>
+      </div>
+    </section>
+
+    <!-- ② MANIFESTO SPLIT -->
+    <section class="bp-split container reveal">
+      <div class="bp-split__photo-wrap">
+        <div class="bp-split__photo" style="background-image:url('/images/2024-06-photo_2024-06-29_15-16-00.jpg')"></div>
+        <div class="bp-split__stat glass">
+          <span class="bp-split__stat-num">2019</span>
+          <span class="bp-split__stat-lbl">Год основания</span>
+        </div>
+      </div>
+      <div class="bp-split__text">
+        <span class="eyebrow">Наша история</span>
+        <h2 class="bp-h2">Очки, рождённые&nbsp;из экспедиций</h2>
+        <p>
+          VOLK появился из личного опыта. Основатели бренда — страстные путешественники, исходившие тайгу, покорявшие уральские хребты и бороздившие просторы Байкала. Они устали от компромиссов: яркие очки, которые быстро ломаются, или прочные, но уродливые.
+        </p>
+        <p>
+          В 2019 году в Санкт-Петербурге родилась идея — создать очки, которые сочетают премиальные материалы с русским духом бескомпромиссности. Первая коллекция: <strong>TAIGA</strong> — шесть расцветок сибирского леса.
+        </p>
+        <p>
+          Сегодня VOLK — шесть коллекций, более <strong>15 000</strong> довольных владельцев по всей России и одна философия: <strong>делать лучшее доступным.</strong>
         </p>
       </div>
     </section>
 
-    <!-- Story section -->
-    <section class="about-story">
-      <div class="about-story-inner">
-        <div class="story-text">
-          <span class="eyebrow">Наша история</span>
-          <h2 class="story-title">Очки, рождённые<br />из экспедиций</h2>
-          <p class="story-p">
-            VOLK появился из личного опыта. Основатели бренда — страстные путешественники, которые исходили тайгу, покоряли уральские хребты и бороздили просторы Байкала. Они устали от компромиссов: яркие очки, которые быстро ломаются, или прочные, но уродливые.
+    <!-- ③ STATS BAR -->
+    <div class="bp-stats">
+      <div class="container bp-stats__grid">
+        {[
+          { n: "6",     l: "Коллекций" },
+          { n: "15K+",  l: "Владельцев" },
+          { n: "UV400", l: "Защита" },
+          { n: "5%",    l: "На природу" },
+        ].map((s, i) => (
+          <div class="bp-stat reveal" style={`--d:${i*0.08}s`}>
+            <span class="bp-stat__n">{s.n}</span>
+            <span class="bp-stat__l">{s.l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ④ PLEDGE – NATURE -->
+    <section class="bp-nature">
+      <div class="bp-nature__photo" style="background-image:url('/images/2024-08-photo_2024-07-09_09-27-42-1000x856.jpg')"></div>
+      <div class="bp-nature__fog"></div>
+      <div class="container bp-nature__body">
+        <div class="bp-nature__card reveal">
+          <span class="eyebrow" style="justify-content:center;">Наша миссия</span>
+          <div class="bp-nature__pct">5<sup>%</sup></div>
+          <h2 class="bp-h2 bp-nature__ttl">от всех продаж —<br/>на защиту природы</h2>
+          <p class="bp-nature__desc">
+            Мы являемся страстными любителями природы. Именно её просторы вдохновляют нас каждый день.
+            <strong>5% от всех продаж</strong> перечисляются в фонды по сохранению диких лесов и очистке водоёмов России.
+            Покупая VOLK, вы помогаете защитить планету для будущих поколений.
           </p>
-          <p class="story-p">
-            В 2019 году родилась идея — создать очки, которые сочетают итальянское качество материалов с русским духом бескомпромиссности. Первая коллекция называлась TAIGA. Шесть расцветок, вдохновлённых временами года в сибирском лесу.
-          </p>
-          <p class="story-p">
-            Сегодня VOLK — это шесть коллекций, более 15 000 довольных владельцев по всей России и философия, которая не меняется: делать лучшее.
-          </p>
-        </div>
-        <div class="story-img">
-          <img
-            src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&q=85"
-            alt="VOLK Sunglasses — экспедиция"
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="story-stat-card">
-            <span class="stat-big">2019</span>
-            <span class="stat-label">Год основания</span>
+          <div class="bp-nature__badges">
+            <span class="bp-nbadge">🌲 Сохранение лесов</span>
+            <span class="bp-nbadge">💧 Очистка водоёмов</span>
+            <span class="bp-nbadge">♻️ Ответственный бизнес</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Values -->
-    <section class="about-values">
-      <div class="values-inner">
-        <span class="eyebrow">Наши ценности</span>
-        <h2 class="values-title">Три принципа VOLK</h2>
-        <div class="values-grid">
-          <div class="value-card">
-            <span class="value-num">01</span>
-            <h3 class="value-name">Качество без компромиссов</h3>
-            <p class="value-desc">Только итальянская ацетатная оправа, японские петли и линзы с многослойным покрытием. Каждая пара проходит контроль качества в три этапа.</p>
+    <!-- ⑤ TECHNOLOGY CARDS -->
+    <section class="bp-tech container">
+      <header class="bp-tech__hdr reveal">
+        <span class="eyebrow">Технологии</span>
+        <h2 class="bp-h2">Защита безупречного качества</h2>
+      </header>
+      <div class="bp-tech__grid">
+        {[
+          {
+            n: "01",
+            ic: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`,
+            t: "UV400",
+            d: "Полная блокировка UVA и UVB лучей — 100% защита при любом освещении.",
+          },
+          {
+            n: "02",
+            ic: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>`,
+            t: "TAC Polarized",
+            d: "Поляризационный фильтр 3-й категории. Убирает блики с воды, снега и асфальта.",
+          },
+          {
+            n: "03",
+            ic: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+            t: "Создано с душой",
+            d: "Ручной контроль качества каждой пары. Мы не выпускаем продукт, который не стал идеальным.",
+          },
+        ].map((c, i) => (
+          <div class="bp-tc reveal" style={`--d:${i*0.12}s`}>
+            <span class="bp-tc__n">{c.n}</span>
+            <div class="bp-tc__icon" set:html={c.ic}></div>
+            <h3 class="bp-tc__t">{c.t}</h3>
+            <p class="bp-tc__d">{c.d}</p>
           </div>
-          <div class="value-card">
-            <span class="value-num">02</span>
-            <h3 class="value-name">Дизайн с характером</h3>
-            <p class="value-desc">Мы не следуем трендам — мы задаём их. Брутальный, минималистичный дизайн, вдохновлённый суровой красотой России.</p>
-          </div>
-          <div class="value-card">
-            <span class="value-num">03</span>
-            <h3 class="value-name">Для реальной жизни</h3>
-            <p class="value-desc">Наши очки носят в горах, на пляже, в офисе и на вечеринке. Они должны выдерживать всё — и выглядеть при этом безупречно.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 
-    <!-- Collections lineup -->
-    <section class="about-collections">
-      <div class="collections-inner">
-        <span class="eyebrow">Наши коллекции</span>
-        <h2 class="collections-title">Шесть коллекций.<br />Один бренд.</h2>
-        <div class="collections-list">
-          {[
-            { name: "TAIGA", desc: "6 расцветок. Тайга в каждом взгляде.", img: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=600&q=80", slug: "taiga" },
-            { name: "SIBERIA", desc: "Металлическая оправа. Сибирская прочность.", img: "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=600&q=80", slug: "siberia" },
-            { name: "SOCHI", desc: "Курортный шик. Всё лето напролёт.", img: "https://images.unsplash.com/photo-1565945887714-d5139f4eb0ce?w=600&q=80", slug: "sochi" },
-            { name: "HERMITAGE", desc: "Ограниченная серия. Петербургская роскошь.", img: "https://images.unsplash.com/photo-1473496169904-658ba7574b0d?w=600&q=80", slug: "hermitage" },
-            { name: "ARCTIC", desc: "Фотохромные линзы. Для экстремала.", img: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=80", slug: "arctic" },
-            { name: "MOSCOW", desc: "Авиатор для жителей мегаполиса.", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80", slug: "moscow" },
-          ].map((col) => (
-            <a href={`/produkty/${col.slug}`} class="coll-item" id={`about-col-${col.slug}`}>
-              <div class="coll-img">
-                <img src={col.img} alt={`VOLK ${col.name}`} loading="lazy" decoding="async" />
-              </div>
-              <div class="coll-info">
-                <span class="coll-name">{col.name}</span>
-                <span class="coll-desc">{col.desc}</span>
-              </div>
-            </a>
-          ))}
+    <!-- ⑥ PRODUCT MOSAIC -->
+    <section class="bp-mosaic container">
+      <header class="bp-mosaic__hdr reveal">
+        <div>
+          <span class="eyebrow">Коллекции</span>
+          <h2 class="bp-h2" style="margin-top:0.75rem">Шесть линеек. Один бренд.</h2>
         </div>
+        <a href="/katalog" class="btn btn-outline-gold btn-sm" id="mosaic-catalog-link">Весь каталог →</a>
+      </header>
+
+      <div class="bp-mosaic__grid">
+        <a href="/katalog" class="bp-mi bp-mi--wide reveal">
+          <div class="bp-mi__img" style="background-image:url('/images/2025-01-Polyarizatsionnye-ochki-taiga-flame-flont.jpg')"></div>
+          <div class="bp-mi__info">
+            <span class="bp-mi__tag">Хит продаж</span>
+            <h3>TAIGA</h3>
+            <p>6 расцветок. Поляризация. Тайга в каждом взгляде.</p>
+          </div>
+        </a>
+        <a href="/katalog" class="bp-mi reveal" style="--d:.1s">
+          <div class="bp-mi__img" style="background-image:url('/images/2023-08-Siberia-Black-front.jpg')"></div>
+          <div class="bp-mi__info">
+            <h3>SIBERIA</h3>
+            <p>Металлическая оправа. Сибирская прочность.</p>
+          </div>
+        </a>
+        <a href="/katalog" class="bp-mi reveal" style="--d:.2s">
+          <div class="bp-mi__img" style="background-image:url('/images/2024-06-SOCHI-black-blue-side.jpg')"></div>
+          <div class="bp-mi__info">
+            <h3>SOCHI</h3>
+            <p>Курортный шик. Всё лето напролёт.</p>
+          </div>
+        </a>
+        <a href="/katalog" class="bp-mi reveal" style="--d:.3s">
+          <div class="bp-mi__img" style="background-image:url('/images/2025-11-DSC_1816.jpg')"></div>
+          <div class="bp-mi__info">
+            <h3>HERMITAGE</h3>
+            <p>Ограниченная серия. Петербургская роскошь.</p>
+          </div>
+        </a>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="about-cta">
-      <div class="about-cta-inner">
-        <h2 class="about-cta-title">Выбери свои VOLK</h2>
-        <p class="about-cta-desc">Найди очки, которые станут частью твоей истории.</p>
-        <a href="/katalog" class="btn-primary about-cta-btn" id="about-cta-btn">Перейти в каталог</a>
+    <!-- ⑦ FINAL CTA -->
+    <section class="bp-cta">
+      <div class="bp-cta__photo" style="background-image:url('/images/2024-12-Sochi-sportivnie-ochki-1000x856.jpg')"></div>
+      <div class="bp-cta__dark"></div>
+      <div class="container bp-cta__body reveal">
+        <h2 class="bp-cta__title">Найди свои<br/><em>VOLK</em></h2>
+        <p class="bp-cta__sub">Стань частью сообщества, которое ценит качество, стиль и природу.</p>
+        <a href="/katalog" class="btn btn-gold btn-lg" id="cta-catalog-final">ПЕРЕЙТИ В КАТАЛОГ</a>
       </div>
     </section>
+
   </main>
   <Footer />
 </BaseLayout>
 
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
 <style>
-  .about-main { padding-top: 70px; }
+/* ==========================================
+   BRAND PAGE — VOLK Design System
+   All images use CSS background-image (never raw <img> for bg purposes).
+   All sections are properly contained.
+   ========================================== */
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-montserrat);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-volk-accent);
-    margin-bottom: 1rem;
-  }
-  .eyebrow::before {
-    content: '';
-    display: block;
-    width: 30px;
-    height: 1px;
-    background: var(--color-volk-accent);
-  }
+.bp { background: var(--color-volk-black); overflow-x: hidden; }
 
-  /* Hero */
-  .about-hero {
-    position: relative;
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-  }
-  .about-hero-bg {
-    position: absolute;
-    inset: 0;
-  }
-  .about-hero-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .about-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.5) 100%);
-  }
-  .about-hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem;
-    width: 100%;
-  }
-  .about-hero-title {
-    font-family: var(--font-bebas);
-    font-size: clamp(4rem, 10vw, 9rem);
-    letter-spacing: 0.05em;
-    line-height: 0.9;
-    margin-bottom: 1.5rem;
-  }
-  .about-hero-title span { color: var(--color-volk-accent); }
-  .about-hero-sub {
-    font-family: var(--font-inter);
-    font-size: 1rem;
-    color: rgba(245,245,240,0.6);
-    line-height: 1.7;
-  }
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s cubic-bezier(.16,1,.3,1) var(--d,0s), transform .8s cubic-bezier(.16,1,.3,1) var(--d,0s); }
+.reveal.in { opacity: 1; transform: none; }
 
-  /* Story */
-  .about-story {
-    background: #090909;
-    border-bottom: 1px solid #111;
-  }
-  .about-story-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem;
-    display: grid;
+/* Shared typography */
+.bp-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+  margin: 0.75rem 0 1.5rem;
+}
+.bp-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-body); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55);
+  margin-bottom: 2rem;
+}
+.bp-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--color-accent);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.6)} }
+
+/* ── ① HERO ── */
+.bp-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  max-height: 900px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 6rem;
+}
+.bp-hero__canvas { position: absolute; inset: 0; overflow: hidden; }
+.bp-hero__photo {
+  width: 100%; height: 100%;
+  background-size: cover; background-position: center 30%;
+}
+.bp-hero__shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8,8,8,.25) 0%, transparent 30%, rgba(8,8,8,.75) 70%, var(--color-volk-black) 100%),
+    linear-gradient(to right, rgba(8,8,8,.75) 0%, transparent 55%);
+}
+.bp-hero__copy {
+  position: relative; z-index: 1; max-width: 700px;
+}
+.bp-hero__h1 {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8.5rem);
+  line-height: .88; letter-spacing:-.01em;
+  color: var(--color-volk-white); text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.bp-hero__h1 em { font-style: normal; color: var(--color-accent); }
+.bp-hero__lead {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: rgba(255,255,255,.6);
+  line-height: 1.6; margin-bottom: 2.5rem; max-width: 430px;
+}
+
+/* ── ② SPLIT ── */
+.bp-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+  padding-top: 7rem; padding-bottom: 7rem;
+}
+.bp-split__photo-wrap { position: relative; }
+.bp-split__photo {
+  width: 100%; aspect-ratio: 3/4;
+  background-size: cover; background-position: center;
+  border: 1px solid rgba(255,255,255,.06);
+}
+.bp-split__stat {
+  position: absolute; bottom: -2rem; left: -2rem;
+  padding: 1.5rem 2rem;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.bp-split__stat-num {
+  font-family: var(--font-display); font-size: 3rem; line-height: 1;
+  color: var(--color-accent);
+}
+.bp-split__stat-lbl {
+  font-family: var(--font-body); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+}
+.bp-split__text {
+  display: flex; flex-direction: column; gap: 0;
+}
+.bp-split__text p {
+  font-family: var(--font-body);
+  font-size: .92rem; color: rgba(255,255,255,.5); line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.bp-split__text strong { color: var(--color-volk-white); font-weight: 700; }
+
+/* ── ③ STATS BAR ── */
+.bp-stats {
+  background: var(--color-volk-deep);
+  border-top: 1px solid rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.bp-stats__grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+}
+.bp-stat {
+  padding: 3.5rem 2rem;
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  border-right: 1px solid rgba(255,255,255,.05); text-align: center;
+}
+.bp-stat:last-child { border-right: none; }
+.bp-stat__n {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1;
+  color: var(--color-accent);
+}
+.bp-stat__l {
+  font-family: var(--font-body); font-size: .68rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35);
+}
+
+/* ── ④ NATURE PLEDGE ── */
+.bp-nature {
+  position: relative;
+  padding: 9rem 0;
+}
+.bp-nature__photo {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  filter: saturate(.5) brightness(.5);
+}
+.bp-nature__fog {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    var(--color-volk-black) 0%,
+    rgba(8,8,8,.5) 30%,
+    rgba(8,8,8,.5) 70%,
+    var(--color-volk-black) 100%);
+}
+.bp-nature__body { position: relative; z-index: 1; }
+.bp-nature__card {
+  max-width: 680px; margin: 0 auto;
+  background: rgba(8,8,8,.7);
+  border: 1px solid rgba(206,255,2,.15);
+  padding: 4rem;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.25rem; text-align: center;
+  backdrop-filter: blur(12px);
+}
+.bp-nature__pct {
+  font-family: var(--font-display);
+  font-size: clamp(5rem,12vw, 9rem); line-height: 1;
+  color: var(--color-accent);
+  text-shadow: 0 0 60px rgba(206,255,2,.35);
+}
+.bp-nature__pct sup { font-size: .4em; vertical-align: super; }
+.bp-nature__ttl { margin: 0; color: var(--color-volk-white); }
+.bp-nature__desc {
+  font-family: var(--font-body); font-size: .95rem;
+  color: rgba(255,255,255,.55); line-height: 1.8; max-width: 520px;
+}
+.bp-nature__desc strong { color: var(--color-accent); }
+.bp-nature__badges { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; margin-top: .5rem; }
+.bp-nbadge {
+  font-family: var(--font-body); font-size: .68rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  border: 1px solid rgba(206,255,2,.2); color: rgba(255,255,255,.6);
+  padding: .4rem 1rem;
+}
+
+/* ── ⑤ TECH CARDS ── */
+.bp-tech { padding: 7rem 0; }
+.bp-tech__hdr { margin-bottom: 3.5rem; }
+.bp-tech__grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+}
+.bp-tc {
+  background: var(--color-volk-surface);
+  border: 1px solid rgba(255,255,255,.05);
+  padding: 3rem 2.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  position: relative; overflow: hidden;
+  transition: border-color .35s, transform .35s;
+}
+.bp-tc::after {
+  content:''; position:absolute; top:0; left:0; width:0; height:2px;
+  background: var(--color-accent);
+  transition: width .5s cubic-bezier(.16,1,.3,1);
+}
+.bp-tc:hover::after { width: 100%; }
+.bp-tc:hover { border-color: rgba(206,255,2,.18); transform: translateY(-6px); }
+.bp-tc__n {
+  font-family: var(--font-display); font-size: 3.5rem; line-height: 1;
+  color: rgba(255,255,255,.04); position: absolute; top: 1.5rem; right: 2rem;
+}
+.bp-tc__icon { color: var(--color-accent); }
+.bp-tc__t {
+  font-family: var(--font-heading); font-size: 1rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--color-volk-white);
+}
+.bp-tc__d {
+  font-family: var(--font-body); font-size: .85rem;
+  color: rgba(255,255,255,.4); line-height: 1.7;
+}
+
+/* ── ⑥ MOSAIC ── */
+.bp-mosaic {
+  padding: 7rem 0;
+  border-top: 1px solid rgba(255,255,255,.04);
+}
+.bp-mosaic__hdr {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 3rem; gap: 2rem;
+}
+.bp-mosaic__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 320px 320px;
+  gap: .75rem;
+}
+/* Wide item spans 2 cols on row 1 */
+.bp-mi {
+  position: relative; overflow: hidden; display: block;
+  border: 1px solid rgba(255,255,255,.07);
+  transition: border-color .3s;
+}
+.bp-mi:hover { border-color: rgba(206,255,2,.2); }
+.bp-mi--wide { grid-column: span 2; }
+.bp-mi__img {
+  width: 100%; height: 100%;
+  background-size: cover; background-position: center;
+  transition: transform .7s cubic-bezier(.16,1,.3,1), filter .5s;
+  filter: saturate(.8);
+}
+.bp-mi:hover .bp-mi__img { transform: scale(1.05); filter: saturate(1.1); }
+.bp-mi__info {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.1) 50%, transparent 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.75rem; gap: .35rem;
+}
+.bp-mi__tag {
+  align-self: flex-start;
+  background: var(--color-accent); color: #000;
+  font-family: var(--font-body); font-size: .58rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; padding: .25rem .75rem;
+  margin-bottom: .15rem;
+}
+.bp-mi__info h3 {
+  font-family: var(--font-display); font-size: 2rem; color: #fff; line-height: 1;
+}
+.bp-mi__info p {
+  font-family: var(--font-body); font-size: .75rem; color: rgba(255,255,255,.55);
+}
+
+/* ── ⑦ CTA ── */
+.bp-cta {
+  position: relative; padding: 10rem 0;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+}
+.bp-cta__photo {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  filter: grayscale(100%) brightness(.6);
+}
+.bp-cta__dark {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.6);
+}
+.bp-cta__body { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.bp-cta__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem,7vw,6rem); line-height: .9;
+  color: #fff; text-transform: uppercase;
+}
+.bp-cta__title em { font-style: normal; color: var(--color-accent); }
+.bp-cta__sub {
+  font-family: var(--font-body); font-size: 1.05rem;
+  color: rgba(255,255,255,.55); max-width: 420px;
+}
+
+/* ==================== REACTIVE ==================== */
+@media (max-width: 1024px) {
+  .bp-split { grid-template-columns: 1fr; gap: 3rem; }
+  .bp-split__photo { aspect-ratio: 16/9; }
+  .bp-split__stat { left: 1rem; bottom: -1.5rem; }
+  .bp-stats__grid { grid-template-columns: repeat(2,1fr); }
+  .bp-stat:nth-child(2) { border-right: none; }
+  .bp-stat:nth-child(1), .bp-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.05); }
+  .bp-tech__grid { grid-template-columns: 1fr 1fr; }
+  .bp-mosaic__grid {
     grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
+    grid-template-rows: 280px 280px 280px;
   }
-  .story-title {
-    font-family: var(--font-bebas);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    margin-bottom: 1.5rem;
+  .bp-mi--wide { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .bp-hero__h1 { font-size: 3.8rem; }
+  .bp-split { padding-top: 4rem; padding-bottom: 4rem; }
+  .bp-nature__card { padding: 2.5rem 1.5rem; }
+  .bp-tech, .bp-mosaic { padding: 4rem 0; }
+  .bp-tech__grid { grid-template-columns: 1fr; }
+  .bp-mosaic__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
-  .story-p {
-    font-family: var(--font-inter);
-    font-size: 0.88rem;
-    color: #666;
-    line-height: 1.85;
-    margin-bottom: 1rem;
-  }
-  .story-img {
-    position: relative;
-    overflow: visible;
-  }
-  .story-img img {
-    width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-  }
-  .story-stat-card {
-    position: absolute;
-    bottom: -1.5rem;
-    left: -1.5rem;
-    background: var(--color-volk-accent);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .stat-big {
-    font-family: var(--font-bebas);
-    font-size: 3rem;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    color: #0a0a0a;
-  }
-  .stat-label {
-    font-family: var(--font-montserrat);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(10,10,10,0.6);
-  }
-
-  /* Values */
-  .about-values {
-    background: #0a0a0a;
-  }
-  .values-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem;
-  }
-  .values-title {
-    font-family: var(--font-bebas);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: 0.05em;
-    margin-bottom: 3rem;
-  }
-  .values-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-  }
-  .value-card {
-    border: 1px solid #1a1a1a;
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .value-card:hover {
-    border-color: var(--color-volk-accent);
-    background: #0d0d0d;
-  }
-  .value-num {
-    font-family: var(--font-bebas);
-    font-size: 3rem;
-    color: #1a1a1a;
-    line-height: 1;
-  }
-  .value-name {
-    font-family: var(--font-montserrat);
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #f5f5f0;
-    line-height: 1.3;
-  }
-  .value-desc {
-    font-family: var(--font-inter);
-    font-size: 0.8rem;
-    color: #555;
-    line-height: 1.7;
-  }
-
-  /* Collections */
-  .about-collections {
-    background: #090909;
-    border-top: 1px solid #111;
-  }
-  .collections-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem;
-  }
-  .collections-title {
-    font-family: var(--font-bebas);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: 0.05em;
-    line-height: 1;
-    margin-bottom: 2.5rem;
-  }
-  .collections-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-  .coll-item {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #1a1a1a;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.3s;
-  }
-  .coll-item:hover {
-    border-color: #333;
-    transform: translateY(-3px);
-  }
-  .coll-img {
-    overflow: hidden;
-    aspect-ratio: 4/3;
-  }
-  .coll-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
-  }
-  .coll-item:hover .coll-img img {
-    transform: scale(1.05);
-  }
-  .coll-info {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .coll-name {
-    font-family: var(--font-bebas);
-    font-size: 1.4rem;
-    letter-spacing: 0.1em;
-    color: #f5f5f0;
-  }
-  .coll-desc {
-    font-family: var(--font-inter);
-    font-size: 0.72rem;
-    color: #555;
-  }
-
-  /* CTA */
-  .about-cta {
-    background: var(--color-volk-accent);
-    text-align: center;
-  }
-  .about-cta-inner {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  .about-cta-title {
-    font-family: var(--font-bebas);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: 0.05em;
-    color: #0a0a0a;
-  }
-  .about-cta-desc {
-    font-family: var(--font-inter);
-    font-size: 0.9rem;
-    color: rgba(10,10,10,0.6);
-    margin-bottom: 0.5rem;
-  }
-  .about-cta-btn {
-    background: #0a0a0a;
-    color: #f5f5f0;
-    border-color: #0a0a0a;
-  }
-  .about-cta-btn:hover {
-    background: transparent;
-    color: #0a0a0a;
-    border-color: #0a0a0a;
-  }
-
-  @media (max-width: 1024px) {
-    .about-story-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .values-grid { grid-template-columns: 1fr; }
-    .collections-list { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 640px) {
-    .collections-list { grid-template-columns: 1fr; }
-  }
+  .bp-mi--wide { grid-column: span 1; }
+  .bp-mi { height: 260px; }
+  .bp-mosaic__hdr { flex-direction: column; align-items: flex-start; }
+  .bp-cta { padding: 6rem 0; }
+  .bp-cta__title { font-size: 3rem; }
+  .bp-stats__grid { grid-template-columns: 1fr 1fr; }
+}
 </style>

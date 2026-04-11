@@ -13,12 +13,13 @@ const isLowStock  = product.stock > 0 && product.stock < 3;
 const isMidStock  = product.stock >= 3 && product.stock <= 5;
 const isOutOfStock = product.outOfStock || product.stock === 0;
 
-// Real checkout URL from volksunglasses.com
+// Checkout URL → WooCommerce backend (api.volksunglasses.com)
+const WOO_BASE = "https://api.volksunglasses.com";
 const buyUrl = isOutOfStock
-  ? product.originalUrl  // go to product page if OOS
-  : `https://volksunglasses.com/?add-to-cart=${product.woo_id}`;
+  ? product.originalUrl
+  : `${WOO_BASE}/checkout/?add-to-cart=${product.woo_id}`;
 
-const detailUrl = `/produkty/${product.slug}`;
+const detailUrl = `/${product.slug}`;
 ---
 
 <article

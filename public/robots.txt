@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block dev/admin paths
+Disallow: /api/
+
+Sitemap: https://volksunglasses.com/sitemap.xml

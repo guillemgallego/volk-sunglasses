@@ -21,22 +21,11 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
     <section class="cat-header" aria-label="Заголовок каталога">
       <div class="container cat-header-inner">
         <div class="cat-header-text">
-          <span class="eyebrow">Коллекция 2025</span>
+          <span class="eyebrow">Коллекция 2026</span>
           <h1 class="display-xl cat-title" style="margin-top: 0.6rem;">КАТАЛОГ</h1>
           <p class="cat-desc">
-            {products.length} моделей. Поляризация UV400. Бесплатная доставка.
+            Все {products.length} моделей. TAC Polarized UV400. Бесплатная доставка по России.
           </p>
-        </div>
-        <div class="cat-header-img">
-          <img
-            src="https://volksunglasses.com/wp-content/uploads/2025/01/Ochki-zerkalnie-sky.jpg"
-            alt="VOLK TAIGA SKY — поляризационные очки"
-            loading="eager"
-            decoding="async"
-            class="cat-hero-img"
-            width="560"
-            height="420"
-          />
         </div>
       </div>
     </section>
@@ -56,10 +45,16 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
         <!-- Category tabs -->
         <div class="filter-tabs" role="tablist" aria-label="Фильтрация по коллекции">
           {[
-            { id: "all",      label: "Все" },
-            { id: "Taiga",    label: "TAIGA" },
-            { id: "Siberia",  label: "SIBERIA" },
-            { id: "Hermitage",label: "HERMITAGE" },
+            { id: "all",        label: "Все" },
+            { id: "TAIGA",      label: "TAIGA" },
+            { id: "SIBERIA",    label: "SIBERIA" },
+            { id: "HERMITAGE",  label: "HERMITAGE" },
+            { id: "ALTAI",      label: "ALTAI" },
+            { id: "ELBRUS",     label: "ELBRUS" },
+            { id: "SAMARA",     label: "SAMARA" },
+            { id: "SOCHI",      label: "SOCHI" },
+            { id: "ARCTIC",     label: "ARCTIC (МАСКИ)" },
+            { id: "VOLK PACK",  label: "РЮКЗАКИ" },
           ].map((t, i) => (
             <button
               class={`filter-tab ${i === 0 ? "filter-tab--active" : ""}`}
@@ -100,7 +95,7 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
         {products.map((p, i) => (
           <div
             class="catalog-item"
-            data-category={p.category}
+            data-category={p.category.toUpperCase()}
             data-price={p.price}
             data-rating={p.rating}
             data-instock={!p.outOfStock}
@@ -155,13 +150,13 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
   overflow: hidden;
 }
 .cat-header-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  min-height: 340px;
-  gap: 2rem;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 220px;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
 }
 .cat-title { line-height: 0.88; }
 .cat-desc {
@@ -169,17 +164,6 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
   font-size: 0.85rem;
   color: var(--color-volk-muted);
   margin-top: 0.75rem;
-}
-.cat-header-img {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.cat-hero-img {
-  max-height: 300px;
-  width: 100%;
-  object-fit: cover;
-  border: 1px solid var(--color-volk-border);
 }
 
 /* Scarcity bar */
@@ -365,8 +349,7 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
   .product-grid--4 { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 900px) {
-  .cat-header-inner { grid-template-columns: 1fr; }
-  .cat-header-img { display: none; }
+  .cat-header-inner { align-items: center; text-align: center; }
 }
 @media (max-width: 768px) {
   .product-grid--4 { grid-template-columns: repeat(2, 1fr); }
@@ -456,3 +439,4 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
     apply();
   });
 </script>
+

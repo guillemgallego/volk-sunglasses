@@ -32,8 +32,7 @@ const year = new Date().getFullYear();
       <!-- Brand col -->
       <div class="footer-brand">
         <a href="/" class="footer-logo" aria-label="VOLK Sunglasses главная">
-          <span class="footer-logo-volk">VOLK</span>
-          <span class="footer-logo-sub">SUNGLASSES</span>
+          <img src="/images/logo-volk.png" alt="VOLK Sunglasses" class="footer-logo-img" width="120" height="71" />
         </a>
         <p class="footer-tagline">
           Поляризационные солнцезащитные очки. Разработаны в России. Для спорта, вождения и путешествий.
@@ -78,10 +77,10 @@ const year = new Date().getFullYear();
       <div class="footer-nav-col">
         <span class="footer-col-title">Поддержка</span>
         <nav aria-label="Поддержка">
-          <a href="https://volksunglasses.com/dostavka-oplata/" class="footer-link" target="_blank" rel="noopener">Доставка и оплата</a>
-          <a href="https://volksunglasses.com/vozvrat-obmen-tovara/" class="footer-link" target="_blank" rel="noopener">Возврат и обмен</a>
+          <a href="/dostavka-oplata" class="footer-link">Доставка и оплата</a>
+          <a href="/vozvrat-obmen-tovara" class="footer-link">Возврат и обмен</a>
           <a href="/kontakty" class="footer-link">Контакты</a>
-          <a href="https://volksunglasses.com/privacy-policy/" class="footer-link" target="_blank" rel="noopener">Конфиденциальность</a>
+          <a href="/privacy-policy" class="footer-link">Конфиденциальность</a>
         </nav>
         <div class="footer-contact">
           <a href="https://wa.me/79602737038" class="footer-phone" target="_blank" rel="noopener">+7 960 273 70 38</a>
@@ -94,15 +93,22 @@ const year = new Date().getFullYear();
   <!-- Bottom bar -->
   <div class="footer-bottom">
     <div class="footer-container footer-bottom-inner">
-      <p class="footer-copy">
-        © {year} VOLK Sunglasses. Все права защищены.
-      </p>
-      <div class="payment-badges">
-        <span class="pay-badge">Visa</span>
-        <span class="pay-badge">MasterCard</span>
-        <span class="pay-badge">МИР</span>
-        <span class="pay-badge">ЮKassa</span>
-        <span class="pay-badge">СДЭК</span>
+      <div class="footer-legal">
+        <p class="footer-copy">
+          © {year} VOLK Sunglasses. Все права защищены.
+        </p>
+        <p class="footer-company">
+          ИП Кецерас Я.В.<span class="footer-sep">|</span>ИНН 781433259051
+        </p>
+      </div>
+      <!-- Trust & Guarantee -->
+      <div class="trust-badges" aria-label="Гарантии">
+        <img src="/images/footer-trust.png" alt="Гарантия качества и безопасность" class="footer-badge-img" />
+      </div>
+
+      <!-- Payment Methods -->
+      <div class="payment-methods" aria-label="Способы оплаты">
+        <img src="/images/footer-payments.png" alt="Безопасная оплата: Visa, Mastercard, МИР, СБП" class="footer-badge-img" />
       </div>
     </div>
   </div>
@@ -149,26 +155,12 @@ const year = new Date().getFullYear();
 /* Brand */
 .footer-logo {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
   margin-bottom: 1.25rem;
 }
-.footer-logo-volk {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  letter-spacing: 0.16em;
-  color: var(--color-volk-white);
-  line-height: 1;
-  transition: color 0.2s;
-}
-.footer-logo:hover .footer-logo-volk { color: var(--color-accent); }
-.footer-logo-sub {
-  font-family: var(--font-body);
-  font-size: 0.42rem;
-  letter-spacing: 0.42em;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  font-weight: 700;
+.footer-logo-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
 }
 .footer-tagline {
   font-family: var(--font-body);
@@ -260,15 +252,25 @@ const year = new Date().getFullYear();
   gap: 1rem;
   flex-wrap: wrap;
 }
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
 .footer-copy {
   font-family: var(--font-body);
   font-size: 0.68rem;
   color: var(--color-volk-subtle);
 }
-.payment-badges {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
+.footer-company {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  color: rgba(242, 240, 235, 0.25);
+  letter-spacing: 0.03em;
+}
+.footer-sep {
+  margin: 0 0.5rem;
+  opacity: 0.3;
 }
 .pay-badge {
   font-family: var(--font-body);
@@ -279,6 +281,33 @@ const year = new Date().getFullYear();
   background: var(--color-volk-surface);
   border: 1px solid var(--color-volk-border);
   padding: 0.2rem 0.5rem;
+}
+
+/* Trust & Payments */
+.footer-bottom-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+.trust-badges,
+.payment-methods {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.trust-badges {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.footer-badge-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 50px;
+  object-fit: contain;
 }
 
 @media (max-width: 1100px) {

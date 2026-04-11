@@ -1,0 +1,182 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Возврат и обмен товара | VOLK Sunglasses"
+  description="Гарантии и условия возврата продукции VOLK."
+>
+  <Navbar />
+  
+  <main class="legal-page">
+    <section class="legal-hero">
+      <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1556740734-7f9a2b7a0f4d?q=80&w=2070&auto=format&fit=crop" alt="" class="bg-img" />
+        <div class="bg-overlay"></div>
+      </div>
+      <div class="container hero-container">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="/">Главная</a> <span class="sep">/</span> <span>Возврат и обмен</span>
+        </nav>
+        <h1 class="display-lg text-shimmer">Гарантия <br/>и возврат</h1>
+        <p class="hero-sub">Мы уверены в качестве наших очков, но если что-то пошло не так — мы это исправим.</p>
+      </div>
+    </section>
+
+    <div class="container legal-content-grid">
+      <!-- Main Content -->
+      <div class="main-body">
+        
+        <!-- Step by Step -->
+        <section class="return-steps">
+          <div class="step glass" style="--delay: 0.1s">
+            <div class="step-num">01.</div>
+            <div class="step-content">
+              <h3>Проверьте сроки</h3>
+              <p>Возврат товара надлежащего качества возможен в течение <strong>7 дней</strong> с момента получения заказа.</p>
+            </div>
+          </div>
+          <div class="step glass" style="--delay: 0.2s">
+            <div class="step-num">02.</div>
+            <div class="step-content">
+              <h3>Сохраните вид</h3>
+              <p>Товар не должен быть в употреблении. Сохраните все бирки, упаковку и товарный вид очков.</p>
+            </div>
+          </div>
+          <div class="step glass" style="--delay: 0.3s">
+            <div class="step-num">03.</div>
+            <div class="step-content">
+              <h3>Свяжитесь с нами</h3>
+              <p>Напишите на <a href="mailto:info@volksunglasses.com" class="accent-link">info@volksunglasses.com</a> для получения инструкций.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Detailed Policy -->
+        <section class="content-block glass-dark">
+          <div class="prose">
+            <h2>Подробные условия</h2>
+            <p>Отношения между покупателем и интернет-магазином <strong>VOLK</strong> регулируются Законом РФ «О защите прав потребителей».</p>
+            
+            <h3>Товар надлежащего качества</h3>
+            <p>Если очки вам не подошли, мы вернем деньги за товар (за вычетом стоимости доставки). Деньги возвращаются в течение 10 дней после того, как мы получим и проверим товар на складе.</p>
+
+            <h3>Брак или дефект</h3>
+            <p>Если вы обнаружили производственный брак, возврат возможен в течение <strong>14 дней</strong>. В этом случае мы берем все расходы по пересылке на себя или производим замену на новую пару.</p>
+
+            <div class="important-notice">
+              <div class="icon">ℹ️</div>
+              <p>Возврат денежных средств производится на ту же банковскую карту, с которой был совершен платеж.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sticky-side">
+          <div class="support-card glass">
+            <h3>Есть вопросы?</h3>
+            <p>Наша поддержка поможет разобраться в деталях возврата.</p>
+            <div class="side-actions">
+              <a href="https://wa.me/79602737038" class="btn btn-gold btn-sm">Написать в WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  
+  <Footer />
+</BaseLayout>
+
+<style>
+.legal-page { background: var(--color-volk-black); color: #fff; }
+
+/* Hero */
+.legal-hero {
+  position: relative;
+  padding: 140px 0 80px;
+}
+.hero-bg { position: absolute; inset: 0; }
+.bg-img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.3; filter: grayscale(1);
+}
+.bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--color-volk-black));
+}
+.hero-container { position: relative; z-index: 1; }
+
+.breadcrumb {
+  display: flex; gap: 0.5rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.2em; color: var(--color-volk-muted); margin-bottom: 1.5rem;
+}
+.breadcrumb a { color: #fff; text-decoration: none; }
+.breadcrumb .sep { opacity: 0.3; }
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+}
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--color-volk-muted);
+  max-width: 500px;
+}
+
+/* Steps Grid */
+.return-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;
+}
+.step { padding: 2rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+.step-num { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-accent); font-weight: 800; margin-bottom: 1.5rem; }
+.step-content h3 { font-family: var(--font-heading); font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem; }
+.step-content p { font-size: 0.88rem; color: var(--color-volk-muted); line-height: 1.6; }
+
+/* Content Layout */
+.legal-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 4rem;
+  padding-bottom: 120px;
+}
+
+.prose {
+  font-family: var(--font-body);
+  line-height: 1.8;
+  color: var(--color-volk-muted);
+  font-size: 1.05rem;
+}
+.prose h2 { font-family: var(--font-display); font-size: 2.2rem; text-transform: uppercase; color: #fff; margin-bottom: 2rem; }
+.prose h3 { font-family: var(--font-heading); font-size: 1.3rem; color: #fff; margin: 2.5rem 0 1rem; }
+.accent-link { color: var(--color-accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+.important-notice {
+  display: flex; gap: 1.5rem; padding: 2rem; margin-top: 3rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+}
+.important-notice .icon { font-size: 1.5rem; }
+
+/* Sidebar */
+.sticky-side { position: sticky; top: 120px; }
+.support-card { padding: 2.5rem; }
+.support-card h3 { margin: 0 0 1rem; font-size: 1.1rem; color: #fff; }
+.support-card p { font-size: 0.88rem; color: var(--color-volk-muted); margin-bottom: 1.5rem; }
+
+.glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+.glass-dark { background: rgba(0,0,0,0.2); padding: 4rem; border: 1px solid rgba(255,255,255,0.03); }
+
+@media (max-width: 1024px) {
+  .legal-content-grid { grid-template-columns: 1fr; }
+  .return-steps { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .glass-dark { padding: 2rem; }
+}
+</style>

@@ -1,0 +1,1039 @@
+---
+// produkty/[slug].astro – Premium product page with real VOLK data
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "./Navbar.astro";
+import Footer from "./Footer.astro";
+import ProductCard from "./ProductCard.astro";
+import { products } from "../data/products";
+import type { GetStaticPaths } from "astro";
+
+const { product } = Astro.props;
+if (!product) return Astro.redirect("/katalog");
+
+const isOutOfStock = product.outOfStock || product.stock === 0;
+const isLowStock   = product.stock > 0 && product.stock < 3;
+const isMidStock   = product.stock >= 3 && product.stock <= 5;
+
+// Hybrid WooCommerce URLs — backend at api.volksunglasses.com
+const WOO_BASE = "https://api.volksunglasses.com";
+const checkoutUrl = isOutOfStock
+  ? product.originalUrl
+  : `${WOO_BASE}/checkout/?add-to-cart=${product.woo_id}`;
+
+const cartUrl = `${WOO_BASE}/cart/?add-to-cart=${product.woo_id}`;
+
+const wildberriesUrl = "https://www.wildberries.ru/brands/volk-sunglasses";
+
+// Related products (same category, exclude current)
+const related = products
+  .filter(p => p.slug !== product.slug && !p.outOfStock)
+  .slice(0, 4);
+
+// JSON-LD Schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: product.description,
+  image: product.images,
+  sku: `VOLK-${product.woo_id || product.id}`,
+  brand: { "@type": "Brand", name: "VOLK Sunglasses" },
+  offers: {
+    "@type": "Offer",
+    price: product.price,
+    priceCurrency: "RUB",
+    availability: isOutOfStock
+      ? "https://schema.org/OutOfStock"
+      : "https://schema.org/InStock",
+    url: `https://volksunglasses.com/${product.slug}`,
+    seller: { "@type": "Organization", name: "VOLK Sunglasses" },
+    priceValidUntil: "2026-12-31",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: product.rating,
+    reviewCount: product.reviewCount,
+    bestRating: 5,
+    worstRating: 1,
+  },
+};
+
+const seoTitle = `${product.name} — ${product.priceFormatted} | Поляризационные очки VOLK`;
+const seoDescription = `Купить ${product.name}: ${product.shortDescription}. Цена ${product.priceFormatted}. ${product.outOfStock ? "Следите за появлением в наличии." : "В наличии. "}Поляризация, UV400. Бесплатная доставка по России.`;
+---
+
+<BaseLayout title={seoTitle} description={seoDescription} image={product.images[0]} type="product">
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <Navbar />
+
+  <main class="pdp-main" id="main-content" itemscope itemtype="https://schema.org/Product">
+    <meta itemprop="name" content={product.name} />
+    <meta itemprop="description" content={product.description} />
+
+    <!-- ── Breadcrumb ───────────────────────────────────────── -->
+    <nav class="breadcrumb" aria-label="Хлебные крошки">
+      <div class="container">
+        <ol class="bc-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="/" itemprop="item"><span itemprop="name">Главная</span></a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <span class="bc-sep" aria-hidden="true">›</span>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="/katalog" itemprop="item"><span itemprop="name">Каталог</span></a>
+            <meta itemprop="position" content="2" />
+          </li>
+          <span class="bc-sep" aria-hidden="true">›</span>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">{product.name}</span>
+            <meta itemprop="position" content="3" />
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- ── Product layout ──────────────────────────────────── -->
+    <div class="container pdp-grid">
+      <!-- Gallery -->
+      <div class="pdp-gallery" id="pdp-gallery">
+        <div class="gallery-main" id="gallery-main">
+          <img
+            src={product.images[0]}
+            alt={`${product.name} — поляризационные солнцезащитные очки VOLK`}
+            class="gallery-main-img"
+            id="gallery-img"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            width="800"
+            height="600"
+            itemprop="image"
+          />
+          {isLowStock && (
+            <div class="gallery-badge">
+              <span class="badge badge-fire animate-firebeat">🔥 Осталось {product.stock} шт.!</span>
+            </div>
+          )}
+          {isOutOfStock && (
+            <div class="gallery-oos-overlay">
+              <span>Нет в наличии</span>
+            </div>
+          )}
+        </div>
+
+        {product.images.length > 1 && (
+          <div class="gallery-thumbs" role="tablist" aria-label="Фотографии товара">
+            {product.images.map((img, i) => (
+              <button
+                class={`gallery-thumb ${i === 0 ? "gallery-thumb--active" : ""}`}
+                data-src={img}
+                id={`thumb-${i}`}
+                role="tab"
+                aria-selected={i === 0}
+                aria-label={`Фото ${i + 1}`}
+              >
+                <img
+                  src={img}
+                  alt={`${product.name} фото ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  width="140"
+                  height="105"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+
+        <!-- Trust badges (small) -->
+        <div class="pdp-trust">
+          <div class="trust-badge">
+            <span>🚚</span><span>Бесплатная доставка</span>
+          </div>
+          <div class="trust-badge">
+            <span>↩</span><span>Возврат и обмен</span>
+          </div>
+          <div class="trust-badge">
+            <span>🔒</span><span>Безопасная оплата</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info panel -->
+      <div class="pdp-info">
+        <!-- Category pill -->
+        <span class="pdp-cat label-xs">{product.category}</span>
+
+        <!-- H1 Title -->
+        <h1 class="pdp-title">{product.name}</h1>
+        <p class="pdp-tagline">{product.tagline}</p>
+
+        <!-- Rating -->
+        <div
+          class="pdp-rating"
+          itemprop="aggregateRating"
+          itemscope
+          itemtype="https://schema.org/AggregateRating"
+        >
+          <div class="rating-stars-lg" role="img" aria-label={`${product.rating} из 5 звёзд`}>
+            {Array.from({ length: 5 }, (_, i) => (
+              <svg
+                width="16" height="16"
+                viewBox="0 0 12 12"
+                fill={i < Math.floor(product.rating) ? "var(--color-accent)" : "var(--color-volk-border-hi)"}
+                aria-hidden="true"
+              >
+                <path d="M6 0l1.5 4.5H12L8.25 7.5l1.5 4.5L6 9l-3.75 3 1.5-4.5L0 4.5h4.5z"/>
+              </svg>
+            ))}
+          </div>
+          <span class="pdp-rating-num" itemprop="ratingValue">{product.rating}</span>
+          <a href={`${product.originalUrl}#reviews`} class="pdp-rating-cnt" target="_blank" rel="noopener">
+            <span itemprop="reviewCount">{product.reviewCount}</span> отзывов на volksunglasses.com
+          </a>
+          <meta itemprop="bestRating" content="5" />
+          <meta itemprop="worstRating" content="1" />
+        </div>
+
+        <hr class="hr-gold" />
+
+        <!-- Price -->
+        <div class="pdp-price-block" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+          <span class="pdp-price" itemprop="price" content={String(product.price)}>
+            {product.priceFormatted}
+          </span>
+          <meta itemprop="priceCurrency" content="RUB" />
+          <link itemprop="availability" href={isOutOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"} />
+          <link itemprop="itemCondition" href="https://schema.org/NewCondition" />
+          <span class="pdp-price-note">НДС включён · Бесплатная доставка от этой суммы</span>
+        </div>
+
+        <!-- Stock indicator -->
+        <div class={`pdp-stock ${isOutOfStock ? "stock--out" : isLowStock ? "stock--low" : isMidStock ? "stock--mid" : "stock--ok"}`} role="status">
+          <span class="stock-dot"></span>
+          {isOutOfStock && "Нет в наличии — следите за обновлением"}
+          {isLowStock && `🔥 Осталось всего ${product.stock} шт.! Успей купить!`}
+          {isMidStock && !isLowStock && `⚡ Заканчивается — ${product.stock} шт. на складе`}
+          {!isOutOfStock && !isLowStock && !isMidStock && "✓ В наличии — готов к отправке"}
+        </div>
+
+        <!-- Lens info pill -->
+        <div class="lens-info">
+          <div class="lens-dot" style={`background: ${
+            product.lens.includes("голуб") ? "#4fc3f7" :
+            product.lens.includes("зелён") ? "#66bb6a" :
+            product.lens.includes("роз") ? "#f48fb1" :
+            product.lens.includes("жёлт") ? "#ffd54f" :
+            product.lens.includes("чёрн") ? "#444" : "#999"
+          }`}></div>
+          <span class="lens-label">Линзы: {product.lens}</span>
+        </div>
+
+        <!-- Buy CTA -->
+        <div class="pdp-cta">
+          {isOutOfStock ? (
+            <>
+              <a href={product.originalUrl} class="btn btn-ghost btn-full btn-lg" target="_blank" rel="noopener" id={`oos-${product.slug}`}>
+                ⚠️ Узнать о поступлении на volksunglasses.com
+              </a>
+              <div class="pdp-cta-divider">
+                <span>Или купите на</span>
+              </div>
+              <a href={wildberriesUrl} class="btn-wb btn-full" target="_blank" rel="noopener noreferrer" id={`wb-${product.slug}`}>
+                <svg class="wb-logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 5C11.72 5 5 11.72 5 20s6.72 15 15 15 15-6.72 15-15S28.28 5 20 5zm0 4.5l3.5 7.5H28l-5.75 4.18 2.2 6.82L20 24.6l-4.45 3.4 2.2-6.82L12 17h4.5L20 9.5z" fill="white"/>
+                </svg>
+                Купить на Wildberries
+                <span class="wb-arrow">→</span>
+              </a>
+            </>
+          ) : (
+            <>
+              <!-- PRIMARY: Купить сейчас → direct checkout (1 click) -->
+              <a
+                href={checkoutUrl}
+                class="btn-checkout"
+                id={`checkout-${product.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Купить ${product.name} за ${product.priceFormatted}`}
+              >
+                <span class="btn-checkout__label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  КУПИТЬ СЕЙЧАС — {product.priceFormatted}
+                </span>
+                <span class="btn-checkout__sub">Оплата картой · Оформление за 60 сек.</span>
+              </a>
+
+              <!-- SECONDARY: В корзину -->
+              <a
+                href={cartUrl}
+                class="btn-addcart"
+                id={`cart-${product.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+                В КОРЗИНУ
+              </a>
+
+              <div class="pdp-cta-divider"><span>или купите на маркетплейсе</span></div>
+
+              <!-- WILDBERRIES -->
+              <a
+                href={wildberriesUrl}
+                class="btn-wb btn-full"
+                target="_blank"
+                rel="noopener noreferrer"
+                id={`wb-${product.slug}`}
+              >
+                <svg class="wb-logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20 5C11.72 5 5 11.72 5 20s6.72 15 15 15 15-6.72 15-15S28.28 5 20 5zm0 4.5l3.5 7.5H28l-5.75 4.18 2.2 6.82L20 24.6l-4.45 3.4 2.2-6.82L12 17h4.5L20 9.5z" fill="white"/>
+                </svg>
+                Купить на Wildberries
+                <span class="wb-arrow">→</span>
+              </a>
+
+              <!-- Tertiary link -->
+              <a href={product.originalUrl} class="pdp-original-link" target="_blank" rel="noopener noreferrer" id="pdp-original">
+                Смотреть на volksunglasses.com ↗
+              </a>
+            </>
+          )}
+        </div>
+
+        <!-- Guarantee row -->
+        <div class="pdp-guarantees">
+          {[
+            { icon: "🚚", label: "СДЭК по России, Беларуси и Казахстану" },
+            { icon: "🔄", label: "Возврат и обмен товара" },
+            { icon: "💬", label: "WhatsApp: +7 960 273 70 38" },
+            { icon: "🌿", label: "5% с продажи — на помощь природе" },
+          ].map(g => (
+            <div class="guarantee">
+              <span class="guarantee-icon">{g.icon}</span>
+              <span class="guarantee-text">{g.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STICKY MOBILE BUY BAR ──────────────────────────── -->
+    {!isOutOfStock && (
+      <div class="pdp-sticky-bar" id="pdp-sticky-bar" aria-hidden="true">
+        <div class="pdp-sticky-bar__info">
+          <span class="pdp-sticky-bar__name">{product.name}</span>
+          <span class="pdp-sticky-bar__price">{product.priceFormatted}</span>
+        </div>
+        <a href={checkoutUrl} class="pdp-sticky-bar__btn" target="_blank" rel="noopener noreferrer">
+          Купить сейчас →
+        </a>
+      </div>
+    )}
+
+    <!-- ── Product Description + Specs ──────────────────────── -->
+    <section class="pdp-details" aria-label="Описание и характеристики">
+      <div class="container pdp-details-grid">
+        <div class="detail-block">
+          <h2 class="detail-title">Описание</h2>
+          <p class="detail-body" itemprop="description">{product.description}</p>
+          <div class="detail-features">
+            {product.features.map(f => (
+              <div class="detail-feature">
+                <span class="feature-dot" aria-hidden="true">◈</span>
+                <span>{f}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="detail-block">
+          <h2 class="detail-title">Технические характеристики</h2>
+          <ul class="spec-table">
+            {product.specs.map(s => (
+              <li class="spec-row">
+                <span class="spec-key">{s.label}</span>
+                <span class="spec-val">{s.value}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="spec-badges">
+            <span class="badge badge-gold">UV400</span>
+            <span class="badge badge-dark">TAC Polarized</span>
+            <span class="badge badge-dark">3-я категория</span>
+            <span class="badge badge-dark">Унисекс</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Related Products ────────────────────────────────── -->
+    {related.length > 0 && (
+      <section class="pdp-related" aria-label="Похожие товары">
+        <div class="container">
+          <header class="section-header">
+            <div>
+              <span class="eyebrow">Смотри также</span>
+              <h2 class="display-md" style="margin-top: 0.5rem;">Похожие модели</h2>
+            </div>
+            <a href="/katalog" class="btn btn-ghost btn-sm" id="related-all">Все модели</a>
+          </header>
+          <div class="related-grid">
+            {related.map(p => <ProductCard product={p} />)}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Back -->
+    <div class="container pdp-back">
+      <a href="/katalog" class="back-link" id="pdp-back">← Вернуться в каталог</a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+.pdp-main { padding-top: 0; }
+
+/* Breadcrumb */
+.breadcrumb {
+  background: var(--color-volk-deep);
+  border-bottom: 1px solid var(--color-volk-border);
+  padding: 0.65rem 0;
+}
+.bc-list {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-volk-muted);
+  flex-wrap: wrap;
+}
+.bc-list a { transition: color 0.2s; }
+.bc-list a:hover { color: var(--color-accent); }
+.bc-list li:last-child span { color: var(--color-volk-white); font-weight: 600; }
+.bc-sep { color: var(--color-volk-border-hi); }
+
+/* Grid */
+.pdp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  align-items: start;
+}
+
+/* Gallery */
+.pdp-gallery {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.gallery-main {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border);
+}
+.gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+.gallery-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 3;
+}
+.gallery-oos-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8,8,8,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+}
+.gallery-thumbs {
+  display: flex;
+  gap: 0.6rem;
+}
+.gallery-thumb {
+  flex: 1;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: var(--color-volk-surface);
+  transition: border-color 0.2s;
+  padding: 0;
+}
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.gallery-thumb:hover img { transform: scale(1.05); }
+.gallery-thumb--active { border-color: var(--color-accent) !important; }
+
+/* Trust badges */
+.pdp-trust {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--color-volk-border);
+}
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+  justify-content: center;
+  padding: 0.6rem 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+  border-right: 1px solid var(--color-volk-border);
+  background: var(--color-volk-deep);
+}
+.trust-badge:last-child { border-right: none; }
+
+/* Info panel */
+.pdp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.pdp-cat {
+  display: inline-block;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-dim);
+  padding: 0.25rem 0.65rem;
+  background: var(--color-accent-bg);
+}
+.pdp-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+}
+.pdp-tagline {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--color-volk-muted);
+  font-style: italic;
+  margin-top: -0.5rem;
+}
+
+/* Rating */
+.pdp-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.rating-stars-lg { display: flex; gap: 3px; }
+.pdp-rating-num {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+.pdp-rating-cnt {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-volk-muted);
+  transition: color 0.2s;
+}
+.pdp-rating-cnt:hover { color: var(--color-accent); }
+
+/* Price */
+.pdp-price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pdp-price {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-volk-white);
+  line-height: 1;
+}
+.pdp-price-note {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--color-volk-subtle);
+}
+
+/* Stock */
+.pdp-stock {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.stock--ok  { background: rgba(92,184,135,0.07); border-color: rgba(92,184,135,0.2); color: var(--color-success); }
+.stock--mid { background: var(--color-accent-bg); border-color: rgba(200,169,110,0.25); color: var(--color-accent); }
+.stock--low { background: var(--color-danger-bg); border-color: rgba(224,92,92,0.25); color: #e07070; }
+.stock--out { background: rgba(255,255,255,0.03); border-color: var(--color-volk-border); color: var(--color-volk-subtle); }
+.stock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.stock--low .stock-dot { animation: firebeat 1.5s ease-in-out infinite; }
+
+/* Lens info */
+.lens-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+}
+.lens-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.lens-label {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-volk-muted);
+  font-weight: 500;
+}
+
+/* CTA */
+.pdp-cta { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* ── PRIMARY: Купить сейчас ── */
+.btn-checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 1.1rem 2rem;
+  background: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  color: var(--color-volk-black);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.2s;
+  width: 100%;
+}
+.btn-checkout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-101%);
+  transition: transform 0.35s ease;
+}
+.btn-checkout:hover::before { transform: translateX(0); }
+.btn-checkout:hover {
+  box-shadow: 0 0 36px rgba(206,255,2,0.55), 0 4px 20px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+.btn-checkout__label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-volk-black);
+}
+.btn-checkout__sub {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+}
+
+/* ── SECONDARY: В корзину ── */
+.btn-addcart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  border: 2px solid var(--color-volk-border-hi);
+  color: var(--color-volk-white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+  width: 100%;
+}
+.btn-addcart:hover {
+  background: var(--color-volk-surface);
+  border-color: var(--color-volk-white);
+  color: var(--color-volk-white);
+}
+
+/* ── Wildberries ── */
+.btn-wb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.9rem 2rem;
+  background: #7B2FBE;
+  border: 2px solid #7B2FBE;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.2s;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+.btn-wb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.08);
+  transform: translateX(-101%);
+  transition: transform 0.3s ease;
+}
+.btn-wb:hover::after { transform: translateX(0); }
+.btn-wb:hover {
+  background: #9B4FE0;
+  box-shadow: 0 0 28px rgba(123,47,190,0.45);
+  transform: translateY(-2px);
+}
+.wb-logo { width: 20px; height: 20px; flex-shrink: 0; }
+.wb-arrow {
+  margin-left: auto;
+  font-size: 1rem;
+  opacity: 0.7;
+  transition: transform 0.25s;
+}
+.btn-wb:hover .wb-arrow { transform: translateX(4px); }
+
+/* Divider */
+.pdp-cta-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-volk-subtle);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.pdp-cta-divider::before,
+.pdp-cta-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-volk-border);
+}
+
+.btn-full { width: 100%; }
+
+/* Out of stock wrapper */
+.pdp-oos-block { display: flex; flex-direction: column; gap: 0.75rem; }
+.pdp-oos-msg {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-body); font-size: 0.78rem;
+  color: var(--color-volk-subtle);
+  padding: 0.6rem;
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border);
+}
+
+/* Tertiary link */
+.pdp-original-link {
+  display: block;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-volk-subtle);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.pdp-original-link:hover { color: var(--color-accent); }
+
+/* ── STICKY MOBILE BAR ── */
+.pdp-sticky-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--color-volk-deep);
+  border-top: 1px solid var(--color-volk-border);
+  padding: 0.9rem 1.25rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.16,1,.3,1);
+}
+.pdp-sticky-bar.pdp-sticky-bar--visible { transform: translateY(0); }
+.pdp-sticky-bar__info { display: flex; flex-direction: column; gap: 2px; }
+.pdp-sticky-bar__name {
+  font-family: var(--font-heading);
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-volk-muted);
+}
+.pdp-sticky-bar__price {
+  font-family: var(--font-heading);
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--color-volk-white);
+}
+.pdp-sticky-bar__btn {
+  background: var(--color-accent);
+  color: #000;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: box-shadow 0.25s;
+}
+.pdp-sticky-bar__btn:hover {
+  box-shadow: 0 0 20px rgba(206,255,2,0.5);
+}
+@media (max-width: 768px) {
+  .pdp-sticky-bar { display: flex; }
+}
+
+/* Guarantees */
+.pdp-guarantees {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.guarantee {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.65rem;
+  background: var(--color-volk-deep);
+  border: 1px solid var(--color-volk-border);
+}
+.guarantee-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.guarantee-text {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--color-volk-muted);
+  line-height: 1.45;
+}
+
+/* Details section */
+.pdp-details {
+  background: var(--color-volk-deep);
+  border-top: 1px solid var(--color-volk-border);
+  padding: 4rem 0;
+}
+.pdp-details-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+}
+.detail-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.detail-body {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--color-volk-muted);
+  line-height: 1.85;
+  margin-bottom: 1.5rem;
+}
+.detail-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.detail-feature {
+  display: flex;
+  gap: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(242,240,235,0.65);
+}
+.feature-dot { color: var(--color-accent); font-size: 0.6rem; flex-shrink: 0; margin-top: 3px; }
+
+/* Spec table */
+.spec-table {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+}
+.spec-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--color-volk-border);
+  gap: 1rem;
+}
+.spec-key {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-volk-muted);
+}
+.spec-val {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-volk-white);
+  text-align: right;
+}
+.spec-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Related */
+.pdp-related {
+  padding: 4rem 0;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+/* Back */
+.pdp-back { padding: 2rem 0 3rem; }
+.back-link {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--color-accent); }
+
+@media (max-width: 1024px) {
+  .pdp-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .pdp-gallery { position: static; }
+  .pdp-details-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .pdp-guarantees { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .gallery-thumbs { gap: 0.4rem; }
+}
+</style>
+
+<script>
+  // Gallery switcher
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('.gallery-thumb');
+  const mainImg = document.getElementById('gallery-img') as HTMLImageElement | null;
+
+  thumbs.forEach(t => {
+    t.addEventListener('click', () => {
+      const src = t.dataset.src;
+      if (!src || !mainImg) return;
+      mainImg.style.opacity = '0';
+      setTimeout(() => {
+        mainImg.src = src;
+        mainImg.style.opacity = '1';
+      }, 200);
+      thumbs.forEach(b => {
+        b.classList.remove('gallery-thumb--active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      t.classList.add('gallery-thumb--active');
+      t.setAttribute('aria-selected', 'true');
+    });
+  });
+
+  // Sticky mobile buy bar — shows after scrolling past the CTA
+  const stickyBar = document.getElementById('pdp-sticky-bar');
+  if (stickyBar) {
+    stickyBar.setAttribute('aria-hidden', 'false');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          stickyBar.classList.add('pdp-sticky-bar--visible');
+        } else {
+          stickyBar.classList.remove('pdp-sticky-bar--visible');
+        }
+      },
+      { rootMargin: '-60px 0px 0px 0px', threshold: 0 }
+    );
+    const ctaRef = document.querySelector('.pdp-cta');
+    if (ctaRef) observer.observe(ctaRef);
+  }
+</script>

@@ -29,7 +29,7 @@ export interface Product {
   outOfStock: boolean;
 }
 
-export const products: Product[] = [
+export const rawProducts: Product[] = [
   // ── SIBERIA BLUE ─────────────────────────────────────────────────────────────
   {
     id: 1,
@@ -51,8 +51,8 @@ export const products: Product[] = [
     frame: "чёрная матовая",
     tags: ["поляризация", "зеркало", "квадрат", "вождение"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Blue-Green-Face.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Green-S.jpg",
+      "/images/2023-08-Siberia-Blue-Green-Face.jpg",
+      "/images/2023-08-Siberia-Green-S.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -78,7 +78,7 @@ export const products: Product[] = [
   // ── TAIGA FOREST ─────────────────────────────────────────────────────────────
   {
     id: 2,
-    woo_id: 0, // out of stock, no cart ID shown
+    woo_id: 1228, // Updated with real ID
     name: "TAIGA FOREST",
     slug: "taiga-forest",
     tagline: "Градиентная чёрно-зелёная оправа. Легенда коллекции.",
@@ -96,8 +96,8 @@ export const products: Product[] = [
     frame: "градиент чёрно-зелёная",
     tags: ["поляризация", "спорт", "повседневные", "форест"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2025/01/Polyarizatcionnie-ochki-taiga-forest-2.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Polyarizatcionnie-ochki-taiga-forest.jpg",
+      "/images/2025-01-Polyarizatcionnie-ochki-taiga-forest-2.jpg",
+      "/images/2023-08-Polyarizatcionnie-ochki-taiga-forest.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -140,8 +140,8 @@ export const products: Product[] = [
     frame: "чёрная",
     tags: ["классика", "чёрные", "вождение", "спорт"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2025/01/Chernye-solncezashitnye-ochki.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Chernye-solncezashitnye-ochki-side.jpg",
+      "/images/2025-01-Chernye-solncezashitnye-ochki.jpg",
+      "/images/2023-08-Chernye-solncezashitnye-ochki-side.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -185,8 +185,8 @@ export const products: Product[] = [
     frame: "прозрачная",
     tags: ["зеркало", "прозрачная", "пляж", "горы"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2025/01/Ochki-zerkalnie-sky.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Ochki-prozrachnye.jpg",
+      "/images/2025-01-Ochki-zerkalnie-sky.jpg",
+      "/images/2023-08-Ochki-prozrachnye.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -230,8 +230,8 @@ export const products: Product[] = [
     frame: "чёрная матовая",
     tags: ["зелёные", "поляризация", "квадрат", "вождение"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Blue-Green-Face.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Green-S.jpg",
+      "/images/2023-08-Siberia-Blue-Green-Face.jpg",
+      "/images/2023-08-Siberia-Green-S.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -275,8 +275,8 @@ export const products: Product[] = [
     frame: "чёрная матовая",
     tags: ["розовые", "золото", "гламур", "вождение"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Rose-front.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Siberia-Rose-S.jpg",
+      "/images/2023-08-Siberia-Rose-front.jpg",
+      "/images/2023-08-Siberia-Rose-S.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -302,7 +302,7 @@ export const products: Product[] = [
   // ── TAIGA FLAME ─────────────────────────────────────────────────────────────
   {
     id: 7,
-    woo_id: 0,
+    woo_id: 2792,
     name: "TAIGA FLAME",
     slug: "taiga-flame",
     tagline: "Жёлтые линзы. Максимальный контраст.",
@@ -320,8 +320,8 @@ export const products: Product[] = [
     frame: "чёрная матовая",
     tags: ["жёлтые", "активный отдых", "вода", "контраст"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2025/01/Polyarizatsionnye-ochki-taiga-flame-flont.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Polyarizatsionnye-ochki-taiga-flame.jpg",
+      "/images/2025-01-Polyarizatsionnye-ochki-taiga-flame-flont.jpg",
+      "/images/2023-08-Polyarizatsionnye-ochki-taiga-flame.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -346,7 +346,7 @@ export const products: Product[] = [
   // ── HERMITAGE BLACK ──────────────────────────────────────────────────────────
   {
     id: 8,
-    woo_id: 0,
+    woo_id: 2875,
     name: "HERMITAGE BLACK",
     slug: "hermitage-black",
     tagline: "Круглые. Матовые. Знаковые.",
@@ -364,8 +364,8 @@ export const products: Product[] = [
     frame: "чёрная матовая",
     tags: ["круглые", "чёрные", "город", "вождение"],
     images: [
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Kruglye-ochki.jpg",
-      "https://volksunglasses.com/wp-content/uploads/2023/08/Kruglye-ochki-side.jpg",
+      "/images/2023-08-Kruglye-ochki.jpg",
+      "/images/2023-08-Kruglye-ochki-side.jpg",
     ],
     features: [
       "Поляризационные линзы TAC Polarized",
@@ -391,6 +391,79 @@ export const products: Product[] = [
   },
 ];
 
+import wcData from "./wc-products.json";
+const fetchedProducts: any[] = wcData;
+
+
+export const products: Product[] = [];
+
+rawProducts.forEach((p) => {
+  if (p.woo_id && fetchedProducts.length > 0) {
+    const wooProduct = fetchedProducts.find((wp: any) => wp.id === p.woo_id);
+    if (wooProduct) {
+      const stock = wooProduct.stock_quantity ?? 0;
+      const price = parseInt(wooProduct.price || String(p.price), 10);
+      products.push({
+        ...p,
+        price,
+        priceFormatted: price.toLocaleString("ru-RU") + " ₽",
+        stock,
+        outOfStock: wooProduct.stock_status === "outofstock" || stock === 0,
+      });
+      return;
+    }
+  }
+  products.push(p);
+});
+
+fetchedProducts.forEach((wp: any) => {
+  if (rawProducts.find((p) => p.woo_id === wp.id)) return;
+
+
+  const price = parseInt(wp.price || "0", 10);
+  const stock = wp.stock_quantity ?? 0;
+  const rawDesc = wp.description || wp.short_description || "";
+  const cleanDesc = rawDesc.replace(/<[^>]*>?/gm, "").trim() || "Оригинальная продукция VOLK.";
+
+  // Determine category based on product name
+  let catName = wp.name.split(" ")[0].toUpperCase();
+  if (catName === "VOLK" && wp.name.includes("PACK")) catName = "VOLK PACK";
+  else if (catName === "СМЕННЫЕ") catName = "SOCHI"; // SOCHI lenses
+  else if (catName === "VOLK" && wp.name.includes("OCEAN")) catName = "PONCHO";
+  else if (catName === "SURF") catName = "PONCHO";
+
+  products.push({
+    id: wp.id,
+    woo_id: wp.id,
+    name: wp.name,
+    slug: wp.slug,
+    tagline: wp.categories?.[0]?.name || "Новинка коллекций",
+    price,
+    priceFormatted: price.toLocaleString("ru-RU") + " ₽",
+    originalUrl: wp.permalink,
+    stock,
+    rating: Number(wp.average_rating) || 5.0,
+    reviewCount: wp.rating_count || 0,
+    description: cleanDesc,
+    shortDescription: (wp.short_description || "").replace(/<[^>]*>?/gm, "").trim() || "Оригинальное качество VOLK",
+    category: catName,
+    lens: "Линзы VOLK",
+    frame: "Оправа VOLK",
+    tags: wp.tags?.map((t: any) => t.name) || [],
+    images: wp.images?.length > 0 ? wp.images : ["/images/logo-volk.png"],
+    features: [
+      "Гарантия качества VOLK",
+      "Быстрая доставка"
+    ],
+    specs: [
+      { label: "Модель", value: catName }
+    ],
+    bestseller: wp.featured || false,
+    newArrival: true,
+    outOfStock: wp.stock_status === "outofstock" || stock === 0,
+  });
+});
+
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }
@@ -406,3 +479,4 @@ export function getInStock(): Product[] {
 export function getLowStock(): Product[] {
   return products.filter((p) => p.stock > 0 && p.stock < 3);
 }
+

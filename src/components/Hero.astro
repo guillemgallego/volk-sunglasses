@@ -5,14 +5,17 @@
 <section class="hero" id="hero" aria-label="Главный баннер">
   <!-- BG image -->
   <div class="hero-bg" aria-hidden="true">
-    <img
-      src="https://images.unsplash.com/photo-1531911507543-ed43ca96d59a?w=1920&q=90&fm=webp"
-      alt=""
-      class="hero-bg-img"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    />
+    <picture>
+      <!-- Hero Image provided by user, saved locally -->
+      <img
+        src="/hero-volk.jpg"
+        alt="VOLK Sunglasses Action"
+        class="hero-bg-img"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
     <div class="hero-gradient"></div>
     <!-- Diagonal sweep cut (like Oakley) -->
     <div class="hero-cut" aria-hidden="true"></div>
@@ -21,20 +24,17 @@
   <div class="hero-body container">
     <!-- Eyebrow -->
     <div class="hero-eyebrow">
-      <span class="eyebrow">Коллекция 2025</span>
+      <span class="eyebrow">Коллекция 2026</span>
     </div>
 
     <!-- Headline -->
     <h1 class="hero-headline" id="hero-title">
-      <span class="hero-line">ЗАЩИТИ</span>
-      <span class="hero-line hero-line--accent text-shimmer">ВЗГЛЯД.</span>
-      <span class="hero-line">ПОКОРИ</span>
-      <span class="hero-line">МИР.</span>
+      <span class="hero-line">ИГРАЙ</span>
+      <span class="hero-line hero-line--accent text-shimmer" style="color: var(--color-accent); font-weight: 900;">БЕЗ ПРАВИЛ.</span>
     </h1>
 
     <p class="hero-sub">
-      Поляризационные очки с&nbsp;UV400 для спорта, вождения и&nbsp;путешествий.<br />
-      Разработаны в&nbsp;России. Доставка по&nbsp;всей стране.
+      Премиальные поляризационные линзы TAC UV400 для любого экстрима.
     </p>
 
     <div class="hero-actions">
@@ -86,10 +86,17 @@
 <style>
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 80svh;
   display: flex;
   align-items: center;
   overflow: hidden;
+}
+
+/* On very wide screens, bound the height so it doesn't zoom in excessively */
+@media (min-width: 1400px) {
+  .hero {
+    min-height: 70svh;
+  }
 }
 
 /* Background */
@@ -102,7 +109,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 60% center;
+  object-position: center center;
 }
 .hero-gradient {
   position: absolute;
@@ -130,13 +137,13 @@
 .hero-body {
   position: relative;
   z-index: 2;
-  padding-top: 100px;
-  padding-bottom: 140px;
+  padding-top: 45vh; /* Pushed down slightly below the center logo */
+  padding-bottom: 100px;
   width: 100%;
 }
 
 .hero-eyebrow {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 /* Headline */
@@ -144,12 +151,13 @@
   display: flex;
   flex-direction: column;
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 13vw, 11.5rem);
-  line-height: 0.88;
-  letter-spacing: -0.01em;
+  font-size: clamp(3rem, 7vw, 6rem); /* Reduced further for balance */
+  line-height: 0.9;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  margin-bottom: 2rem;
-  max-width: 800px;
+  margin-bottom: 2.5rem;
+  max-width: 900px;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .hero-line {
   display: block;
@@ -161,12 +169,13 @@
 /* Subtext */
 .hero-sub {
   font-family: var(--font-body);
-  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
-  font-weight: 300;
-  color: rgba(242,240,235,0.65);
-  line-height: 1.75;
-  max-width: 480px;
-  margin-bottom: 2.25rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 500;
+  color: var(--color-volk-white);
+  line-height: 1.5;
+  max-width: 500px;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 /* CTA row */
@@ -243,9 +252,12 @@
 
 /* Mobile adjustments */
 @media (max-width: 640px) {
+  .hero {
+    min-height: 60svh;
+  }
   .hero-body {
-    padding-top: 80px;
-    padding-bottom: 110px;
+    padding-top: 30vh;
+    padding-bottom: 80px;
   }
   .hero-actions {
     flex-direction: column;

@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Политика конфиденциальности | VOLK Sunglasses"
+  description="Официальная политика обработки персональных данных VOLK Sunglasses."
+>
+  <Navbar />
+  
+  <main class="legal-page">
+    <section class="legal-hero minimal">
+      <div class="container hero-container">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="/">Главная</a> <span class="sep">/</span> <span>Конфиденциальность</span>
+        </nav>
+        <h1 class="display-md">Конфиденциальность</h1>
+        <p class="hero-sub">Ваша безопасность и приватность — наш приоритет.</p>
+      </div>
+    </section>
+
+    <div class="container legal-content-grid single-col">
+      <div class="main-body glass-article">
+        <div class="prose">
+          <div class="legal-intro">
+            <p>Настоящая Политика определяет порядок обработки персональных данных и меры по обеспечению их безопасности в соответствии с Федеральным законом №152-ФЗ «О персональных данных».</p>
+          </div>
+
+          <hr class="fade-hr" />
+
+          <h2>1. Общие положения</h2>
+          <p>Оператором персональных данных является владелец веб-сайта <strong>volksunglasses.com</strong>. Главная цель Оператора — соблюдение прав и свобод человека при обработке данных, включая защиту на неприкосновенность частной жизни.</p>
+
+          <h2>2. Какие данные мы собираем</h2>
+          <p>Мы собираем только ту информацию, которая необходима для корректного исполнения заказов:</p>
+          <ul class="clean-list">
+            <li><strong>Имя и Фамилия:</strong> для обращения к вам и передачи в службу доставки.</li>
+            <li><strong>Телефон:</strong> для связи с курьером и SMS-уведомлений о статусе.</li>
+            <li><strong>Email:</strong> для отправки чеков, трек-номеров и подтверждений.</li>
+            <li><strong>Адрес доставки:</strong> для логистического партнера (СДЭК).</li>
+          </ul>
+
+          <h2>3. Использование файлов Cookie</h2>
+          <p>Мы используем Cookies для аналитики (Яндекс.Метрика) и улучшения пользовательского опыта. Вы можете отключить их в настройках своего браузера.</p>
+
+          <h2>4. Права пользователя</h2>
+          <p>Вы имеете право в любой момент:</p>
+          <ul>
+            <li>Запросить информацию о ваших данных, которые мы храним.</li>
+            <li>Попросить об их удалении или исправлении.</li>
+            <li>Отозвать согласие на обработку написав на <a href="mailto:info@volksunglasses.com" class="accent-link">info@volksunglasses.com</a>.</li>
+          </ul>
+
+          <div class="legal-footer">
+            <p>Актуальная версия политики всегда находится на этой странице. <br/> Дата последнего обновления: 13 марта 2026 г.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <Footer />
+</BaseLayout>
+
+<style>
+.legal-page { background: var(--color-volk-black); color: #fff; }
+
+/* Hero Minimal */
+.legal-hero.minimal {
+  padding: 100px 0 60px;
+  background: radial-gradient(circle at 10% 20%, rgba(206, 255, 2, 0.05) 0%, transparent 50%);
+}
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.hero-sub { color: var(--color-volk-muted); font-family: var(--font-body); }
+
+.breadcrumb {
+  display: flex; gap: 0.5rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.2em; color: var(--color-volk-muted); margin-bottom: 1.5rem;
+}
+.breadcrumb a { color: #fff; text-decoration: none; }
+
+/* Article Layout */
+.single-col { max-width: 900px; margin: 0 auto; padding-bottom: 120px; }
+.glass-article {
+  background: rgba(255,255,255,0.02);
+  padding: 5rem;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+
+.prose { font-family: var(--font-body); line-height: 1.8; color: var(--color-volk-muted); font-size: 1.05rem; }
+.prose h2 { font-family: var(--font-heading); color: #fff; font-size: 1.6rem; margin: 3rem 0 1.5rem; border-left: 2px solid var(--color-accent); padding-left: 1.5rem; }
+.prose strong { color: #fff; }
+
+.legal-intro { font-size: 1.2rem; line-height: 1.6; color: #fff; }
+.fade-hr { border: 0; height: 1px; background: linear-gradient(to right, var(--color-accent), transparent); margin: 3rem 0; opacity: 0.3; }
+
+.clean-list { list-style: none; padding: 0; }
+.clean-list li { margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 2px; }
+
+.accent-link { color: var(--color-accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+.legal-footer { margin-top: 5rem; font-size: 0.8rem; opacity: 0.5; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+
+@media (max-width: 640px) {
+  .glass-article { padding: 2rem; }
+}
+</style>

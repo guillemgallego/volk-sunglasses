@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<BaseLayout
+  title="Блог VOLK Sunglasses | Статьи о солнцезащитных очках"
+  description="Полезные статьи, советы по выбору очков, обзоры новых поступлений и интересные факты от VOLK."
+>
+  <Navbar />
+  <main class="page-main" id="main-content">
+    <section class="section">
+      <div class="container">
+        <header class="page-header">
+          <span class="eyebrow">Блог</span>
+          <h1 class="display-lg" style="margin-top: 0.5rem;">Блог VOLK.</h1>
+          <p class="page-sub">Всё о поляризационных очках, стиле и защите глаз.</p>
+        </header>
+
+        <div class="blog-grid">
+          {posts.map((post) => (
+            <article class="blog-card bg-deep glass">
+              {post.data.image && (
+                <div class="blog-thumb">
+                  <a href={`/${post.id}`}>
+                    <img src={post.data.image} alt={post.data.title} loading="lazy" />
+                  </a>
+                </div>
+              )}
+              <div class="blog-content">
+                <span class="blog-date">
+                  {new Date(post.data.date).toLocaleDateString("ru-RU", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+                <h2 class="blog-title">
+                  <a href={`/${post.id}`}>{post.data.title}</a>
+                </h2>
+                <p class="blog-excerpt">{post.data.excerpt}</p>
+                <a href={`/${post.id}`} class="btn btn-outline-gold btn-sm blog-btn">Читать далее →</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+.page-main { padding-top: 4rem; padding-bottom: 4rem; }
+.page-header { margin-bottom: 4rem; }
+.page-sub { font-family: var(--font-body); font-size: 0.88rem; color: var(--color-volk-muted); margin-top: 1rem; max-width: 500px; }
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-volk-border);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent-dim);
+}
+
+.blog-thumb {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-volk-border);
+}
+
+.blog-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.blog-card:hover .blog-thumb img {
+  transform: scale(1.05);
+}
+
+.blog-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.blog-date {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-volk-subtle);
+  margin-bottom: 0.75rem;
+}
+
+.blog-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-volk-white);
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.blog-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-title a:hover {
+  color: var(--color-accent);
+}
+
+.blog-excerpt {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-volk-muted);
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-btn {
+  align-self: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+}
+
+@media (max-width: 640px) {
+  .blog-grid { grid-template-columns: 1fr; }
+}
+</style>

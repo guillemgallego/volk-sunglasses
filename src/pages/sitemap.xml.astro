@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import { products } from "../data/products";
+
+const BASE = "https://volksunglasses.com";
+const today = new Date().toISOString().split("T")[0];
+
+const staticPages = [
+  { url: "/",                     priority: "1.0",  changefreq: "weekly" },
+  { url: "/katalog",              priority: "0.95", changefreq: "daily" },
+  { url: "/o-brende",             priority: "0.75", changefreq: "monthly" },
+  { url: "/kontakty",             priority: "0.70", changefreq: "monthly" },
+  { url: "/dostavka-oplata",      priority: "0.65", changefreq: "monthly" },
+  { url: "/vozvrat-obmen-tovara", priority: "0.60", changefreq: "monthly" },
+  { url: "/blog",                 priority: "0.85", changefreq: "weekly" },
+  { url: "/privacy-policy",       priority: "0.40", changefreq: "yearly" },
+];
+
+const productUrls = products.map(p => ({
+  url: `/${p.slug}`,
+  priority: p.bestseller ? "0.90" : "0.80",
+  changefreq: "weekly",
+}));
+
+const posts = await getCollection("blog");
+const blogUrls = posts.map(p => ({
+  url: `/${p.id}`,
+  priority: "0.70",
+  changefreq: "monthly",
+}));
+
+const allUrls = [...staticPages, ...productUrls, ...blogUrls];
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {allUrls.map(({ url, priority, changefreq }) => (
+    <url>
+      <loc>{BASE}{url}</loc>
+      <lastmod>{today}</lastmod>
+      <changefreq>{changefreq}</changefreq>
+      <priority>{priority}</priority>
+    </url>
+  ))}
+</urlset>

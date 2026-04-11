@@ -1,0 +1,277 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Доставка и оплата | VOLK Sunglasses"
+  description="Информация о доставке и оплате. Доставляем очки по всей России и СНГ."
+>
+  <Navbar />
+  
+  <main class="legal-page">
+    <section class="legal-hero">
+      <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?q=80&w=2070&auto=format&fit=crop" alt="" class="bg-img" />
+        <div class="bg-overlay"></div>
+      </div>
+      <div class="container hero-container">
+        <nav class="breadcrumb" aria-label="Хлебные крошки">
+          <a href="/">Главная</a> <span class="sep">/</span> <span>Доставка и оплата</span>
+        </nav>
+        <h1 class="display-lg text-shimmer">Сервис и логистика</h1>
+        <p class="hero-sub">Прозрачные условия, быстрая доставка и безопасные платежи.</p>
+      </div>
+    </section>
+
+    <div class="container legal-content-grid">
+      <!-- Main Content -->
+      <div class="main-body">
+        
+        <!-- Delivery Section -->
+        <section class="content-block glass" style="--delay: 0.1s">
+          <div class="block-header">
+            <span class="block-num">01</span>
+            <h2>Доставка</h2>
+          </div>
+          <div class="prose">
+            <p>Мы доставляем очки <strong>VOLK</strong> во все регионы России и страны СНГ. Наша цель — обеспечить максимальную сохранность и скорость получения вашего заказа.</p>
+            
+            <div class="carrier-box">
+              <div class="carrier-logo">СДЭК</div>
+              <p>Наш основной партнер по логистике — компания СДЭК, лидер экспресс-доставки.</p>
+            </div>
+
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Санкт-Петербург</span>
+                <span class="spec-value">1-2 дня</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Москва</span>
+                <span class="spec-value">2-3 дня</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Регионы РФ</span>
+                <span class="spec-value">3-7 дней</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">СНГ</span>
+                <span class="spec-value">от 5 дней</span>
+              </div>
+            </div>
+
+            <h3>Варианты получения</h3>
+            <ul class="feature-list">
+              <li><strong>Пункты выдачи (ПВЗ):</strong> Оптимальный выбор. Более 3000 точек по всей стране.</li>
+              <li><strong>Курьерская доставка:</strong> Лично в руки по удобному вам адресу.</li>
+            </ul>
+
+            <div class="tracking-cta glass-dark">
+              <div class="cta-icon">🚚</div>
+              <div class="cta-body">
+                <h4>Отслеживание заказа</h4>
+                <p>После отправки вы получите трек-номер для контроля пути посылки.</p>
+                <a href="https://www.cdek.ru/ru/tracking" target="_blank" class="text-link">Проверить на сайте СДЭК →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Payment Section -->
+        <section class="content-block glass" style="--delay: 0.2s">
+          <div class="block-header">
+            <span class="block-num">02</span>
+            <h2>Оплата</h2>
+          </div>
+          <div class="prose">
+            <p>Все операции на нашем сайте проводятся через защищенный шлюз <strong>ЮKassa</strong>. Мы не храним данные ваших карт.</p>
+            
+            <div class="payment-methods">
+              <div class="method"><span>Банковские карты</span></div>
+              <div class="method"><span>СБП (qr-коды)</span></div>
+              <div class="method"><span>SberPay</span></div>
+              <div class="method"><span>ЮMoney</span></div>
+            </div>
+
+            <h3>Безопасность</h3>
+            <p>Оплата защищена по стандарту PCI DSS. Используется двухфакторная аутентификация пользователя (3D Secure).</p>
+            
+            <div class="alert-premium">
+              <div class="alert-line"></div>
+              <p>Вы получаете электронный чек на почту сразу после успешной транзакции согласно ФЗ-54.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sticky-side">
+          <div class="support-card glass">
+            <h3>Нужна помощь?</h3>
+            <p>Если у вас возникли сложности с оформлением или способами доставки, напишите нам.</p>
+            <div class="side-actions">
+              <a href="https://wa.me/79602737038" class="btn btn-gold btn-sm">WhatsApp</a>
+              <a href="/kontakty" class="text-link">Все контакты</a>
+            </div>
+          </div>
+          <div class="quick-nav">
+            <a href="#delivery" class="nav-item">01. Доставка</a>
+            <a href="#payment" class="nav-item">02. Оплата</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  
+  <Footer />
+</BaseLayout>
+
+<style>
+.legal-page { background: var(--color-volk-black); color: #fff; }
+
+/* Hero */
+.legal-hero {
+  position: relative;
+  padding: 140px 0 80px;
+  text-align: left;
+}
+.hero-bg { position: absolute; inset: 0; }
+.bg-img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.3; filter: grayscale(1);
+}
+.bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--color-volk-black));
+}
+.hero-container { position: relative; z-index: 1; }
+
+.breadcrumb {
+  display: flex; gap: 0.5rem; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.2em; color: var(--color-volk-muted); margin-bottom: 1.5rem;
+}
+.breadcrumb a { color: #fff; text-decoration: none; }
+.breadcrumb .sep { opacity: 0.3; }
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+}
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--color-volk-muted);
+  max-width: 500px;
+}
+
+/* Content Layout */
+.legal-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 4rem;
+  padding-bottom: 120px;
+}
+
+.content-block {
+  margin-bottom: 2rem;
+}
+.block-header {
+  display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2.5rem;
+}
+.block-num {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+.block-header h2 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.prose {
+  font-family: var(--font-body);
+  line-height: 1.8;
+  color: var(--color-volk-muted);
+  font-size: 1.05rem;
+}
+.prose strong { color: #fff; }
+.prose h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: #fff;
+  margin: 2.5rem 0 1rem;
+}
+
+.carrier-box {
+  background: #fff;
+  color: #000;
+  padding: 2rem;
+  margin: 2rem 0;
+  display: flex; gap: 2rem; align-items: center;
+}
+.carrier-logo {
+  font-size: 2rem; font-weight: 900; letter-spacing: -1px; border-right: 2px solid #000; padding-right: 1.5rem;
+}
+
+.specs-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0;
+}
+.spec-item {
+  padding: 1.25rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+}
+.spec-label { display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--color-volk-subtle); margin-bottom: 0.5rem; }
+.spec-value { font-size: 1.25rem; font-weight: 700; color: #fff; }
+
+.feature-list { list-style: none; padding: 0; }
+.feature-list li { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; }
+.feature-list li::before {
+  content: ''; position: absolute; left: 0; top: 0.6rem; width: 8px; height: 1px; background: var(--color-accent);
+}
+
+.tracking-cta {
+  display: flex; gap: 1.5rem; padding: 2rem; margin-top: 3rem; background: rgba(206,255,2,0.05); border: 1px solid rgba(206,255,2,0.1);
+}
+.cta-icon { font-size: 2rem; }
+.cta-body h4 { margin: 0 0 0.5rem; color: #fff; }
+.text-link { color: var(--color-accent); font-weight: 700; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+/* Payment methods */
+.payment-methods {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0;
+}
+.method {
+  padding: 0.75rem 1.25rem; border: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; font-weight: 700;
+}
+
+.alert-premium { position: relative; padding-left: 1.5rem; margin-top: 2rem; font-style: italic; }
+.alert-line { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--color-accent); }
+
+/* Sidebar */
+.sticky-side { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 2rem; }
+.support-card h3 { margin: 0 0 1rem; font-size: 1.1rem; color: #fff; }
+.support-card p { font-size: 0.88rem; color: var(--color-volk-muted); margin-bottom: 1.5rem; }
+.side-actions { display: flex; flex-direction: column; gap: 1rem; }
+.quick-nav { display: flex; flex-direction: column; }
+.nav-item {
+  padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--color-volk-subtle); text-decoration: none;
+  font-family: var(--font-heading); font-size: 0.9rem; transition: color 0.2s;
+}
+.nav-item:hover { color: var(--color-accent); }
+
+.glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); padding: 4rem; border-radius: 4px; }
+
+@media (max-width: 1024px) {
+  .legal-content-grid { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .glass { padding: 2rem; }
+}
+</style>

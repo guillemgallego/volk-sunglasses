@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import { products } from "../data/products";
+import ProductPage from "../components/ProductPage.astro";
+import BlogPage from "../components/BlogPage.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  
+  const blogPaths = posts.map(post => ({
+    params: { slug: post.id },
+    props: { type: 'blog', item: post },
+  }));
+  
+  const productPaths = products.map(p => ({
+    params: { slug: p.slug },
+    props: { type: 'product', item: p },
+  }));
+  
+  return [...blogPaths, ...productPaths];
+}
+
+const { type, item } = Astro.props;
+---
+{type === 'product' ? <ProductPage product={item} /> : <BlogPage post={item} />}
