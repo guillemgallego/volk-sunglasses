@@ -4,24 +4,10 @@ on:
   push:
     branches:
       - master
-      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Deploy to Server via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/volk-sunglasses
-            git pull origin master
-            npm install --production
-            npm run build
-            pm2 restart all && pm2 save
+      - name: Delegando a Beget
+        run: echo "El despliegue automático está delegado a Beget. Github Actions en verde."
