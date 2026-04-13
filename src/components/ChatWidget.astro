@@ -1,0 +1,177 @@
+---
+---
+<div id="volk-chat-widget" class="fixed bottom-6 right-6 z-50 font-body">
+  <!-- Interactive Bubble -->
+  <button id="volk-chat-toggle" aria-label="Open chat" class="bg-[#ceff02] text-[#080808] w-14 h-14 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(206,255,2,0.3)] hover:scale-105 active:scale-95 transition-all focus:outline-none border-none cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7.9 20A9 9 0 1 0 5 17.1L3 21l3.9-2z"></path>
+    </svg>
+  </button>
+
+  <!-- Chat Window -->
+  <div id="volk-chat-window" class="hidden absolute bottom-20 right-0 w-[calc(100vw-3rem)] sm:w-[380px] h-[70vh] max-h-[580px] min-h-[400px] flex-col bg-[#0d0d0d] border border-[#222] rounded-xl shadow-2xl transition-all origin-bottom-right z-50 overflow-hidden noise">
+    
+    <!-- Header -->
+    <div class="bg-[#131313] p-4 border-b border-[#222] flex justify-between items-center relative z-10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#ceff02] flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080808" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+        </div>
+        <div>
+          <h3 class="font-display text-lg text-[#f5f5f0] m-0 tracking-wider">VOLK ASSISTANT</h3>
+          <p class="text-[#686868] text-[10px] m-0 flex items-center gap-1 uppercase font-bold tracking-widest">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#ceff02] animate-pulse"></span>
+            Live
+          </p>
+        </div>
+      </div>
+      <button id="volk-chat-close" class="text-[#686868] hover:text-[#ceff02] transition-colors border-none bg-transparent cursor-pointer p-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="volk-chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-4 scroll-smooth">
+      <div class="flex justify-start animate-fadeUp">
+        <div class="bg-[#1a1a1a] border border-[#303030] text-[#f5f5f0] text-sm px-4 py-3 rounded-lg max-w-[85%] leading-relaxed font-body">
+            👋 Привет! Я — ИИ-помощник VOLK. <br><br>Как я могу помочь вам в выборе идеальных очков сегодня?
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="p-3 bg-[#131313] border-t border-[#222]">
+      <form id="volk-chat-form" class="relative flex items-center">
+        <input 
+          type="text" 
+          id="volk-chat-input" 
+          placeholder="Спросите о моделях, доставке..." 
+          class="w-full bg-[#1a1a1a] border border-[#303030] text-[#f5f5f0] text-sm rounded-lg pl-4 pr-12 py-3 focus:outline-none focus:border-[#ceff02] transition-all placeholder:text-[#383838]"
+          autocomplete="off"
+        >
+        <button 
+          type="submit" 
+          id="volk-chat-submit"
+          class="absolute right-1.5 p-2 bg-[#ceff02] text-[#080808] rounded-md transition-all active:scale-95 disabled:opacity-50 cursor-pointer border-none flex items-center justify-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  let isChatOpen = false;
+  let chatHistory = [];
+  
+  const toggleBtn = document.getElementById('volk-chat-toggle');
+  const closeBtn  = document.getElementById('volk-chat-close');
+  const chatWindow= document.getElementById('volk-chat-window');
+  const chatForm  = document.getElementById('volk-chat-form');
+  const chatInput = document.getElementById('volk-chat-input');
+  const chatMessages = document.getElementById('volk-chat-messages');
+
+  function toggleChat() {
+    isChatOpen = !isChatOpen;
+    chatWindow.style.display = isChatOpen ? 'flex' : 'none';
+    if (isChatOpen) {
+        chatInput.focus();
+        chatMessages.scrollTo({ top: chatMessages.scrollHeight });
+    }
+  }
+
+  toggleBtn.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+
+  function appendMessage(text, isUser) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-fadeUp`;
+    
+    msgDiv.innerHTML = `
+      <div class="text-sm px-4 py-3 rounded-lg max-w-[85%] leading-relaxed ${
+        isUser 
+          ? 'bg-[#ceff02] text-[#080808] font-bold' 
+          : 'bg-[#1a1a1a] border border-[#303030] text-[#f5f5f0]'
+      }">
+        ${text.replace(/\n/g, '<br>')}
+      </div>
+    `;
+    
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+  }
+
+  function appendLoading() {
+    const msgDiv = document.createElement('div');
+    msgDiv.id = 'volk-chat-loading';
+    msgDiv.className = 'flex justify-start animate-fadeUp';
+    msgDiv.innerHTML = `
+      <div class="bg-[#1a1a1a] border border-[#303030] px-4 py-3 rounded-lg">
+        <div class="flex gap-1">
+          <div class="w-1.5 h-1.5 bg-[#ceff02] rounded-full animate-bounce"></div>
+          <div class="w-1.5 h-1.5 bg-[#ceff02] rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+          <div class="w-1.5 h-1.5 bg-[#ceff02] rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+        </div>
+      </div>
+    `;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+  }
+
+  chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    chatInput.value = '';
+    appendMessage(message, true);
+    appendLoading();
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, history: chatHistory })
+      });
+
+      const data = await response.json();
+      document.getElementById('volk-chat-loading')?.remove();
+
+      if (!response.ok) throw new Error(data.error);
+
+      appendMessage(data.response, false);
+      chatHistory.push({ role: 'user', parts: [{ text: message }] });
+      chatHistory.push({ role: 'model', parts: [{ text: data.response }] });
+
+    } catch (error) {
+      document.getElementById('volk-chat-loading')?.remove();
+      appendMessage("Извините, произошла ошибка подключения. Проверьте конфигурацию .env.", false);
+    }
+  });
+</script>
+
+<style>
+/* Local scoped styles to match VOLK theme if not already global */
+#volk-chat-window.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.2;
+}
+.animate-fadeUp {
+  animation: fadeUp 0.3s ease-out both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>

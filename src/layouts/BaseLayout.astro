@@ -1,6 +1,8 @@
 ---
 // BaseLayout.astro
 import '../styles/global.css';
+import ChatWidget from '../components/ChatWidget.astro';
+
 interface Props {
   title: string;
   description: string;
@@ -30,6 +32,8 @@ const siteName = "VOLK Sunglasses";
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ru-RU" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
 
     <!-- Open Graph -->
     <meta property="og:type" content={type} />
@@ -95,6 +99,6 @@ const siteName = "VOLK Sunglasses";
   </head>
   <body>
     <slot />
+    <ChatWidget />
   </body>
 </html>
-
