@@ -57,6 +57,22 @@ import Footer from "../components/Footer.astro";
       </div>
     </section>
 
+    <!-- ②.5 FOUNDER -->
+    <section class="bp-founder container reveal" aria-label="Основатель">
+      <div class="bp-founder__inner">
+        <div class="bp-founder__photo">
+          <img src="/images/founder.jpg" alt="Ярослав Кецерас - Основатель VOLK Sunglasses" loading="lazy" />
+        </div>
+        <div class="bp-founder__text">
+          <h3 class="bp-h3">Ярослав Кецерас</h3>
+          <span class="bp-founder__role">Основатель VOLK Sunglasses</span>
+          <p>
+            «В каждом путешествии я сталкивался с проблемой: дорогие очки жалко сломать, а дешёвые не защищают глаза и портят зрение. Это подтолкнуло меня к созданию бренда, где премиальное качество и надёжность становятся доступными каждому. Мы создаём продукт, который я с гордостью ношу сам».
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- ③ STATS BAR -->
     <div class="bp-stats">
       <div class="container bp-stats__grid">
@@ -192,6 +208,22 @@ import Footer from "../components/Footer.astro";
       </div>
     </section>
   </main>
+
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ярослав Кецерас",
+      "jobTitle": "Основатель",
+      "image": "https://volksunglasses.com/images/founder.jpg",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "VOLK Sunglasses",
+        "url": "https://volksunglasses.com"
+      }
+    }
+  </script>
+
   <Footer />
 </BaseLayout>
 
@@ -225,6 +257,12 @@ import Footer from "../components/Footer.astro";
   text-transform: uppercase;
   color: var(--color-volk-white);
   margin: 0.75rem 0 1.5rem;
+}
+.bp-h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-volk-white);
+  margin-bottom: 0.25rem;
 }
 .bp-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -313,6 +351,31 @@ import Footer from "../components/Footer.astro";
   margin-bottom: 1rem;
 }
 .bp-split__text strong { color: var(--color-volk-white); font-weight: 700; }
+
+/* ── ②.5 FOUNDER ── */
+.bp-founder { margin-bottom: 5rem; }
+.bp-founder__inner {
+  display: flex; gap: 2.5rem; align-items: center;
+  background: var(--color-volk-surface);
+  border: 1px solid var(--color-volk-border);
+  padding: 2.5rem; border-radius: 4px;
+}
+.bp-founder__photo {
+  width: 140px; height: 140px; flex-shrink: 0;
+  border-radius: 50%; overflow: hidden;
+  border: 2px solid var(--color-accent);
+}
+.bp-founder__photo img { width: 100%; height: 100%; object-fit: cover; }
+.bp-founder__text { display: flex; flex-direction: column; }
+.bp-founder__role {
+  font-family: var(--font-body); font-size: 0.75rem; 
+  color: var(--color-accent); text-transform: uppercase; 
+  letter-spacing: 0.08em; margin-bottom: 1rem; font-weight: 700;
+}
+.bp-founder__text p {
+  font-family: var(--font-body); font-size: 0.95rem; 
+  color: rgba(255,255,255,.7); line-height: 1.7; font-style: italic;
+}
 
 /* ── ③ STATS BAR ── */
 .bp-stats {
@@ -506,6 +569,7 @@ import Footer from "../components/Footer.astro";
   .bp-split { grid-template-columns: 1fr; gap: 3rem; }
   .bp-split__photo { aspect-ratio: 16/9; }
   .bp-split__stat { left: 1rem; bottom: -1.5rem; }
+  .bp-founder__inner { flex-direction: column; text-align: center; }
   .bp-stats__grid { grid-template-columns: repeat(2,1fr); }
   .bp-stat:nth-child(2) { border-right: none; }
   .bp-stat:nth-child(1), .bp-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.05); }
