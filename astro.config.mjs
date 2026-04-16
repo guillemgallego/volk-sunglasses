@@ -16,5 +16,11 @@ export default defineConfig({
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',
+  },
+  redirects: {
+    '/shop': '/katalog',
+    '/my-account': 'https://api.volksunglasses.com/my-account',
+    '/product-category/[...slug]': '/katalog',
+    '/product/[...slug]': '/[slug]',
   }
 });
