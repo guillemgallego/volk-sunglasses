@@ -58,12 +58,38 @@ const schema = {
   },
 };
 
-const seoTitle = `${product.name} — ${product.priceFormatted} | Поляризационные очки VOLK`;
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://volksunglasses.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Каталог",
+      "item": "https://volksunglasses.com/katalog"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": product.name,
+      "item": `https://volksunglasses.com/${product.slug}`
+    }
+  ]
+};
+
+const seoTitle = `${product.name} | Поляризационные очки VOLK Sunglasses`;
 const seoDescription = `Купить ${product.name}: ${product.shortDescription}. Цена ${product.priceFormatted}. ${product.outOfStock ? "Следите за появлением в наличии." : "В наличии. "}Поляризация, UV400. Бесплатная доставка по России.`;
 ---
 
 <BaseLayout title={seoTitle} description={seoDescription} image={product.images[0]} type="product">
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <Navbar />
 
   <main class="pdp-main" id="main-content" itemscope itemtype="https://schema.org/Product">
@@ -206,6 +232,11 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
           <link itemprop="availability" href={isOutOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"} />
           <link itemprop="itemCondition" href="https://schema.org/NewCondition" />
           <span class="pdp-price-note">НДС включён · Бесплатная доставка от этой суммы</span>
+          <div class="checkout-trust-mini">
+            <span class="trust-item">🛡️ Безопасная оплата</span>
+            <span class="trust-item">🚚 СДЭК / Почта</span>
+            <span class="trust-item">🔄 14 дней на возврат</span>
+          </div>
         </div>
 
         <!-- Stock indicator -->
@@ -340,6 +371,14 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
     <section class="pdp-details" aria-label="Описание и характеристики">
       <div class="container pdp-details-grid">
         <div class="detail-block">
+          <h2 class="detail-title">Для кого эта модель?</h2>
+          <p class="detail-body">
+            {product.slug.includes('siberia') ? 
+              "Модель SIBERIA создана для тех, кто ценит классическую квадратную форму в современном исполнении. Она идеально подходит для вождения автомобиля благодаря антибликовому фильтру TAC Polarized, который убирает блики от мокрого асфальта и лобовых стёкол. Также это отличный выбор для активного отдыха на природе, походов в горы и прогулок у воды, где важна максимальная защита от ультрафиолета." :
+              "Коллекция TAIGA — это универсальное решение для повседневной носки и спорта. Легкая и прочная оправа практически не чувствуется на лице, что делает их идеальными для длительных поездок за рулем, утренних пробежек или велопрогулок. Поляризация 3-й категории обеспечит четкость изображения даже в самый яркий солнечный день, защищая глаза от переутомления."
+            }
+          </p>
+          
           <h2 class="detail-title">Описание</h2>
           <p class="detail-body" itemprop="description">{product.description}</p>
           <div class="detail-features">
@@ -617,6 +656,20 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
   font-family: var(--font-body);
   font-size: 0.68rem;
   color: var(--color-volk-subtle);
+}
+.checkout-trust-mini {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.trust-item {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  color: var(--color-volk-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 500;
 }
 
 /* Stock */
