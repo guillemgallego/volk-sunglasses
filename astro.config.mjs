@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://volksunglasses.com',
   output: 'static',
@@ -21,6 +20,6 @@ export default defineConfig({
     '/shop': '/katalog',
     '/my-account': 'https://api.volksunglasses.com/my-account',
     '/product-category/[...slug]': '/katalog',
-    '/product/[...slug]': '/[slug]',
+    '/product/[...slug]': '/katalog',
   }
 });
