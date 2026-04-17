@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código
+      - name: Descargar codigo
         uses: actions/checkout@v4
 
       - name: Configurar Node.js 22
@@ -28,9 +28,9 @@ jobs:
       - name: Subir archivos al VPS
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          source: "dist/*"
-          target: "/var/www/html"
+          host: ${{ secrets.BEGET_HOST }}
+          username: ${{ secrets.BEGET_USER }}
+          key: ${{ secrets.BEGET_SSH_KEY }}
+          source: dist/*
+          target: ${{ secrets.BEGET_PATH }}
           strip_components: 1
