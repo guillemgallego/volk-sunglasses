@@ -29,6 +29,42 @@ const related = products
   .filter(p => p.slug !== product.slug && !p.outOfStock)
   .slice(0, 4);
 
+// Blog links related to this product
+const blogByCategory: Record<string, { slug: string; title: string }[]> = {
+  Siberia: [
+    { slug: "polyarizacionnye-ochki-kak-vybrat", title: "Поляризационные очки — как выбрать" },
+    { slug: "kak-vybrat-solncezashitnye-ochki", title: "Как выбрать солнцезащитные очки?" },
+    { slug: "solntsezashitnye-ochki-dlya-voditelei", title: "Солнцезащитные очки для водителей" },
+  ],
+  Taiga: [
+    { slug: "kak-vybrat-solncezashitnye-ochki", title: "Как выбрать солнцезащитные очки?" },
+    { slug: "formy-solncezashitnyh-ochkov", title: "Формы солнцезащитных очков" },
+    { slug: "luchshye-solntsezashitnye-ochki-dlya-zanyatii-sportom", title: "Лучшие очки для занятий спортом" },
+  ],
+  Hermitage: [
+    { slug: "solntsezashitnye-ochki-krugloi-formy", title: "Солнцезащитные очки круглой формы" },
+    { slug: "luchshie-ochki-dlya-muzhchin", title: "Лучшие солнцезащитные очки для мужчин" },
+    { slug: "kakie-solntsezashitnye-ochki-mode", title: "Какие солнцезащитные очки в моде?" },
+  ],
+};
+
+const tagBlogLinks: Record<string, { slug: string; title: string }> = {
+  вождение: { slug: "solntsezashitnye-ochki-dlya-voditelei", title: "Очки для водителей" },
+  спорт:    { slug: "luchshye-solntsezashitnye-ochki-dlya-zanyatii-sportom", title: "Очки для спорта" },
+  пляж:     { slug: "kak-vybrat-solncezashitnye-ochki", title: "Как выбрать солнцезащитные очки?" },
+  горы:     { slug: "ochki-dlya-pohodov", title: "Очки для походов" },
+  вода:     { slug: "ochki-dlya-vodnyh-vidov-s", title: "Очки для водных видов спорта" },
+  жёлтые:  { slug: "ochki-s-zheltymi-linzami", title: "Очки с жёлтыми линзами" },
+};
+
+const catPosts = blogByCategory[product.category] ?? blogByCategory["Taiga"];
+const tagExtraPosts = product.tags
+  .filter(t => tagBlogLinks[t])
+  .map(t => tagBlogLinks[t])
+  .filter(p => !catPosts.some(c => c.slug === p.slug))
+  .slice(0, 1);
+const relatedBlogPosts = [...catPosts, ...tagExtraPosts].slice(0, 3);
+
 // JSON-LD Schema
 const schema = {
   "@context": "https://schema.org",
@@ -87,7 +123,7 @@ const seoTitle = `${product.name} | Поляризационные очки VOLK
 const seoDescription = `Купить ${product.name}: ${product.shortDescription}. Цена ${product.priceFormatted}. ${product.outOfStock ? "Следите за появлением в наличии." : "В наличии. "}Поляризация, UV400. Бесплатная доставка по России.`;
 ---
 
-<BaseLayout title={seoTitle} description={seoDescription} image={product.images[0]} type="product">
+<BaseLayout title={seoTitle} description={seoDescription} image={product.images[0].startsWith("http") ? product.images[0] : `https://volksunglasses.com${product.images[0]}`} type="product">
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <Navbar />
@@ -390,34 +426,38 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
             ))}
           </div>
 
-          <!-- Hardcoded Reviews Block -->
-          <div class="pdp-reviews-block" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1)">
-            <h3 class="detail-title">Отзывы покупателей <span style="font-size: 0.8em; color: var(--color-accent); font-weight: 500">(4.8 ⭐)</span></h3>
-            
-            <div class="review-item" style="margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px dashed rgba(255,255,255,0.05)">
-              <div style="display:flex; justify-content:space-between; margin-bottom: 0.3rem">
-                <strong style="font-family: var(--font-body); font-size: 0.9rem">Алексей С. <span style="color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-left: 5px">✓ Купил эту модель</span></strong>
-                <span style="color:var(--color-accent); letter-spacing: 2px">★★★★★</span>
-              </div>
-              <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-family: var(--font-body)">Отличные очки, легкие и поляризация реально работает. Брал для вождения — идеальные, бликов вообще нет.</p>
-            </div>
-            
-            <div class="review-item" style="margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px dashed rgba(255,255,255,0.05)">
-              <div style="display:flex; justify-content:space-between; margin-bottom: 0.3rem">
-                <strong style="font-family: var(--font-body); font-size: 0.9rem">Мария Д. <span style="color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-left: 5px">✓ Купила эту модель</span></strong>
-                <span style="color:var(--color-accent); letter-spacing: 2px">★★★★★</span>
-              </div>
-              <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-family: var(--font-body)">Смотрятся очень стильно. Упаковка топ, в комплекте плотный чехол-мешочек и салфетка.</p>
-            </div>
-            
-            <div class="review-item">
-              <div style="display:flex; justify-content:space-between; margin-bottom: 0.3rem">
-                <strong style="font-family: var(--font-body); font-size: 0.9rem">Иван В. <span style="color: rgba(255,255,255,0.3); font-size: 0.75rem; margin-left: 5px">✓ Купил эту модель</span></strong>
-                <span style="color:var(--color-accent); letter-spacing: 2px">★★★★☆</span>
-              </div>
-              <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; font-family: var(--font-body)">Все супер, только доставка СДЭК задержалась на 1 день. Но сами очки бомба за свои деньги.</p>
-            </div>
+          <!-- Reviews link -->
+          <div class="pdp-reviews-link" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1)">
+            <h3 class="detail-title">Отзывы покупателей <span style="font-size: 0.8em; color: var(--color-accent); font-weight: 500">({product.reviewCount} отзывов · {product.rating} ⭐)</span></h3>
+            <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--color-volk-muted); line-height: 1.7;">
+              Реальные отзывы покупателей доступны на странице товара:
+            </p>
+            <a
+              href={`${product.originalUrl}#reviews`}
+              class="pdp-reviews-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Читать отзывы на volksunglasses.com →
+            </a>
           </div>
+
+          <!-- Читайте также -->
+          {relatedBlogPosts.length > 0 && (
+            <div class="pdp-blog-links">
+              <h3 class="detail-title">Читайте также</h3>
+              <ul class="pdp-blog-list">
+                {relatedBlogPosts.map(p => (
+                  <li>
+                    <a href={`/${p.slug}`} class="pdp-blog-link">
+                      <span class="pdp-blog-link-icon" aria-hidden="true">→</span>
+                      {p.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         <div class="detail-block">
           <h2 class="detail-title">Технические характеристики</h2>
@@ -1035,6 +1075,43 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Reviews link */
+.pdp-reviews-btn {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s;
+}
+.pdp-reviews-btn:hover { opacity: 0.75; }
+
+/* Blog links */
+.pdp-blog-links { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
+.pdp-blog-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.pdp-blog-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-volk-muted);
+  transition: color 0.2s;
+  text-decoration: none;
+}
+.pdp-blog-link:hover { color: var(--color-accent); }
+.pdp-blog-link-icon { color: var(--color-accent); font-size: 0.7rem; flex-shrink: 0; }
 
 /* Related */
 .pdp-related {

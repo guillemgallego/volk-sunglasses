@@ -14,56 +14,10 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
 
 <BaseLayout
   title="VOLK Sunglasses — Поляризационные солнцезащитные очки с UV400 | Россия"
+  og_title="VOLK — Поляризационные очки UV400 | Россия"
   description="Поляризационные солнцезащитные очки VOLK для спорта, вождения и путешествий. Защита UV400, антибликовые линзы TAC Polarized. Бесплатная доставка по России от 2 350 ₽."
+  og_description="Очки VOLK: UV400, TAC Polarized, 3-я категория. Для спорта, вождения, путешествий. Бесплатная доставка по России."
 >
-  <script type="application/ld+json" is:inline>
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Какая категория линз используется в очках VOLK?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Во всех очках VOLK используются линзы 3-й категории затемнения. Они поглощают 82–92% видимого света — идеально для яркого солнца, пляжа, гор и вождения днём."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Есть ли защита от ультрафиолета и бликов?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Да. Все модели оснащены защитой UV400 и поляризационным фильтром. Это блокирует вредные лучи UVA и UVB, устраняет блики y снижает нагрузку на глаза при ярком освещении."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Как отследить заказ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Сразу после оформления заказа вы получите трекинг-номер на email. Отследить посылку можно через сайт СДЭК. Если письмо не пришло — напишите нам в WhatsApp."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Как ухаживать за очками?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Храните очки в чехле из микрофибры (идёт в комплекте). Не оставляйте на солнце или в горячем автомобиле. Избегайте контакта с твёрдыми поверхностями и бытовой химией."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Сколько ждать доставку?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Срок зависит от региона. Доставляем по России, Беларуси и Казахстану через СДЭК. Подробнее — на странице доставки."
-          }
-        }
-      ]
-    }
-  </script>
   <Navbar />
   <main id="main-content">
     <!-- ① HERO ─────────────────────────────────────────────── -->
@@ -204,6 +158,44 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
           <a href="/katalog" class="btn btn-gold" id="lifestyle-catalog">
             Выбрать очки
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤b SEO TEXT BLOCK ────────────────────────────────── -->
+    <section class="seo-text-section" aria-label="О технологии VOLK">
+      <div class="container seo-text-inner">
+        <div class="seo-text-col">
+          <h2 class="seo-text-h2">Поляризационные очки VOLK: технология, которая работает</h2>
+          <p>
+            Солнцезащитные очки VOLK созданы для тех, кто проводит время активно — за рулём, на воде, в горах или просто на летних улицах города. В основе каждой модели — линзы <strong>TAC Polarized</strong> 3-й категории затемнения, которые поглощают 82–92% видимого света и полностью блокируют ультрафиолет классов UVA и UVB (стандарт <strong>UV400</strong>).
+          </p>
+          <p>
+            Поляризационный фильтр устраняет блики, отражённые от мокрого асфальта, воды и стёкол. Это критично при вождении: горизонтально поляризованный свет, вызывающий ослепляющие отблески, нейтрализуется полностью. Водители отмечают, что изображение становится более контрастным и чётким, а усталость глаз за долгую поездку снижается заметно.
+          </p>
+          <p>
+            Коллекции <strong>TAIGA</strong> и <strong>SIBERIA</strong> — квадратная форма оправы, подходящая большинству форм лица. Сверхлёгкий пластик дужек (11–13 г) не давит на виски даже при многочасовой носке. <strong>HERMITAGE</strong> — классическая круглая форма для городского стиля. Все модели унисекс: идеально как для мужчин, так и для женщин.
+          </p>
+        </div>
+        <div class="seo-text-col">
+          <h3 class="seo-text-h3">Что входит в комплект</h3>
+          <ul class="seo-text-list">
+            <li>Очки с поляризационными линзами TAC Polarized</li>
+            <li>Чехол-мешочек из микрофибры (защита и протирка)</li>
+            <li>Бесплатная доставка СДЭК по России, Беларуси и Казахстану</li>
+            <li>Возможность возврата и обмена в течение 14 дней</li>
+          </ul>
+          <h3 class="seo-text-h3">Для каких задач подходят</h3>
+          <ul class="seo-text-list">
+            <li><strong>Вождение</strong> — устраняют блики от дороги и лобового стекла</li>
+            <li><strong>Спорт и бег</strong> — лёгкие, не спадают при движении</li>
+            <li><strong>Горы и пляж</strong> — категория 3 надёжно защищает при ярком солнце</li>
+            <li><strong>Путешествия</strong> — компактный чехол удобен в дороге</li>
+            <li><strong>Каждый день</strong> — стильный дизайн подходит к любому образу</li>
+          </ul>
+          <p class="seo-text-note">
+            Часть прибыли от каждой продажи VOLK направляется на экологические инициативы — посадку деревьев и сохранение природных территорий России.
+          </p>
         </div>
       </div>
     </section>
@@ -622,6 +614,87 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
 }
 .nl-legal a { color: var(--color-accent); text-decoration: underline; }
 
+/* ─── SEO TEXT BLOCK ──────────────────────────────────── */
+.seo-text-section {
+  padding: 5rem 0;
+  background: var(--color-volk-black);
+  border-top: 1px solid var(--color-volk-border);
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.seo-text-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.seo-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.seo-text-h2 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+  line-height: 1.3;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.seo-text-h3 {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: 0.5rem;
+}
+.seo-text-col p {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-volk-muted);
+  line-height: 1.85;
+}
+.seo-text-col strong {
+  color: var(--color-volk-white);
+  font-weight: 600;
+}
+.seo-text-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.seo-text-list li {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--color-volk-muted);
+  line-height: 1.6;
+  padding-left: 1rem;
+  position: relative;
+}
+.seo-text-list li::before {
+  content: "◈";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-size: 0.55rem;
+  top: 4px;
+}
+.seo-text-list li strong { color: var(--color-volk-white); font-weight: 600; }
+.seo-text-note {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-volk-subtle);
+  line-height: 1.65;
+  border-left: 2px solid var(--color-accent-dim);
+  padding-left: 0.75rem;
+  font-style: italic;
+}
+
 /* ─── RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 1200px) {
   .props-grid { grid-template-columns: repeat(2, 1fr); }
@@ -636,6 +709,7 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
   .ls-text-wrap { padding: 3rem 2rem; }
   .faq-inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .newsletter-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .seo-text-inner { grid-template-columns: 1fr; gap: 2.5rem; }
 }
 @media (max-width: 768px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); }
