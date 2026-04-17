@@ -32,6 +32,9 @@ const siteName = "VOLK Sunglasses";
 <html lang="ru" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <!-- Hero image preload — must be first to minimize LCP resource delay -->
+    <link rel="preload" as="image" href="/hero-volk.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/hero-volk.jpg" fetchpriority="high" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta name="theme-color" content="#080808" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
