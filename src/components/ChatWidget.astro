@@ -68,6 +68,7 @@
 </div>
 
 <script>
+  function initChat() {
   let isChatOpen = false;
   let chatHistory = [];
   
@@ -155,6 +156,13 @@
       appendMessage("Извините, произошла ошибка подключения. Проверьте конфигурацию .env.", false);
     }
   });
+  } // end initChat
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initChat, { timeout: 3000 });
+  } else {
+    window.addEventListener('load', initChat);
+  }
 </script>
 
 <style>
