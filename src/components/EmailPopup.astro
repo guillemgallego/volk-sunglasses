@@ -1,0 +1,429 @@
+---
+// EmailPopup.astro — Exit intent + timer popup for email capture
+// Triggers: 6s on mobile, exit intent on desktop
+// Respects: localStorage flag (7 days), already subscribed flag
+---
+
+<div id="volk-popup-overlay" class="popup-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+  <div class="popup-box" id="volk-popup-box">
+    <!-- Close -->
+    <button class="popup-close" id="volk-popup-close" aria-label="Закрыть">✕</button>
+
+    <!-- Left: image -->
+    <div class="popup-image" aria-hidden="true">
+      <img
+        src="/images/2025-01-Polyarizatcionnie-ochki-taiga-forest-2.jpg"
+        alt="VOLK Sunglasses"
+        width="260"
+        height="320"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="popup-image-overlay"></div>
+      <div class="popup-image-badge">UV400<br/>поляризация</div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="popup-content">
+      <p class="popup-eyebrow">Только для подписчиков</p>
+      <h2 class="popup-title" id="popup-title">Скидка 10%<br/>на первый заказ</h2>
+      <p class="popup-sub">Введи email — получи код мгновенно. Плюс первым узнавай о новинках VOLK.</p>
+
+      <form id="volk-popup-form" class="popup-form" novalidate>
+        <input
+          type="text"
+          id="popup-name"
+          name="name"
+          placeholder="Твоё имя (необязательно)"
+          class="popup-input"
+          autocomplete="given-name"
+        />
+        <input
+          type="email"
+          id="popup-email"
+          name="email"
+          placeholder="Email"
+          class="popup-input"
+          required
+          autocomplete="email"
+        />
+        <button type="submit" class="popup-btn" id="popup-submit">
+          <span id="popup-btn-text">Получить скидку →</span>
+          <span id="popup-btn-loading" class="hidden">Отправляем...</span>
+        </button>
+        <p id="popup-error" class="popup-error hidden">Введи корректный email</p>
+      </form>
+
+      <!-- Success state -->
+      <div id="popup-success" class="popup-success hidden">
+        <div class="success-icon">✓</div>
+        <p class="success-title">Готово!</p>
+        <div class="success-code">VOLKMAIL10</div>
+        <p class="success-sub">Код отправлен на твой email.<br/>Используй при оформлении заказа.</p>
+        <a href="/katalog" class="popup-btn" style="display:block;text-align:center;text-decoration:none;margin-top:16px;">
+          Смотреть каталог →
+        </a>
+      </div>
+
+      <p class="popup-privacy">Без спама. Отписаться можно в любой момент.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const STORAGE_KEY   = 'volk_popup_dismissed';
+  const SUBSCRIBED_KEY = 'volk_popup_subscribed';
+  const DISMISS_DAYS  = 7;
+  const API_URL       = 'https://api.volksunglasses.com/wp-json/volk/v1/subscribe';
+
+  // Don't show if dismissed recently or already subscribed
+  function shouldShow() {
+    if (localStorage.getItem(SUBSCRIBED_KEY)) return false;
+    const dismissed = localStorage.getItem(STORAGE_KEY);
+    if (!dismissed) return true;
+    const diff = (Date.now() - parseInt(dismissed)) / (1000 * 60 * 60 * 24);
+    return diff >= DISMISS_DAYS;
+  }
+
+  function openPopup() {
+    const overlay = document.getElementById('volk-popup-overlay');
+    if (!overlay || !shouldShow()) return;
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('popup-email')?.focus();
+  }
+
+  function closePopup() {
+    const overlay = document.getElementById('volk-popup-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    localStorage.setItem(STORAGE_KEY, Date.now().toString());
+  }
+
+  // Triggers
+  const isMobile = window.innerWidth < 768;
+
+  if (isMobile) {
+    // Mobile: show after 6s
+    setTimeout(openPopup, 6000);
+  } else {
+    // Desktop: exit intent (mouse leaves top of page)
+    document.addEventListener('mouseleave', function handler(e) {
+      if (e.clientY <= 0) {
+        openPopup();
+        document.removeEventListener('mouseleave', handler);
+      }
+    });
+    // Fallback: show after 12s on desktop
+    setTimeout(openPopup, 12000);
+  }
+
+  // Close handlers
+  document.getElementById('volk-popup-close')?.addEventListener('click', closePopup);
+  document.getElementById('volk-popup-overlay')?.addEventListener('click', function(e) {
+    if (e.target === this) closePopup();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePopup();
+  });
+
+  // Form submit
+  document.getElementById('volk-popup-form')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email   = (document.getElementById('popup-email') as HTMLInputElement)?.value.trim();
+    const name    = (document.getElementById('popup-name') as HTMLInputElement)?.value.trim();
+    const errorEl = document.getElementById('popup-error');
+    const btnText = document.getElementById('popup-btn-text');
+    const btnLoad = document.getElementById('popup-btn-loading');
+    const submitBtn = document.getElementById('popup-submit') as HTMLButtonElement;
+
+    // Validate
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl?.classList.remove('hidden');
+      return;
+    }
+    errorEl?.classList.add('hidden');
+
+    // Loading state
+    btnText?.classList.add('hidden');
+    btnLoad?.classList.remove('hidden');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name }),
+      });
+
+      if (res.ok) {
+        // Show success
+        document.getElementById('volk-popup-form')?.classList.add('hidden');
+        document.getElementById('popup-success')?.classList.remove('hidden');
+        localStorage.setItem(SUBSCRIBED_KEY, '1');
+        // Auto close after 6s
+        setTimeout(closePopup, 6000);
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      btnText?.classList.remove('hidden');
+      btnLoad?.classList.add('hidden');
+      if (submitBtn) submitBtn.disabled = false;
+      if (errorEl) {
+        errorEl.textContent = 'Ошибка. Попробуй ещё раз.';
+        errorEl.classList.remove('hidden');
+      }
+    }
+  });
+})();
+</script>
+
+<style>
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+.popup-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.popup-box {
+  position: relative;
+  display: flex;
+  max-width: 640px;
+  width: 100%;
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 14px;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+.popup-overlay.is-open .popup-box {
+  transform: translateY(0) scale(1);
+}
+
+/* Close */
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: #555;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+  padding: 4px 8px;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+.popup-close:hover { color: #ceff02; }
+
+/* Left image panel */
+.popup-image {
+  position: relative;
+  width: 220px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.popup-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.popup-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, #0d0d0d 100%),
+              linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
+}
+.popup-image-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 12px;
+  background: #ceff02;
+  color: #080808;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 4px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Right content */
+.popup-content {
+  flex: 1;
+  padding: 36px 28px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.popup-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ceff02;
+  margin: 0 0 10px;
+}
+.popup-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f5f5f0;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+.popup-sub {
+  font-size: 0.82rem;
+  color: #686868;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+/* Form */
+.popup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.popup-input {
+  background: #131313;
+  border: 1px solid #303030;
+  color: #f5f5f0;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+.popup-input:focus {
+  border-color: #ceff02;
+  box-shadow: 0 0 0 3px rgba(206, 255, 2, 0.12);
+}
+.popup-input::placeholder { color: #383838; }
+
+.popup-btn {
+  background: #ceff02;
+  color: #080808;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(206, 255, 2, 0.2);
+  width: 100%;
+}
+.popup-btn:hover {
+  background: #ddff44;
+  box-shadow: 0 6px 28px rgba(206, 255, 2, 0.35);
+  transform: translateY(-1px);
+}
+.popup-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.popup-error {
+  font-size: 0.75rem;
+  color: #ff4d4d;
+  margin: 0;
+}
+.popup-privacy {
+  font-size: 0.65rem;
+  color: #383838;
+  margin: 10px 0 0;
+}
+
+/* Success */
+.popup-success {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.success-icon {
+  width: 44px;
+  height: 44px;
+  background: #ceff02;
+  color: #080808;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin: 0 auto 4px;
+}
+.success-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f5f5f0;
+  text-transform: uppercase;
+  margin: 0;
+}
+.success-code {
+  background: rgba(206, 255, 2, 0.1);
+  border: 1px solid rgba(206, 255, 2, 0.3);
+  color: #ceff02;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin: 4px 0;
+}
+.success-sub {
+  font-size: 0.78rem;
+  color: #686868;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hidden { display: none !important; }
+
+/* Mobile */
+@media (max-width: 520px) {
+  .popup-image { display: none; }
+  .popup-content { padding: 36px 22px 24px; }
+  .popup-title { font-size: 1.6rem; }
+}
+</style>

@@ -1,6 +1,7 @@
 ---
 // BaseLayout.astro
 import '../styles/global.css';
+import EmailPopup from '../components/EmailPopup.astro';
 
 interface Props {
   title: string;
@@ -141,6 +142,7 @@ const siteName = "VOLK Sunglasses";
   </head>
   <body>
     <slot />
+    <EmailPopup />
     <!-- Google Tag Manager — deferred after load for better LCP/INP -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXNHBWQ"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
