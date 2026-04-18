@@ -57,6 +57,60 @@ const tagBlogLinks: Record<string, { slug: string; title: string }> = {
   жёлтые:  { slug: "ochki-s-zheltymi-linzami", title: "Очки с жёлтыми линзами" },
 };
 
+// "Для кого" — 3 arquetipos basados en tags del producto
+type Archetype = { icon: string; title: string; desc: string };
+const ALL_ARCHETYPES: Record<string, Archetype> = {
+  driver: {
+    icon: "🚗",
+    title: "Водитель в дороге",
+    desc: "Поляризация убирает блики с мокрого асфальта и встречных фар. Безопасность на трассе.",
+  },
+  sport: {
+    icon: "🏃",
+    title: "Активный спортсмен",
+    desc: "Лёгкая оправа, надёжная посадка, защита UV400. Бег, вело, трекинг — очки не подводят.",
+  },
+  traveler: {
+    icon: "🎒",
+    title: "Путешественник",
+    desc: "Яркое солнце в горах, вода у моря, белый снег — глаза остаются защищёнными в любом свете.",
+  },
+  city: {
+    icon: "🌆",
+    title: "Городской стиль",
+    desc: "Минимализм и характер. Очки, которые одинаково уместны в офисе, на террасе и вечером в баре.",
+  },
+  water: {
+    icon: "🌊",
+    title: "Вода и пляж",
+    desc: "Поляризация убирает блики с воды. Видно рыбу под поверхностью и горизонт без засветов.",
+  },
+};
+
+const pickArchetypes = (tags: string[]): Archetype[] => {
+  const picked: Archetype[] = [];
+  const tagSet = new Set(tags.map((t) => t.toLowerCase()));
+  const has = (...keys: string[]) => keys.some((k) => tagSet.has(k));
+
+  if (has("вождение")) picked.push(ALL_ARCHETYPES.driver);
+  if (has("спорт", "активный отдых")) picked.push(ALL_ARCHETYPES.sport);
+  if (has("горы", "пляж")) picked.push(ALL_ARCHETYPES.traveler);
+  if (has("вода")) picked.push(ALL_ARCHETYPES.water);
+  if (has("город", "повседневные", "классика", "гламур")) picked.push(ALL_ARCHETYPES.city);
+
+  // Fallback + dedup + top 3
+  const unique = Array.from(new Set(picked));
+  while (unique.length < 3) {
+    const fallback = [ALL_ARCHETYPES.driver, ALL_ARCHETYPES.traveler, ALL_ARCHETYPES.city].find(
+      (a) => !unique.includes(a)
+    );
+    if (!fallback) break;
+    unique.push(fallback);
+  }
+  return unique.slice(0, 3);
+};
+const archetypes = pickArchetypes(product.tags);
+
 const catPosts = blogByCategory[product.category] ?? blogByCategory["Taiga"];
 const tagExtraPosts = product.tags
   .filter(t => tagBlogLinks[t])
@@ -267,7 +321,13 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
           <meta itemprop="priceCurrency" content="RUB" />
           <link itemprop="availability" href={isOutOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock"} />
           <link itemprop="itemCondition" href="https://schema.org/NewCondition" />
-          <span class="pdp-price-note">НДС включён · Бесплатная доставка от этой суммы</span>
+          <div class="pdp-direct-badge">
+            <span class="direct-badge-icon" aria-hidden="true">✓</span>
+            <div>
+              <strong>Цена напрямую от производителя</strong>
+              <span>Без комиссий маркетплейсов · НДС включён</span>
+            </div>
+          </div>
           <div class="checkout-trust-mini">
             <span class="trust-item">🛡️ Безопасная оплата</span>
             <span class="trust-item">🚚 СДЭК / Почта</span>
@@ -294,6 +354,22 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
             product.lens.includes("чёрн") ? "#444" : "#999"
           }`}></div>
           <span class="lens-label">Линзы: {product.lens}</span>
+        </div>
+
+        <!-- "Для кого" — 3 arquetipos -->
+        <div class="pdp-for-whom" aria-label="Для кого эти очки">
+          <p class="pdp-for-whom__title">ДЛЯ КОГО ЭТИ ОЧКИ</p>
+          <div class="pdp-for-whom__grid">
+            {archetypes.map((a) => (
+              <div class="for-whom-card">
+                <span class="for-whom-icon" aria-hidden="true">{a.icon}</span>
+                <div class="for-whom-body">
+                  <strong class="for-whom-title">{a.title}</strong>
+                  <span class="for-whom-desc">{a.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <!-- Buy CTA -->
@@ -710,6 +786,125 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
   align-items: center;
   gap: 0.3rem;
   font-weight: 500;
+}
+
+/* Direct-from-manufacturer badge */
+.pdp-direct-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--color-accent-bg);
+  border: 1px solid rgba(206, 255, 2, 0.25);
+  border-radius: 6px;
+}
+.direct-badge-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-volk-black);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+.pdp-direct-badge > div {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.pdp-direct-badge strong {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-volk-white);
+  text-transform: uppercase;
+}
+.pdp-direct-badge span {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-volk-muted);
+  margin-top: 2px;
+}
+
+/* "Для кого" — Who is this for */
+.pdp-for-whom {
+  margin: 1.5rem 0 0.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-volk-border);
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.pdp-for-whom__title {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin: 0 0 0.85rem;
+}
+.pdp-for-whom__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.for-whom-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--color-volk-deep);
+  border: 1px solid var(--color-volk-border);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.for-whom-card:hover {
+  border-color: var(--color-volk-border-hi);
+  transform: translateY(-2px);
+}
+.for-whom-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.for-whom-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.for-whom-title {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--color-volk-white);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.for-whom-desc {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-volk-muted);
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .pdp-for-whom__grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .for-whom-card {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0.65rem 0.75rem;
+  }
+  .for-whom-icon {
+    font-size: 1.25rem;
+  }
 }
 
 /* Stock */
