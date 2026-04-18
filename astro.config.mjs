@@ -14,7 +14,7 @@ export default defineConfig({
   },
   compressHTML: true,
   build: {
-    inlineStylesheets: 'always',
+    inlineStylesheets: 'auto',
   },
   redirects: {
     '/shop': '/katalog',
