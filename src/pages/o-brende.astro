@@ -155,39 +155,65 @@ import Footer from "../components/Footer.astro";
       <header class="bp-mosaic__hdr reveal">
         <div>
           <span class="eyebrow">Коллекции</span>
-          <h2 class="bp-h2" style="margin-top:0.75rem">Шесть линеек. Один бренд.</h2>
+          <h2 class="bp-h2" style="margin-top:0.75rem">Семь коллекций. Один бренд.</h2>
         </div>
         <a href="/katalog" class="btn btn-outline-gold btn-sm" id="mosaic-catalog-link">Весь каталог →</a>
       </header>
 
       <div class="bp-mosaic__grid">
-        <a href="/katalog" class="bp-mi bp-mi--wide reveal">
-          <div class="bp-mi__img" style="background-image:url('/images/2025-01-Polyarizatsionnye-ochki-taiga-flame-flont.jpg')"></div>
+        <!-- Row 1: TAIGA (wide) + SIBERIA -->
+        <a href="/katalog?cat=TAIGA" class="bp-mi bp-mi--wide reveal">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/Polyarizatsionnye-ochki-taiga-flame-flont.jpg')"></div>
           <div class="bp-mi__info">
             <span class="bp-mi__tag">Хит продаж</span>
             <h3>TAIGA</h3>
             <p>6 расцветок. Поляризация. Тайга в каждом взгляде.</p>
           </div>
         </a>
-        <a href="/katalog" class="bp-mi reveal" style="--d:.1s">
-          <div class="bp-mi__img" style="background-image:url('/images/2023-08-Siberia-Black-front.jpg')"></div>
+        <a href="/katalog?cat=SIBERIA" class="bp-mi reveal" style="--d:.1s">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/Siberia-Black-front.jpg')"></div>
           <div class="bp-mi__info">
             <h3>SIBERIA</h3>
             <p>Металлическая оправа. Сибирская прочность.</p>
           </div>
         </a>
-        <a href="/katalog" class="bp-mi reveal" style="--d:.2s">
-          <div class="bp-mi__img" style="background-image:url('/images/2024-06-SOCHI-black-blue-side.jpg')"></div>
+
+        <!-- Row 2: HERMITAGE + SOCHI + ALTAI -->
+        <a href="/katalog?cat=HERMITAGE" class="bp-mi reveal" style="--d:.2s">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/Kruglye-ochki-rozovye.jpg')"></div>
+          <div class="bp-mi__info">
+            <h3>HERMITAGE</h3>
+            <p>Ограниченная серия. Петербургская роскошь.</p>
+          </div>
+        </a>
+        <a href="/katalog?cat=SOCHI" class="bp-mi reveal" style="--d:.3s">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/SOCHI-black-blue-side.jpg')"></div>
           <div class="bp-mi__info">
             <h3>SOCHI</h3>
             <p>Курортный шик. Всё лето напролёт.</p>
           </div>
         </a>
-        <a href="/katalog" class="bp-mi reveal" style="--d:.3s">
-          <div class="bp-mi__img" style="background-image:url('/images/2025-11-DSC_1816.jpg')"></div>
+        <a href="/katalog?cat=ALTAI" class="bp-mi reveal" style="--d:.4s">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/Poluobodkovye-ochki-chernye-1.jpg')"></div>
           <div class="bp-mi__info">
-            <h3>HERMITAGE</h3>
-            <p>Ограниченная серия. Петербургская роскошь.</p>
+            <h3>ALTAI</h3>
+            <p>Полуободковая оправа. Лёгкость горных вершин.</p>
+          </div>
+        </a>
+
+        <!-- Row 3: ELBRUS + SAMARA (wide) -->
+        <a href="/katalog?cat=ELBRUS" class="bp-mi reveal" style="--d:.5s">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/Elbrus-green-front.jpg')"></div>
+          <div class="bp-mi__info">
+            <h3>ELBRUS</h3>
+            <p>Спортивный дух. Зеркальные линзы.</p>
+          </div>
+        </a>
+        <a href="/katalog?cat=SAMARA" class="bp-mi bp-mi--wide-end reveal" style="--d:.6s">
+          <div class="bp-mi__img" style="background-image:url('/images/wc/Samara-Blue-Front.jpg')"></div>
+          <div class="bp-mi__info">
+            <h3>SAMARA</h3>
+            <p>Круглая форма. Зеркальный блеск. Летнее настроение.</p>
           </div>
         </a>
       </div>
@@ -498,10 +524,9 @@ import Footer from "../components/Footer.astro";
 .bp-mosaic__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 320px 320px;
+  grid-template-rows: 320px 240px 240px;
   gap: .75rem;
 }
-/* Wide item spans 2 cols on row 1 */
 .bp-mi {
   position: relative; overflow: hidden; display: block;
   border: 1px solid rgba(255,255,255,.07);
@@ -509,6 +534,7 @@ import Footer from "../components/Footer.astro";
 }
 .bp-mi:hover { border-color: rgba(206,255,2,.2); }
 .bp-mi--wide { grid-column: span 2; }
+.bp-mi--wide-end { grid-column: span 2; }
 .bp-mi__img {
   width: 100%; height: 100%;
   background-size: cover; background-position: center;
@@ -576,9 +602,11 @@ import Footer from "../components/Footer.astro";
   .bp-tech__grid { grid-template-columns: 1fr 1fr; }
   .bp-mosaic__grid {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 280px 280px 280px;
+    grid-template-rows: 280px 280px 280px 280px;
   }
+  /* TAIGA stays wide; SAMARA becomes normal in 2-col tablet */
   .bp-mi--wide { grid-column: span 2; }
+  .bp-mi--wide-end { grid-column: span 1; }
 }
 @media (max-width: 640px) {
   .bp-hero__h1 { font-size: 3.8rem; }
@@ -590,7 +618,7 @@ import Footer from "../components/Footer.astro";
     grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
-  .bp-mi--wide { grid-column: span 1; }
+  .bp-mi--wide, .bp-mi--wide-end { grid-column: span 1; }
   .bp-mi { height: 260px; }
   .bp-mosaic__hdr { flex-direction: column; align-items: flex-start; }
   .bp-cta { padding: 6rem 0; }
