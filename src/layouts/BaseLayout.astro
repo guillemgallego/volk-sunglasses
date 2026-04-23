@@ -33,9 +33,8 @@ const siteName = "VOLK Sunglasses";
 <html lang="ru" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <!-- Hero image preload — must be first to minimize LCP resource delay -->
+    <!-- Hero image preload — WebP only (JPG is just a <picture> fallback for ancient browsers) -->
     <link rel="preload" as="image" href="/hero-volk.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/hero-volk.jpg" fetchpriority="high" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta name="theme-color" content="#080808" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -76,7 +75,7 @@ const siteName = "VOLK Sunglasses";
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "Organization",
+            "@type": ["Organization", "Brand"],
             "@id": "https://volksunglasses.com/#organization",
             "name": "VOLK Sunglasses",
             "url": "https://volksunglasses.com",
@@ -89,13 +88,14 @@ const siteName = "VOLK Sunglasses";
             "foundingDate": "2019",
             "foundingLocation": {
               "@type": "Place",
-              "name": "San Petersburgo, Rusia"
+              "name": "Санкт-Петербург, Россия"
             },
             "contactPoint": {
               "@type": "ContactPoint",
               "telephone": "+7-960-273-70-38",
               "contactType": "customer service",
-              "availableLanguage": "Russian"
+              "availableLanguage": "Russian",
+              "contactOption": "TollFree"
             },
             "sameAs": [
               "https://www.wildberries.ru/brands/2672490-volk-sunglasses",
@@ -105,10 +105,48 @@ const siteName = "VOLK Sunglasses";
             ]
           },
           {
+            "@type": "LocalBusiness",
+            "@id": "https://volksunglasses.com/#localbusiness",
+            "name": "VOLK Sunglasses",
+            "url": "https://volksunglasses.com",
+            "telephone": "+7-960-273-70-38",
+            "priceRange": "₽₽",
+            "currenciesAccepted": "RUB",
+            "paymentAccepted": "Cash, Credit Card",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Санкт-Петербург",
+              "addressCountry": "RU"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "59.9343",
+              "longitude": "30.3351"
+            },
+            "parentOrganization": { "@id": "https://volksunglasses.com/#organization" },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Поляризационные солнцезащитные очки VOLK",
+              "url": "https://volksunglasses.com/katalog"
+            }
+          },
+          {
+            "@type": "ImageObject",
+            "@id": "https://volksunglasses.com/#hero-image",
+            "url": "https://volksunglasses.com/hero-volk.webp",
+            "contentUrl": "https://volksunglasses.com/hero-volk.webp",
+            "width": 1920,
+            "height": 1080,
+            "caption": "VOLK поляризационные солнцезащитные очки с UV400 защитой — коллекция 2026",
+            "representativeOfPage": true,
+            "creator": { "@id": "https://volksunglasses.com/#organization" }
+          },
+          {
             "@type": "WebSite",
             "@id": "https://volksunglasses.com/#website",
             "url": "https://volksunglasses.com",
             "name": "VOLK Sunglasses",
+            "inLanguage": "ru-RU",
             "publisher": { "@id": "https://volksunglasses.com/#organization" },
             "potentialAction": {
               "@type": "SearchAction",
@@ -132,10 +170,6 @@ const siteName = "VOLK Sunglasses";
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" />
     </noscript>
-
-    <!-- Hero image preload (critical LCP resource) -->
-    <link rel="preload" as="image" href="/hero-volk.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/hero-volk.jpg" fetchpriority="high" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />

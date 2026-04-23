@@ -120,32 +120,91 @@ const tagExtraPosts = product.tags
 const relatedBlogPosts = [...catPosts, ...tagExtraPosts].slice(0, 3);
 
 // JSON-LD Schema
+const BASE = "https://volksunglasses.com";
+const productUrl = `${BASE}/${product.slug}`;
+const productImages = product.images.map((img: string) =>
+  img.startsWith("http") ? img : `${BASE}${img}`
+);
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "Product",
-  name: product.name,
-  description: product.description,
-  image: product.images,
-  sku: `VOLK-${product.woo_id || product.id}`,
-  brand: { "@type": "Brand", name: "VOLK Sunglasses" },
-  offers: {
+  "@id": productUrl,
+  "name": `VOLK ${product.name}`,
+  "description": product.description,
+  "image": productImages,
+  "sku": `VOLK-${product.slug.toUpperCase()}`,
+  "mpn": `VOLK-${product.woo_id || product.id}`,
+  "brand": {
+    "@type": "Brand",
+    "@id": `${BASE}/#organization`,
+    "name": "VOLK Sunglasses"
+  },
+  "category": "Солнцезащитные очки / Поляризационные очки",
+  "material": "TAC Polarized, пластик",
+  "color": product.lens,
+  "additionalProperty": [
+    { "@type": "PropertyValue", "name": "UV Protection", "value": "UV400" },
+    { "@type": "PropertyValue", "name": "Polarization", "value": "TAC Polarized" },
+    { "@type": "PropertyValue", "name": "Lens Category", "value": "3" },
+  ],
+  "offers": {
     "@type": "Offer",
-    price: product.price,
-    priceCurrency: "RUB",
-    availability: isOutOfStock
+    "price": product.price,
+    "priceCurrency": "RUB",
+    "availability": isOutOfStock
       ? "https://schema.org/OutOfStock"
       : "https://schema.org/InStock",
-    url: `https://volksunglasses.com/${product.slug}`,
-    seller: { "@type": "Organization", name: "VOLK Sunglasses" },
-    priceValidUntil: "2026-12-31",
+    "url": productUrl,
+    "seller": {
+      "@id": `${BASE}/#organization`,
+      "@type": "Organization",
+      "name": "VOLK Sunglasses"
+    },
+    "priceValidUntil": "2026-12-31",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "RUB"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "RU"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 1,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 7,
+          "unitCode": "DAY"
+        }
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "RU",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 14,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    }
   },
-  aggregateRating: {
+  "aggregateRating": product.reviewCount > 0 ? {
     "@type": "AggregateRating",
-    ratingValue: product.rating,
-    reviewCount: product.reviewCount,
-    bestRating: 5,
-    worstRating: 1,
-  },
+    "ratingValue": product.rating,
+    "reviewCount": product.reviewCount,
+    "bestRating": "5",
+    "worstRating": "1"
+  } : undefined,
 };
 
 const breadcrumbSchema = {
@@ -189,21 +248,13 @@ const seoDescription = `Купить ${product.name}: ${product.shortDescription
     <!-- ── Breadcrumb ───────────────────────────────────────── -->
     <nav class="breadcrumb" aria-label="Хлебные крошки">
       <div class="container">
-        <ol class="bc-list" itemscope itemtype="https://schema.org/BreadcrumbList">
-          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="/" itemprop="item"><span itemprop="name">Главная</span></a>
-            <meta itemprop="position" content="1" />
-          </li>
+        <!-- Breadcrumb HTML (semantic only) — schema via JSON-LD at top of page -->
+        <ol class="bc-list">
+          <li><a href="/">Главная</a></li>
           <span class="bc-sep" aria-hidden="true">›</span>
-          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a href="/katalog" itemprop="item"><span itemprop="name">Каталог</span></a>
-            <meta itemprop="position" content="2" />
-          </li>
+          <li><a href="/katalog">Каталог</a></li>
           <span class="bc-sep" aria-hidden="true">›</span>
-          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name">{product.name}</span>
-            <meta itemprop="position" content="3" />
-          </li>
+          <li aria-current="page">{product.name}</li>
         </ol>
       </div>
     </nav>

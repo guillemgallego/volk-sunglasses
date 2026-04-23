@@ -10,12 +10,14 @@ const links = [
 const path = Astro.url.pathname;
 ---
 
-<!-- Top announcement bar (like Hawkers) -->
-<div class="topbar" id="topbar" role="status" aria-label="Акция">
+<!-- Top announcement bar — rotates 3 trust messages like Knockaround/Blenders -->
+<div class="topbar" id="topbar" role="status" aria-label="Информация о доставке и гарантии">
   <div class="topbar-inner">
-    <span class="topbar-text">
-      🐺 Бесплатная доставка по России и СНГ &nbsp;·&nbsp; 10% скидка на следующий заказ при подписке
-    </span>
+    <div class="topbar-track" id="topbar-track" aria-live="polite">
+      <span class="topbar-msg topbar-msg--active">🚚 Бесплатная доставка по России от 2 350 ₽</span>
+      <span class="topbar-msg">↩ Возврат и обмен в течение 14 дней</span>
+      <span class="topbar-msg">🛡 Гарантия качества на каждую пару</span>
+    </div>
   </div>
 </div>
 
@@ -102,32 +104,36 @@ const path = Astro.url.pathname;
   justify-content: center;
   padding: 0.52rem 1.5rem;
   overflow: hidden;
+  min-height: 2rem;
 }
-.topbar-text {
+.topbar-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.topbar-msg {
   font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: #080808;
   white-space: nowrap;
+  position: absolute;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.topbar-msg--active {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+  pointer-events: auto;
 }
 @media (max-width: 640px) {
-  .topbar-inner {
-    padding: 0.45rem 0;
-    justify-content: flex-start;
-    overflow: hidden;
-  }
-  .topbar-text {
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-    animation: topbar-scroll 18s linear infinite;
-    padding-left: 100%;
-  }
-}
-@keyframes topbar-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  .topbar-inner { padding: 0.45rem 1rem; }
+  .topbar-msg { font-size: 0.63rem; letter-spacing: 0.07em; }
 }
 
 /* Navbar */
@@ -415,4 +421,15 @@ const path = Astro.url.pathname;
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') updateCartCount();
   });
+
+  // Topbar message rotation
+  const topbarMsgs = document.querySelectorAll<HTMLElement>('.topbar-msg');
+  if (topbarMsgs.length > 1) {
+    let current = 0;
+    setInterval(() => {
+      topbarMsgs[current].classList.remove('topbar-msg--active');
+      current = (current + 1) % topbarMsgs.length;
+      topbarMsgs[current].classList.add('topbar-msg--active');
+    }, 3500);
+  }
 </script>

@@ -10,20 +10,102 @@ import { products, getBestsellers } from "../data/products";
 const bestsellers = getBestsellers();
 const allInStock = products.filter(p => !p.outOfStock);
 const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
+
+// Homepage catalog preview: only first 12 products. Full catalog on /katalog.
+const HOME_CATALOG_LIMIT = 12;
+const homeCatalogPreview = products.slice(0, HOME_CATALOG_LIMIT);
+const remainingCount = Math.max(0, products.length - HOME_CATALOG_LIMIT);
+
+const BASE = "https://volksunglasses.com";
+
+// Build ItemList schema from all in-stock products
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Каталог VOLK Sunglasses — Поляризационные очки",
+  "description": "Российский бренд поляризационных солнцезащитных очков с защитой UV400. Линзы TAC Polarized 3-й категории. Бесплатная доставка по России.",
+  "url": `${BASE}/katalog`,
+  "numberOfItems": allInStock.length,
+  // Slim ListItem: only what's needed for ItemList rich results.
+  // Full Product/Offer/shippingDetails schema lives on each product page.
+  "itemListElement": allInStock.map((p, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `${BASE}/${p.slug}`,
+    "name": `VOLK ${p.name}`,
+    "image": p.images[0]?.startsWith("http") ? p.images[0] : `${BASE}${p.images[0]}`
+  }))
+};
+
+// Bestsellers spotlight schema for rich results
+const bestsellerSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${BASE}/#bestsellers`,
+  "name": "Хиты продаж VOLK Sunglasses",
+  "url": `${BASE}/#bestsellers`,
+  "numberOfItems": bestsellers.length,
+  "itemListElement": bestsellers.map((p, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "url": `${BASE}/${p.slug}`
+  }))
+};
 ---
 
 <BaseLayout
-  title="VOLK Sunglasses — Поляризационные солнцезащитные очки с UV400 | Россия"
+  title="Поляризационные очки VOLK UV400 TAC Polarized | Россия"
   og_title="VOLK — Поляризационные очки UV400 | Россия"
   description="Поляризационные солнцезащитные очки VOLK для спорта, вождения и путешествий. Защита UV400, антибликовые линзы TAC Polarized. Бесплатная доставка по России от 2 350 ₽."
   og_description="Очки VOLK: UV400, TAC Polarized, 3-я категория. Для спорта, вождения, путешествий. Бесплатная доставка по России."
 >
+  <!-- Product catalog schema — helps Google Shopping & rich results -->
+  <script type="application/ld+json" set:html={JSON.stringify(itemListSchema, null, 0)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(bestsellerSchema, null, 0)}></script>
+
   <Navbar />
   <main id="main-content">
     <!-- ① HERO ─────────────────────────────────────────────── -->
     <Hero />
 
-    <!-- ② TICKER BAND ─────────────────────────────────────── -->
+    <!-- ② TRUST BAR — like Blenders/Goodr/Knockaround ──────── -->
+    <div class="trust-bar" aria-label="Гарантии и преимущества">
+      <div class="trust-bar-inner">
+        <div class="tbar-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div>
+            <span class="tbar-title">Гарантия качества</span>
+            <span class="tbar-sub">На каждую пару очков</span>
+          </div>
+        </div>
+        <div class="tbar-divider" aria-hidden="true"></div>
+        <div class="tbar-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <div>
+            <span class="tbar-title">Бесплатная доставка</span>
+            <span class="tbar-sub">По всей России от 2 350 ₽</span>
+          </div>
+        </div>
+        <div class="tbar-divider" aria-hidden="true"></div>
+        <div class="tbar-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+          <div>
+            <span class="tbar-title">Возврат 14 дней</span>
+            <span class="tbar-sub">Без вопросов, без споров</span>
+          </div>
+        </div>
+        <div class="tbar-divider" aria-hidden="true"></div>
+        <div class="tbar-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div>
+            <span class="tbar-title">4.8★ средний рейтинг</span>
+            <span class="tbar-sub">UV400 · TAC Polarized</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ TICKER BAND ─────────────────────────────────────── -->
     <div class="ticker" aria-hidden="true">
       <div class="marquee-track">
         <div class="marquee-inner">
@@ -106,8 +188,8 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
         )}
 
         <div class="product-grid">
-          {bestsellers.map((p, i) => (
-            <ProductCard product={p} eager={i < 2} />
+          {bestsellers.map((p) => (
+            <ProductCard product={p} eager={false} />
           ))}
         </div>
       </div>
@@ -162,7 +244,58 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
       </div>
     </section>
 
-    <!-- ⑤b SEO TEXT BLOCK ────────────────────────────────── -->
+    <!-- ⑤b ВЫБЕРИ ПО НАЗНАЧЕНИЮ ──────────────────────────── -->
+    <section class="uso-section" aria-label="Выбор очков по назначению">
+      <div class="container">
+        <header class="section-header">
+          <div>
+            <span class="eyebrow">Для любой задачи</span>
+            <h2 class="display-lg" style="margin-top: 0.6rem;">Выбери по назначению</h2>
+          </div>
+        </header>
+        <div class="uso-grid">
+          {[
+            {
+              icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 16H9m10 0h3v-3.15a2 2 0 0 0-.84-1.63L18 10M2 16h2m-2 0v-3.15a2 2 0 0 1 .84-1.63L8 10m0 0V8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M8 10h8"/></svg>`,
+              label: "Для вождения",
+              desc: "Поляризация устраняет блики от асфальта и лобового стекла",
+              href: "/katalog?uso=driving",
+              kw: "очки для вождения"
+            },
+            {
+              icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`,
+              label: "Для спорта и бега",
+              desc: "Сверхлёгкие 11–13 г, не спадают при движении, UV400",
+              href: "/katalog?uso=sport",
+              kw: "спортивные очки"
+            },
+            {
+              icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polygon points="3 17 12 3 21 17"/><polyline points="3 17 21 17"/></svg>`,
+              label: "Для гор и пляжа",
+              desc: "Категория 3 — надёжная защита при ярком высокогорном солнце",
+              href: "/katalog?uso=mountain",
+              kw: "очки для гор"
+            },
+            {
+              icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+              label: "Для путешествий",
+              desc: "Компактный чехол, унисекс дизайн, стильно в любой стране",
+              href: "/katalog",
+              kw: "очки для путешествий"
+            },
+          ].map(item => (
+            <a href={item.href} class="uso-card" aria-label={item.kw}>
+              <div class="uso-icon" aria-hidden="true" set:html={item.icon}></div>
+              <h3 class="uso-label">{item.label}</h3>
+              <p class="uso-desc">{item.desc}</p>
+              <span class="uso-cta">Смотреть модели →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤c SEO TEXT BLOCK ────────────────────────────────── -->
     <section class="seo-text-section" aria-label="О технологии VOLK">
       <div class="container seo-text-inner">
         <div class="seo-text-col">
@@ -200,21 +333,28 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
       </div>
     </section>
 
-    <!-- ⑥ ALL PRODUCTS ─────────────────────────────────────── -->
-    <section class="section bg-deep" id="vse-modeli" aria-label="Все модели">
+    <!-- ⑥ CATALOG PREVIEW (12 products → link to /katalog) ─── -->
+    <section class="section bg-deep" id="vse-modeli" aria-label="Популярные модели">
       <div class="container">
         <header class="section-header">
           <div>
             <span class="eyebrow">Полный каталог</span>
-            <h2 class="display-lg" style="margin-top: 0.6rem;">Все модели</h2>
+            <h2 class="display-lg" style="margin-top: 0.6rem;">Популярные модели</h2>
           </div>
           <p class="section-count">{allInStock.length} в наличии</p>
         </header>
         <div class="product-grid product-grid--4">
-          {products.map((p, i) => (
-            <ProductCard product={p} eager={i < 4} />
+          {homeCatalogPreview.map((p) => (
+            <ProductCard product={p} eager={false} />
           ))}
         </div>
+        {remainingCount > 0 && (
+          <div style="text-align: center; margin-top: 2.5rem;">
+            <a href="/katalog" class="btn btn-gold btn-lg" id="home-catalog-all">
+              Смотреть весь каталог ({products.length} моделей) →
+            </a>
+          </div>
+        )}
       </div>
     </section>
 
@@ -305,6 +445,120 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
 </BaseLayout>
 
 <style>
+/* ─── TRUST BAR ──────────────────────────────────────── */
+.trust-bar {
+  background: var(--color-volk-deep);
+  border-bottom: 1px solid var(--color-volk-border);
+}
+.trust-bar-inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+.tbar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 2rem;
+  flex: 1;
+}
+.tbar-item svg { color: var(--color-accent); flex-shrink: 0; }
+.tbar-title {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-volk-white);
+  letter-spacing: 0.04em;
+}
+.tbar-sub {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.63rem;
+  color: var(--color-volk-muted);
+  margin-top: 2px;
+  letter-spacing: 0.03em;
+}
+.tbar-divider {
+  width: 1px;
+  background: var(--color-volk-border);
+  margin: 0.75rem 0;
+  flex-shrink: 0;
+}
+@media (max-width: 900px) {
+  .trust-bar-inner { flex-wrap: wrap; padding: 0 1.5rem; }
+  .tbar-item { flex: 1 1 45%; padding: 1rem 1.25rem; }
+  .tbar-divider { display: none; }
+}
+@media (max-width: 480px) {
+  .tbar-item { flex: 1 1 100%; padding: 0.85rem 1rem; }
+}
+
+/* ─── USAGE SECTION ───────────────────────────────────── */
+.uso-section {
+  padding: 5rem 0;
+  background: var(--color-volk-black);
+  border-top: 1px solid var(--color-volk-border);
+}
+.uso-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--color-volk-border);
+  border: 1px solid var(--color-volk-border);
+  margin-top: 2.5rem;
+}
+.uso-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 2.5rem 2rem;
+  background: var(--color-volk-surface);
+  transition: background 0.25s ease;
+  text-decoration: none;
+}
+.uso-card:hover {
+  background: var(--color-volk-elevated);
+}
+.uso-icon { color: var(--color-accent); }
+.uso-label {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-volk-white);
+  line-height: 1.2;
+}
+.uso-desc {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-volk-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+.uso-cta {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: 0.5rem;
+  transition: opacity 0.2s;
+}
+.uso-card:hover .uso-cta { opacity: 0.75; }
+@media (max-width: 900px) {
+  .uso-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .uso-grid { grid-template-columns: 1fr; }
+  .uso-card { padding: 2rem 1.5rem; }
+}
+
 /* ─── TICKER ─────────────────────────────────────────── */
 .ticker {
   background: #000;

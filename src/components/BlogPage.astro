@@ -7,6 +7,13 @@ import Footer from "./Footer.astro";
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+// Only the fields needed for JSON-LD — avoids injecting full post object into inline script
+const postMeta = {
+  title: post.data.title,
+  image: post.data.image || null,
+  date: post.data.date,
+};
+
 const seoTitle = `${post.data.title} | Блог VOLK`;
 const seoDescription = post.data.excerpt || `Читайте статью "${post.data.title}" в блоге VOLK Sunglasses.`;
 ---
@@ -72,13 +79,13 @@ const seoDescription = post.data.excerpt || `Читайте статью "${post
       </article>
 
       <!-- JSON-LD for combined Schema -->
-      <script type="application/ld+json" is:inline define:vars={{ post }}>
+      <script type="application/ld+json" is:inline define:vars={{ postMeta }}>
         {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          "headline": post.data.title,
-          "image": [post.data.image || "https://volksunglasses.com/images/logo-volk.png"],
-          "datePublished": post.data.date,
+          "headline": postMeta.title,
+          "image": [postMeta.image || "https://volksunglasses.com/images/logo-volk.png"],
+          "datePublished": postMeta.date,
           "author": [{
             "@type": "Person",
             "name": "Ярослав Кецерас",

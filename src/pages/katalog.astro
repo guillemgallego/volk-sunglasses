@@ -101,7 +101,7 @@ const lowStock = products.filter(p => p.stock > 0 && p.stock < 3);
             data-rating={p.rating}
             data-instock={!p.outOfStock}
           >
-            <ProductCard product={p} eager={i < 4} />
+            <ProductCard product={p} eager={false} />
           </div>
         ))}
       </div>
