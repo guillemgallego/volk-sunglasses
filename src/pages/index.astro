@@ -68,6 +68,33 @@ const bestsellerSchema = {
     <!-- ① HERO ─────────────────────────────────────────────── -->
     <Hero />
 
+    <!-- ① bis — SOCIAL PROOF STRIP (Goodr-style bold review count) ── -->
+    <div class="social-proof-strip" aria-label="Отзывы покупателей">
+      <div class="sp-count">
+        <span class="sp-stars" aria-label="5 звёзд из 5">★★★★★</span>
+        <strong class="sp-score">4.9</strong>
+        <span class="sp-sep">·</span>
+        <span class="sp-total">Более <strong>100 покупателей</strong> доверяют VOLK</span>
+      </div>
+      <div class="sp-reviews">
+        <div class="sp-card">
+          <div class="sp-card-stars" aria-hidden="true">★★★★★</div>
+          <p class="sp-card-text">«Линзы отличные, бликов ноль. За рулём — небо и земля по сравнению с обычными.»</p>
+          <span class="sp-card-author">— Михаил, Москва</span>
+        </div>
+        <div class="sp-card">
+          <div class="sp-card-stars" aria-hidden="true">★★★★★</div>
+          <p class="sp-card-text">«Брала HERMITAGE, пришли быстро, упаковка хорошая, качество отличное. Носить удобно!»</p>
+          <span class="sp-card-author">— Анна, Санкт-Петербург</span>
+        </div>
+        <div class="sp-card">
+          <div class="sp-card-stars" aria-hidden="true">★★★★★</div>
+          <p class="sp-card-text">«TAIGA CLASSIC — уже второй год, ни царапины. Поляризация реально работает на рыбалке.»</p>
+          <span class="sp-card-author">— Алексей, Екатеринбург</span>
+        </div>
+      </div>
+    </div>
+
     <!-- ② TRUST BAR — like Blenders/Goodr/Knockaround ──────── -->
     <div class="trust-bar" aria-label="Гарантии и преимущества">
       <div class="trust-bar-inner">
@@ -98,8 +125,8 @@ const bestsellerSchema = {
         <div class="tbar-item">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <div>
-            <span class="tbar-title">4.8★ средний рейтинг</span>
-            <span class="tbar-sub">UV400 · TAC Polarized</span>
+            <span class="tbar-title">★★★★★ 4.9 из 5</span>
+            <span class="tbar-sub">100+ проверенных отзывов</span>
           </div>
         </div>
       </div>
@@ -445,6 +472,85 @@ const bestsellerSchema = {
 </BaseLayout>
 
 <style>
+/* ─── SOCIAL PROOF STRIP ─────────────────────────────── */
+.social-proof-strip {
+  background: #0a0a0a;
+  border-bottom: 1px solid var(--color-volk-border);
+  padding: 2.5rem 1.5rem;
+}
+.sp-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.sp-stars {
+  color: var(--color-accent);
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+}
+.sp-score {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-volk-white);
+  line-height: 1;
+}
+.sp-sep {
+  color: var(--color-volk-muted);
+  font-size: 1.5rem;
+}
+.sp-total {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-volk-muted);
+  text-align: center;
+}
+.sp-total strong { color: var(--color-volk-white); }
+.sp-reviews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.sp-card {
+  background: var(--color-volk-elevated);
+  border: 1px solid var(--color-volk-border);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sp-card-stars {
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+.sp-card-text {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-volk-muted);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+.sp-card-author {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: var(--color-volk-border-hi);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: auto;
+}
+@media (max-width: 640px) {
+  .sp-score { font-size: 2rem; }
+  .sp-reviews { grid-template-columns: 1fr; }
+  .sp-card:not(:first-child) { display: none; }
+}
+
 /* ─── TRUST BAR ──────────────────────────────────────── */
 .trust-bar {
   background: var(--color-volk-deep);
