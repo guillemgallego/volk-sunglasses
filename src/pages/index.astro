@@ -74,7 +74,7 @@ const bestsellerSchema = {
         <span class="sp-stars" aria-label="5 звёзд из 5">★★★★★</span>
         <strong class="sp-score">4.9</strong>
         <span class="sp-sep">·</span>
-        <span class="sp-total">Более <strong>100 покупателей</strong> доверяют VOLK</span>
+        <span class="sp-total">Более <strong>5 000 покупателей</strong> выбрали VOLK</span>
       </div>
       <div class="sp-reviews">
         <div class="sp-card">
@@ -95,41 +95,60 @@ const bestsellerSchema = {
       </div>
     </div>
 
-    <!-- ① ter — MEDIA / PLATFORM LOGOS (press-style social proof) ── -->
-    <div class="media-strip" aria-label="Платформы и партнёры">
-      <span class="media-strip-label">Нас выбирают</span>
+    <!-- ① ter — PLATFORM LOGOS ─────────────────────────────────── -->
+    <div class="media-strip" aria-label="Продаём через проверенные платформы">
+      <span class="media-strip-label">Продаём через</span>
       <div class="media-logos">
-        <!-- WildBerries -->
-        <a href="https://www.wildberries.ru/brands/2672490-volk-sunglasses" class="media-logo-item" target="_blank" rel="noopener" aria-label="VOLK на WildBerries">
-          <svg class="media-logo-svg" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <text x="0" y="24" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="currentColor">Wildberries</text>
+
+        <!-- WildBerries logo (brand color #CB11AB) -->
+        <a href="https://www.wildberries.ru/brands/2672490-volk-sunglasses"
+           class="media-logo-item"
+           target="_blank" rel="noopener"
+           aria-label="VOLK на WildBerries — 5000+ заказов">
+          <svg class="logo-wb" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Berry cluster -->
+            <circle cx="10" cy="20" r="9" fill="#CB11AB"/>
+            <circle cx="22" cy="13" r="7" fill="#A30D8C"/>
+            <circle cx="22" cy="27" r="7" fill="#A30D8C"/>
+            <!-- Wordmark -->
+            <text x="35" y="27" font-family="Arial,sans-serif" font-size="17" font-weight="800" fill="#CB11AB" letter-spacing="-0.5">wildberries</text>
           </svg>
-          <span class="media-logo-sub">2 600+ заказов</span>
+          <span class="media-logo-sub">5 000+ заказов</span>
         </a>
+
         <div class="media-sep" aria-hidden="true"></div>
-        <!-- СДЭК -->
-        <div class="media-logo-item" aria-label="Доставка СДЭК">
-          <svg class="media-logo-svg" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <text x="0" y="24" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="currentColor">СДЭК</text>
+
+        <!-- СДЭК logo (brand color #00B140) -->
+        <div class="media-logo-item" aria-label="Доставка СДЭК по всей России">
+          <svg class="logo-cdek" viewBox="0 0 88 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" y="6" width="88" height="28" rx="5" fill="#00B140"/>
+            <text x="44" y="26" font-family="Arial,sans-serif" font-size="17" font-weight="900" fill="white" text-anchor="middle" letter-spacing="1">СДЭК</text>
           </svg>
-          <span class="media-logo-sub">Быстрая доставка</span>
+          <span class="media-logo-sub">Официальный партнёр</span>
         </div>
+
         <div class="media-sep" aria-hidden="true"></div>
-        <!-- Основан 2019 -->
-        <div class="media-logo-item" aria-label="VOLK с 2019 года">
-          <svg class="media-logo-svg" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <text x="0" y="24" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="currentColor">С 2019</text>
-          </svg>
-          <span class="media-logo-sub">Работаем с клиентами</span>
+
+        <!-- Рейтинг -->
+        <div class="media-logo-item" aria-label="5 000+ довольных покупателей">
+          <div class="media-stat">
+            <span class="media-stat-num">5 000+</span>
+            <span class="media-stat-stars">★★★★★</span>
+          </div>
+          <span class="media-logo-sub">Довольных покупателей</span>
         </div>
+
         <div class="media-sep" aria-hidden="true"></div>
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/volk.sunglasses/" class="media-logo-item" target="_blank" rel="noopener" aria-label="VOLK в Instagram">
-          <svg class="media-logo-svg" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <text x="0" y="24" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="currentColor">@volk.sunglasses</text>
-          </svg>
-          <span class="media-logo-sub">Instagram</span>
-        </a>
+
+        <!-- С 2019 -->
+        <div class="media-logo-item" aria-label="VOLK работает с 2019 года">
+          <div class="media-stat">
+            <span class="media-stat-num">С 2019</span>
+            <span class="media-stat-label">года</span>
+          </div>
+          <span class="media-logo-sub">Российский бренд</span>
+        </div>
+
       </div>
     </div>
 
@@ -164,7 +183,7 @@ const bestsellerSchema = {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <div>
             <span class="tbar-title">★★★★★ 4.9 из 5</span>
-            <span class="tbar-sub">100+ проверенных отзывов</span>
+            <span class="tbar-sub">5 000+ отзывов на WB и сайте</span>
           </div>
         </div>
       </div>
@@ -591,20 +610,20 @@ const bestsellerSchema = {
 
 /* ─── MEDIA / PLATFORM STRIP ─────────────────────────── */
 .media-strip {
-  background: var(--color-volk-black);
+  background: #0c0c0c;
   border-bottom: 1px solid var(--color-volk-border);
-  padding: 1.25rem 1.5rem;
+  padding: 1.4rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
 }
 .media-strip-label {
   font-family: var(--font-body);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-volk-muted);
   white-space: nowrap;
@@ -612,7 +631,7 @@ const bestsellerSchema = {
 .media-logos {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -620,26 +639,53 @@ const bestsellerSchema = {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.3rem;
   text-decoration: none;
-  color: rgba(255,255,255,0.35);
-  transition: color 0.2s;
+  transition: opacity 0.2s;
+  opacity: 0.75;
 }
-.media-logo-item:hover { color: rgba(255,255,255,0.7); }
-.media-logo-svg {
-  height: 22px;
-  width: auto;
+.media-logo-item:hover { opacity: 1; }
+/* WB logo SVG */
+.logo-wb { height: 26px; width: auto; }
+/* CDEK logo SVG */
+.logo-cdek { height: 32px; width: auto; }
+/* Stat blocks (for non-logo items) */
+.media-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.media-stat-num {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-volk-white);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.media-stat-stars {
+  color: var(--color-accent);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+}
+.media-stat-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: var(--color-volk-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 .media-logo-sub {
   font-family: var(--font-body);
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-volk-muted);
 }
 .media-sep {
   width: 1px;
-  height: 28px;
+  height: 32px;
   background: var(--color-volk-border);
   flex-shrink: 0;
 }
