@@ -112,9 +112,9 @@ const detailUrl = `/${product.slug}`;
       <div class="stars" aria-label={`${product.rating} из 5`} role="img">
         {Array.from({ length: 5 }, (_, i) => (
           <svg
-            width="10" height="10"
+            width="13" height="13"
             viewBox="0 0 12 12"
-            fill={i < Math.floor(product.rating) ? "var(--color-accent)" : "var(--color-volk-border-hi)"}
+            fill={i < Math.round(product.rating) ? "var(--color-accent)" : "rgba(255,255,255,0.12)"}
             aria-hidden="true"
           >
             <path d="M6 0l1.5 4.5H12L8.25 7.5l1.5 4.5L6 9l-3.75 3 1.5-4.5L0 4.5h4.5z"/>
@@ -123,6 +123,9 @@ const detailUrl = `/${product.slug}`;
       </div>
       <span class="rating-num" itemprop="ratingValue">{product.rating}</span>
       <span class="rating-cnt">(<span itemprop="reviewCount">{product.reviewCount}</span>)</span>
+      {product.rating >= 4.9 && (
+        <span class="rating-top" aria-label="Топ рейтинг">Топ ★</span>
+      )}
       <meta itemprop="bestRating" content="5" />
     </div>
 
@@ -282,19 +285,33 @@ const detailUrl = `/${product.slug}`;
 .card-rating {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
+  flex-wrap: wrap;
 }
 .stars { display: flex; gap: 2px; }
 .rating-num {
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   color: var(--color-accent);
 }
 .rating-cnt {
   font-family: var(--font-body);
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   color: var(--color-volk-muted);
+}
+.rating-top {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #080808;
+  background: var(--color-accent);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  margin-left: 0.1rem;
+  line-height: 1.6;
 }
 
 /* ── Footer ──────────────────────────────── */

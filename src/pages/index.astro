@@ -95,6 +95,44 @@ const bestsellerSchema = {
       </div>
     </div>
 
+    <!-- ① ter — MEDIA / PLATFORM LOGOS (press-style social proof) ── -->
+    <div class="media-strip" aria-label="Платформы и партнёры">
+      <span class="media-strip-label">Нас выбирают</span>
+      <div class="media-logos">
+        <!-- WildBerries -->
+        <a href="https://www.wildberries.ru/brands/2672490-volk-sunglasses" class="media-logo-item" target="_blank" rel="noopener" aria-label="VOLK на WildBerries">
+          <svg class="media-logo-svg" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="0" y="24" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="currentColor">Wildberries</text>
+          </svg>
+          <span class="media-logo-sub">2 600+ заказов</span>
+        </a>
+        <div class="media-sep" aria-hidden="true"></div>
+        <!-- СДЭК -->
+        <div class="media-logo-item" aria-label="Доставка СДЭК">
+          <svg class="media-logo-svg" viewBox="0 0 80 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="0" y="24" font-family="Arial, sans-serif" font-size="20" font-weight="900" fill="currentColor">СДЭК</text>
+          </svg>
+          <span class="media-logo-sub">Быстрая доставка</span>
+        </div>
+        <div class="media-sep" aria-hidden="true"></div>
+        <!-- Основан 2019 -->
+        <div class="media-logo-item" aria-label="VOLK с 2019 года">
+          <svg class="media-logo-svg" viewBox="0 0 100 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="0" y="24" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="currentColor">С 2019</text>
+          </svg>
+          <span class="media-logo-sub">Работаем с клиентами</span>
+        </div>
+        <div class="media-sep" aria-hidden="true"></div>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/volk.sunglasses/" class="media-logo-item" target="_blank" rel="noopener" aria-label="VOLK в Instagram">
+          <svg class="media-logo-svg" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="0" y="24" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="currentColor">@volk.sunglasses</text>
+          </svg>
+          <span class="media-logo-sub">Instagram</span>
+        </a>
+      </div>
+    </div>
+
     <!-- ② TRUST BAR — like Blenders/Goodr/Knockaround ──────── -->
     <div class="trust-bar" aria-label="Гарантии и преимущества">
       <div class="trust-bar-inner">
@@ -549,6 +587,67 @@ const bestsellerSchema = {
   .sp-score { font-size: 2rem; }
   .sp-reviews { grid-template-columns: 1fr; }
   .sp-card:not(:first-child) { display: none; }
+}
+
+/* ─── MEDIA / PLATFORM STRIP ─────────────────────────── */
+.media-strip {
+  background: var(--color-volk-black);
+  border-bottom: 1px solid var(--color-volk-border);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.media-strip-label {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+  white-space: nowrap;
+}
+.media-logos {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.media-logo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: rgba(255,255,255,0.35);
+  transition: color 0.2s;
+}
+.media-logo-item:hover { color: rgba(255,255,255,0.7); }
+.media-logo-svg {
+  height: 22px;
+  width: auto;
+}
+.media-logo-sub {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-volk-muted);
+}
+.media-sep {
+  width: 1px;
+  height: 28px;
+  background: var(--color-volk-border);
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .media-strip { gap: 1rem; }
+  .media-logos { gap: 1.25rem; }
+  .media-sep { display: none; }
+  .media-logo-sub { display: none; }
 }
 
 /* ─── TRUST BAR ──────────────────────────────────────── */
